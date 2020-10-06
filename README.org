@@ -1,0 +1,65 @@
+#+TITLE: Witches 'n Guns README
+#+AUTHOR: Gonzalo Delgado
+#+LANGUAGE: en
+#+STARTUP: showall
+
+* What is *Witches 'n Guns*?
+
+  *Witches 'n Guns* is an arcade-style twin-stick shooter built with HTML5
+  Canvas and Javascript.
+
+  It's developed inside [[https://hometeamgamedev.com/][HomeTeam GameDev]] and meant to be a practice
+  project.
+
+  Witches 'n Guns will be made available for free and playable
+  in-browser from itch.io.
+
+* How to run the game locally
+
+
+  Witches 'n Guns uses [[https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules][Javascript modules]] and requires an HTTP server
+  to run.
+
+  There's a couple of ways to do this depending on the operating
+  system (explained below), but if you happen to have [[https://nodejs.org/en/download/package-manager/][Node.js
+  installed]] and working on your system, you should be able to run the
+  game like this: ~npx browser-sync -f .~
+
+** Linux or macOS
+
+   Open a terminal and change to the game directory and run:
+
+   #+BEGIN_SRC sh
+   python -m SimpleHTTPServer 5501
+   #+END_SRC
+  
+   (There's a Makefile available that will run the game with the
+   ~make~ command provided Node.js is installed and working.)
+
+** Windows
+
+*** Python
+
+	1. [[https://docs.microsoft.com/en-us/windows/python/beginners#install-python][Install Python]]
+	2. Open the game's folder
+	3. Hold the shift key and right click somewhere in the folder
+	4. Select /Open PowerShell window here/
+	5. Run ~python -m http.server~
+	6. Go to http://localhost:8000/ in your browser
+
+*** VSCode with [[https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer][LiveServer]] extension
+
+	If you use VSCode, you can install LiveServer and then click the
+	"Go Live" button on the bottom right.
+
+*** [[https://www.browsersync.io/][Browsersync]]
+
+	1. [[https://docs.microsoft.com/en-us/windows/nodejs/setup-on-windows][Set up Node.js]]
+	2. Open the game's folder
+	3. Hold the shift key and right click somewhere in the folder
+	4. Select /Open PowerShell window here/
+	5. Run ~npm i --save-dev browser-sync~
+	6. Run ~npx browser-sync -f .~
+
+	Only the last step needs to happen every time you need to run the game.
+
