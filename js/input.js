@@ -17,21 +17,10 @@ class PlayerInput {
   }
 
   reset() {
-	this.currentState = {
-	  up: false,
-	  down: false,
-	  left: false,
-	  right: false,
-	  shootUp: false,
-	  shootDown: false,
-	  shootLeft: false,
-	  shootRight: false,
-	  start: false,
-	  credits: false,
-	  mute: false,
-	  debug: false,
-	  pause: false
-	};
+	this.currentState = {};
+	for (const event of INPUT_EVENTS) {
+	  this.currentState[event] = false;
+	}
 	this.previousState = Object.assign({}, this.currentState);
   }
 }
@@ -182,31 +171,32 @@ export class GamepadInput extends PlayerInput {
   }
 }
 
+const INPUT_EVENTS = [
+  "start",
+  "pause",
+  "mute",
+  "credits",
+  "debug",
+  "left",
+  "right",
+  "up",
+  "down",
+  "left",
+  "right",
+  "shootUp",
+  "shootDown",
+  "shootLeft",
+  "shootRight",
+  "gamepadConnected",
+  "gamepadDisconnected",
+];
 
 class InputManager {
   constructor() {
-	// TODO: move to SPOT
-	this.listeners = {
-	  any: [],
-	  start: [],
-	  pause: [],
-	  mute: [],
-	  credits: [],
-	  debug: [],
-	  left: [],
-	  right: [],
-	  up: [],
-	  down: [],
-	  left: [],
-	  right: [],
-	  shootUp: [],
-	  shootDown: [],
-	  shootLeft: [],
-	  shootRight: [],
-	  dash: [],
-	  gamepadConnected: [],
-	  gamepadDisconnected: []
-	};
+	this.listeners = {};
+	for (const event of INPUT_EVENTS) {
+	  this.listeners[event] = [];
+	}
 	this.controls = {};
 	this.defaultControl = null;
 	this.primaryControl = null;
