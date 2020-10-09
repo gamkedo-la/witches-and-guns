@@ -40,7 +40,7 @@ class Scene {
 class AttractModeScene extends Scene {
   reset() {
 	inputManager.reset();
-	inputManager.on(['start', 'gamepadConnected'], controller => {
+	inputManager.on(['start'], controller => {
 	  this.switchTo(SCENES.select);
 	});
 	inputManager.on('credits', () => {
