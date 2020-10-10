@@ -2,7 +2,7 @@
 
 
 run: node_modules
-	npx browser-sync -f index.html -f js -f images
+	npx browser-sync -f index.html -f js -f images -f sounds
 
 dist: js images
 	npx webpack -p
