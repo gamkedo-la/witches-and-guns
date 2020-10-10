@@ -1,4 +1,4 @@
-import {imageLoader} from './assets.js';
+import {assetLoader} from './assets.js';
 
 export class Animation {
   constructor(sheetId, frameTime, frames, xOffset, yOffset, frameWidth, frameHeight) {
@@ -20,7 +20,7 @@ export class Animation {
   }
   
   draw(ctx, x, y) {
-	ctx.drawImage(imageLoader.getImage(this.sheetId),
+	ctx.drawImage(assetLoader.getImage(this.sheetId),
 				  this.xOffset*this.frameWidth, (this.yOffset + this.frames[this.currentFrameIndex])*this.frameHeight,
 				  this.frameWidth, this.frameHeight,
 				  x, y,

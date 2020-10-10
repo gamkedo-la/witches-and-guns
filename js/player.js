@@ -1,7 +1,7 @@
 import {Animation} from './animation.js';
 import {Entity, entitiesManager} from './entity.js';
 import {canvasData} from './globals.js';
-import {imageLoader} from './assets.js';
+import {assetLoader} from './assets.js';
 
 
 const SPEED = 110;

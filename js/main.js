@@ -1,5 +1,5 @@
 import {canvasData} from './globals.js';
-import {imageLoader} from './assets.js';
+import {assetLoader} from './assets.js';
 import {inputManager} from './input.js';
 import {currentScene} from './scenes.js';
 
@@ -26,7 +26,7 @@ window.onload = function() {
   canvasData.canvas = document.getElementById(canvasData.id);
   canvasData.context = canvasData.canvas.getContext('2d');
   inputManager.initialize();
-  imageLoader.loadImages().then(startGame);
+  assetLoader.loadAssets().then(startGame);
 };
 
 function startGame(values) {

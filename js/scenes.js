@@ -1,6 +1,6 @@
 import {Enemy} from './enemies.js';
 import {canvasData} from './globals.js';
-import {imageLoader} from './assets.js';
+import {assetLoader} from './assets.js';
 import {inputManager} from './input.js';
 import {Player} from './player.js';
 import {entitiesManager} from './entity.js';
@@ -181,7 +181,7 @@ class GameScene extends Scene {
   }
 
   draw() {
-	const floorTileImg = imageLoader.getImage("floorTile");
+	const floorTileImg = assetLoader.getImage("floorTile");
 	for (let x=0; x<canvasData.canvas.width; x+=floorTileImg.width) {
 	  for (let y=0; y<canvasData.canvas.height; y+=floorTileImg.height) {
 		canvasData.context.drawImage(floorTileImg, x, y);

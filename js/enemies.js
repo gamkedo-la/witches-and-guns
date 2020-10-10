@@ -1,7 +1,6 @@
 import {Animation} from './animation.js';
 import {Entity, entitiesManager} from './entity.js';
 import {canvasData} from './globals.js';
-import {imageLoader} from './assets.js';
 
 
 export class Enemy extends Entity {
