@@ -163,6 +163,7 @@ export class Player extends Entity {
 	  // Using player center as origin of bullets
 	  // TODO: define/find "gun position"
 	  entitiesManager.spawn(Bullet, this.pos.x + this.width/2, this.pos.y + this.height/2, this.aim.x, this.aim.y, this.vel.x, this.vel.y);
+	  assetLoader.getSound("shoot").play();
 	} else {
 	  this.shotTimer -= dt;
 	}
