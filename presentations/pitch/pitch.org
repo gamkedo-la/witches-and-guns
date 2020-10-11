@@ -1,0 +1,133 @@
+#+OPTIONS: reveal_title_slide:nil reveal_center:t reveal_progress:t reveal_history:nil reveal_control:t
+#+OPTIONS: reveal_rolling_links:t reveal_keyboard:t reveal_overview:t num:nil
+#+OPTIONS: toc:0
+#+REVEAL_ROOT: https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/
+#+REVEAL_MARGIN: 0.2
+#+REVEAL_MIN_SCALE: 0.8
+#+REVEAL_TRANS: fast
+#+REVEAL_THEME: blood
+
+
+* Witches n' Guns
+
+  - Pitch date :: October 11, 2020
+  - Release date :: December 6, 2020
+  - Team lead :: Gonzalo Delgado
+
+* About me
+  - Member since December 2018
+  - Led Ballrog
+  - 4X Game Changer 
+  - Contributed to 10+ games
+	
+#+BEGIN_export html
+<br>
+<img src="./images/springfield.gif" width="144" />
+<img src="./images/xenojackers.gif" width="144" />
+<img src="./images/galastrike.gif" width="144" />
+<img src="./images/fodder.gif" width="144" />
+<img src="./images/bundle.gif" width="144" />
+<img src="./images/rustlers.gif" width="144" />
+<img src="./images/nick.gif" width="144" />
+<img src="./images/racers.gif" width="144" />
+<img src="./images/ballrog.gif" width="144" />
+<img src="./images/falldale.gif" width="144" />
+<img src="./images/tentacles.gif" width="144" />
+#+END_export
+
+* Witches 'n Guns?
+  It's an arcade-style, single screen twin-stick shooter, built with
+  HTML5 Canvas and Javascript.
+  #+ATTR_HTML: :width 640 :height 480
+  [[./images/witches-n-guns.png]]
+
+* Inspiration
+
+** Smash TV
+
+   #+ATTR_HTML: :height 480
+   [[./images/SmashTV.gif]]
+
+** Zombies Ate My Neighbors
+
+   #+ATTR_HTML: :height 480
+   [[./images/ZAMN.gif]]
+
+** Nuclear Throne
+
+   #+ATTR_HTML: :height 480
+   [[./images/NuclearThrone.gif]]
+
+* Demo
+
+#+BEGIN_export html
+<iframe src="./demo/index.html" width="640" height="480"></iframe>
+#+END_export
+
+
+* Vision
+
+  - Arcade feel
+  - 100% Silly
+  - Fun development experience
+  - 4 levels, based in house areas
+	- Yard
+	- Kitchen
+	- Laundry Room
+	- Living Room
+m  - Enemy waves
+  - Boss fights
+
+* Schedule
+
+#+BEGIN_export html
+<blockquote class="trello-board-compact">
+  <a href="https://trello.com/b/5VhElD09/witches-n-guns">
+  Witches 'n Guns Schedule
+  </a>
+</blockquote>
+<script src="https://p.trellocdn.com/embed.min.js"></script>
+#+END_export
+
+* Roles
+
+** Code
+
+   - Enemy AI
+   - Boss fights
+   - Enemy waves
+   - Level progression
+   - Power ups
+
+** Game Design
+
+   - Enemies
+   - Waves
+   - Boss fights
+
+** Art
+
+   - Sprites and animation (player, enemies, boss)
+   - Character portraits
+   - Game title
+   - Level tiles
+   - Projectiles and explosions
+   - Props
+
+** SFX
+   - Projectiles
+   - Explosions
+   - Pick-ups
+   - Level transitions
+
+** Music
+
+   - Attract mode
+   - Gameplay
+   - Boss fight
+   - Game over
+   - Game Finished
+
+* Join!
+
+  *#team-witches-n-guns*
