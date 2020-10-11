@@ -4,33 +4,28 @@ import {canvasData} from './globals.js';
 
 
 export class Enemy extends Entity {
+  constructor(initialPos, width, height, collider, hp, damage, animations, initialAnimation) {
+	super("enemy", initialPos, width, height, collider, hp, damage, animations, initialAnimation);
+  }
+}
+
+
+const BROOM_WIDTH = 14;
+const BROOM_HEIGHT = 26;
+
+export class BroomEnemy extends Enemy {
   constructor(x, y) {
-	super('enemy');
-	this.hp = 1;
+	const animations = {
+	  walk: new Animation("broomEnemy", 200, [0, 1, 2], 0, 0, BROOM_WIDTH, BROOM_HEIGHT)
+	};
+	super({x: x, y: y}, BROOM_WIDTH, BROOM_HEIGHT, {width: 14, height: 14}, 1, 1, animations, "walk");
 	this.speed = 50;
-	this.width = 14;
-	this.height = 26;
 	this.needsCollisionCheck = true;
 	this.canCollideWithTypes.add('playerProjectile');
-	this.collider.width = 14;
-	this.collider.height = 14;
 	// TODO: facing
-	this.animations = {
-	  walk: new Animation("broomEnemy", 200, [0, 1, 2], 0, 0, this.width, this.height)
-	};
-	this.pos = {x: x, y: y};
 	this.vel = {x: 0, y: 0};
-	this.currentAnimation = this.animations.walk;
-	this.currentAnimation.play();
 	this.attackDistance = 20;
 	this.steerTimer = Math.random()*0.5 + 0.5;
-  }
-
-  draw() {
-	if (canvasData.context) {
-	  this.currentAnimation.draw(canvasData.context, this.pos.x, this.pos.y);
-	}
-	super.draw();
   }
 
   update(dt) {
@@ -73,27 +68,9 @@ export class Enemy extends Entity {
 	  this.vel.y += steer.y;
 	  this.pos.x += Math.round(this.vel.x*dt);
 	  this.pos.y += Math.round(this.vel.y*dt);
-
-	  if (this.pos.x < 0) {
-		this.pos.x = 0;
-	  }
-	  if (this.pos.y < 0) {
-		this.pos.y = 0;
-	  }
-	  if (this.pos.x > canvasData.canvas.width - this.width) {
-		this.pos.x = canvasData.canvas.width - this.width;
-	  }
-	  if (this.pos.y > canvasData.canvas.height - this.height) {
-		this.pos.y = canvasData.canvas.height - this.height;
-	  }
 	}
 	super.update(dt);
   }
-
-  collide(entity) {
-	switch(entity.type) {
-	case "playerProjectile":
-	  this.die();
-	}
-  }
 }
+
+

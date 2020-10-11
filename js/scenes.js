@@ -1,4 +1,4 @@
-import {Enemy} from './enemies.js';
+import {BroomEnemy} from './enemies.js';
 import {canvasData} from './globals.js';
 import {assetLoader} from './assets.js';
 import {inputManager} from './input.js';
@@ -122,7 +122,7 @@ class PlayerSelectScene extends Scene {
 		const selectedSlots = this.slots.filter(slot => slot.selected);
 		for (let i=0; i<selectedSlots.length; i++) {
 		  const controller = selectedSlots[i].input;
-		  const player = entitiesManager.spawn(Player, controller);
+		  const player = entitiesManager.spawn(Player, controller, i*(canvasData.canvas.width-20), canvasData.canvas.height/2, i == 0 ? "right" : "left");
 		  controller.player = player;
 		}
 		this.switchTo(SCENES.game);
@@ -161,27 +161,59 @@ class PlayerSelectScene extends Scene {
   }
 }
 
-const MAX_ENEMIES = 20;
+const LEVELS = [
+  {name: "Level 1", loaded: false, complete: false, floorTileId: "floorTile", initialEnemies: [
+	{cls: BroomEnemy, x: 300, y: 100},
+	{cls: BroomEnemy, x: 300, y: 100},
+	{cls: BroomEnemy, x: 300, y: 100},
+	{cls: BroomEnemy, x: 300, y: 100},
+	{cls: BroomEnemy, x: 300, y: 100},
+	{cls: BroomEnemy, x: 300, y: 100},
+	{cls: BroomEnemy, x: 300, y: 100},
+	{cls: BroomEnemy, x: 300, y: 100},
+	{cls: BroomEnemy, x: 300, y: 100},
+	{cls: BroomEnemy, x: 300, y: 100},
+	{cls: BroomEnemy, x: 300, y: 100},
+	{cls: BroomEnemy, x: 300, y: 100}
+  ]}
+];
 class GameScene extends Scene {
-  // level loading here?
   constructor() {
 	super();
-	for (let i=0; i<MAX_ENEMIES; i++) {
-	  entitiesManager.spawn(Enemy, 100, 100);
-	}
+	this.levelIndex = 0;
 	entitiesManager.onCollision('playerProjectile', 'enemy', (projectile, enemy) => {
 	  enemy.hurt(projectile.damage);
 	  projectile.die();
 	});
   }
 
+  loadLevel() {
+	const currentLevel = LEVELS[this.levelIndex];
+	for (const enemyDef of currentLevel.initialEnemies) {
+	  entitiesManager.spawn(enemyDef.cls, enemyDef.x, enemyDef.y);
+	}
+	currentLevel.loaded = true;
+  }
+
   update(dt) {
+	const currentLevel = LEVELS[this.levelIndex];
+	if (!currentLevel.loaded) {
+	  this.loadLevel();
+	}
 	super.update(dt);
 	entitiesManager.update(dt);
   }
 
   draw() {
-	const floorTileImg = assetLoader.getImage("floorTile");
+	const currentLevel = LEVELS[this.levelIndex];
+	if (!currentLevel.loaded) {
+	  canvasData.context.fillStyle = 'rgb(0, 64, 88)';
+	  canvasData.context.fillRect(0, 0, canvasData.canvas.width, canvasData.canvas.height);
+	  canvasData.context.fillStyle = 'white';
+	  canvasData.context.fillText('LOADING ...', 10, canvasData.canvas.height/2);
+	  return;
+	}
+	const floorTileImg = assetLoader.getImage(currentLevel.floorTileId);
 	for (let x=0; x<canvasData.canvas.width; x+=floorTileImg.width) {
 	  for (let y=0; y<canvasData.canvas.height; y+=floorTileImg.height) {
 		canvasData.context.drawImage(floorTileImg, x, y);

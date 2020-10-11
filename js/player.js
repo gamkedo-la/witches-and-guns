@@ -54,33 +54,29 @@ class Bullet extends Entity {
   }
 }
 
+const PLAYER_WIDTH = 20;
+const PLAYER_HEIGHT = 32;
+const PLAYER_ANIMATIONS = {
+	  down: new Animation("player", 150, [0, 1, 2, 3], 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT),
+	  left: new Animation("player", 150, [0, 1, 2, 3], 1, 0, PLAYER_WIDTH, PLAYER_HEIGHT),
+	  up: new Animation("player", 150, [0, 1, 2, 3], 2, 0, PLAYER_WIDTH, PLAYER_HEIGHT),
+	  right: new Animation("player", 150, [0, 1, 2, 3], 3, 0, PLAYER_WIDTH, PLAYER_HEIGHT),
+	  downB: new Animation("player", 150, [3, 2, 1, 0], 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT),
+	  leftB: new Animation("player", 150, [3, 2, 1, 0], 1, 0, PLAYER_WIDTH, PLAYER_HEIGHT),
+	  upB: new Animation("player", 150, [3, 2, 1, 0], 2, 0, PLAYER_WIDTH, PLAYER_HEIGHT),
+	  rightB: new Animation("player", 150, [3, 2, 1, 0], 3, 0, PLAYER_WIDTH, PLAYER_HEIGHT)
+};
 export class Player extends Entity {
-  constructor(controller) {
-	super('player');
-	this.width = 20;
-	this.height = 32;
-	this.collider.width = 12;
-	this.collider.height = 24;
-	this.animations = {
-	  down: new Animation("player", 150, [0, 1, 2, 3], 0, 0, this.width, this.height),
-	  left: new Animation("player", 150, [0, 1, 2, 3], 1, 0, this.width, this.height),
-	  up: new Animation("player", 150, [0, 1, 2, 3], 2, 0, this.width, this.height),
-	  right: new Animation("player", 150, [0, 1, 2, 3], 3, 0, this.width, this.height),
-	  downB: new Animation("player", 150, [3, 2, 1, 0], 0, 0, this.width, this.height),
-	  leftB: new Animation("player", 150, [3, 2, 1, 0], 1, 0, this.width, this.height),
-	  upB: new Animation("player", 150, [3, 2, 1, 0], 2, 0, this.width, this.height),
-	  rightB: new Animation("player", 150, [3, 2, 1, 0], 3, 0, this.width, this.height)
-	};
-	this.animations.idle = this.animations.right;
-	this.currentAnimation = this.animations.idle;
-	this.reset(controller);
+  constructor(controller, x, y, initialAnimation="right") {
+	super("player", {x: x, y: y}, PLAYER_WIDTH, PLAYER_HEIGHT, {width: 12, height: 24}, 10, 1, PLAYER_ANIMATIONS, initialAnimation);
+	this.reset(controller, x, y);
   }
 
-  reset(controller) {
+  reset(controller, x=0, y=0) {
 	super.reset();
 	this.controller = controller;
 	this.alive = false;
-	this.pos =  {x: 0, y: 0};
+	this.pos =  {x: x, y: y};
 	this.vel = {x: 0, y: 0};
 	this.aim = {x: 0, y: 0};
 	this.shotTimer = 0;
@@ -122,24 +118,28 @@ export class Player extends Entity {
 	}
 	this.pos.x += Math.round(this.vel.x);
 	this.pos.y += Math.round(this.vel.y);
-	if (this.pos.y < 0) {
-	  this.pos.y = 0;
-	  this.vel.y = 0;
-	}
-	if (this.pos.y + this.height > canvasData.canvas.height) {
-	  this.pos.y = canvasData.canvas.height - this.height;
-	  this.vel.y = 0;
-	}
-	if (this.pos.x < 0) {
-	  this.pos.x = 0;
-	  this.vel.x = 0;
-	}
-	if (this.pos.x + this.width > canvasData.canvas.width) {
-	  this.pos.x = canvasData.canvas.width - this.width;
-	  this.vel.x = 0;
-	}
   }
 
+  onTopWallCollision(dt) {
+	super.onTopWallCollision(dt);
+	this.vel.y = 0;
+  }
+
+  onLeftWallCollision(dt) {
+	super.onLeftWallCollision(dt);
+	this.vel.x = 0;
+  }
+
+  onBottomWallCollision(dt) {
+	super.onBottomWallCollision(dt);
+	this.vel.y = 0;
+  }
+  
+  onRightWallCollision(dt) {
+	super.onRightWallCollision(dt);
+	this.vel.x = 0;
+  }
+  
   shoot(dt) {
 	if (!this.controller) {
 	  return;

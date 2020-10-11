@@ -82,17 +82,22 @@ const DEFAULT_HP = 10;
 const DEFAULT_DAMAGE = 1;
 
 export class Entity {
-  constructor(type) {
-	this.pos = {x: 0, y: 0};
-	this.width = 0;
-	this.height = 0;
+  constructor(type, initialPos, width, height, collider, hp=DEFAULT_HP, damage=DEFAULT_DAMAGE, animations={}, initialAnimation='') {
+	this.pos = Object.assign({}, initialPos);
+	this.width = width;
+	this.height = height;
 	this.type = type;
 	this.needsCollisionCheck = false;
-	this.collider = {x: 0, y: 0, width: 0, height: 0};
+	this.collider = Object.assign({x: 0, y: 0}, collider);
 	this.canCollideWithTypes = new Set();
-	this.hp = DEFAULT_HP;
-	this.damage = DEFAULT_DAMAGE;
+	this.hp = hp;
+	this.damage = damage;
 	this.alive = false;
+	this.animations = animations;
+	this.currentAnimation = this.animations[initialAnimation] || null;
+	if (this.currentAnimation) {
+	  this.currentAnimation.play();
+	}
   }
 
   die() {
@@ -110,12 +115,43 @@ export class Entity {
   reset() {
   }
 
+  onTopWallCollision(dt) {
+  }
+
+  onLeftWallCollision(dt) {
+  }
+
+  onBottomWallCollision(dt) {
+  }
+  
+  onRightWallCollision(dt) {
+  }
+  
   update(dt) {
+	if (this.pos.x < 0) {
+	  this.pos.x = 0;
+	  this.onLeftWallCollision(dt);
+	}
+	if (this.pos.y < 0) {
+	  this.pos.y = 0;
+	  this.onTopWallCollision(dt);
+	}
+	if (this.pos.x > canvasData.canvas.width - this.width) {
+	  this.pos.x = canvasData.canvas.width - this.width;
+	  this.onRightWallCollision(dt);
+	}
+	if (this.pos.y > canvasData.canvas.height - this.height) {
+	  this.pos.y = canvasData.canvas.height - this.height;
+	  this.onBottomWallCollision(dt);
+	}
 	this.collider.x = this.pos.x + (this.width - this.collider.width)/2;
 	this.collider.y = this.pos.y + (this.height - this.collider.height)/2;
   }
 
   draw() {
+	if (this.currentAnimation) {
+	  this.currentAnimation.draw(canvasData.context, this.pos.x, this.pos.y);
+	};
 	if (window.debugMode && (this.collider.width > 0 || this.collider.height > 0)) {
 	  canvasData.context.lineWidth = 1;
 	  canvasData.context.strokeStyle = 'magenta';
