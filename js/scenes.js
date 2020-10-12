@@ -162,20 +162,54 @@ class PlayerSelectScene extends Scene {
 }
 
 const LEVELS = [
-  {name: "Level 1", loaded: false, complete: false, floorTileId: "floorTile", initialEnemies: [
-	{cls: BroomEnemy, x: 300, y: 100},
-	{cls: BroomEnemy, x: 300, y: 100},
-	{cls: BroomEnemy, x: 300, y: 100},
-	{cls: BroomEnemy, x: 300, y: 100},
-	{cls: BroomEnemy, x: 300, y: 100},
-	{cls: BroomEnemy, x: 300, y: 100},
-	{cls: BroomEnemy, x: 300, y: 100},
-	{cls: BroomEnemy, x: 300, y: 100},
-	{cls: BroomEnemy, x: 300, y: 100},
+  {name: "Level 1", loaded: false, complete: false, floorTileId: "floorTile",
+   waves: [
+	 {
+	   spawners: [
+		 {cls: BroomEnemy, x: 20, y: 10,  amount: 10},
+		 {cls: BroomEnemy, x: 20, y: 200,  amount: 10},
+		 {cls: BroomEnemy, x: 300, y: 10,  amount: 10},
+		 {cls: BroomEnemy, x: 300, y: 200,  amount: 10},
+	   ],
+	   timeOut: 0,
+	 },
+   ],
+   initialEnemies: [
 	{cls: BroomEnemy, x: 300, y: 100},
 	{cls: BroomEnemy, x: 300, y: 100},
 	{cls: BroomEnemy, x: 300, y: 100}
-  ]}
+  ]},
+  {name: "Level 2", loaded: false, complete: false, floorTileId: "floorTile",
+   initialEnemies: [
+	 {cls: BroomEnemy, x: 300, y: 200},
+	 {cls: BroomEnemy, x: 300, y: 200},
+	 {cls: BroomEnemy, x: 300, y: 200},
+	 {cls: BroomEnemy, x: 300, y: 200},
+	 {cls: BroomEnemy, x: 300, y: 200},
+	 {cls: BroomEnemy, x: 300, y: 200},
+	 {cls: BroomEnemy, x: 300, y: 200},
+	 {cls: BroomEnemy, x: 300, y: 200},
+	 {cls: BroomEnemy, x: 300, y: 200},
+	 {cls: BroomEnemy, x: 300, y: 200},
+	 {cls: BroomEnemy, x: 300, y: 200},
+	 {cls: BroomEnemy, x: 300, y: 200},
+	 {cls: BroomEnemy, x: 300, y: 200},
+	 {cls: BroomEnemy, x: 300, y: 200},
+	 {cls: BroomEnemy, x: 300, y: 200},
+	 {cls: BroomEnemy, x: 300, y: 200},
+   ],
+   waves: [
+	 {
+	   spawners: [
+		 {cls: BroomEnemy, x: 20, y: 10,  amount: 20},
+		 {cls: BroomEnemy, x: 20, y: 200,  amount: 20},
+		 {cls: BroomEnemy, x: 300, y: 10,  amount: 20},
+		 {cls: BroomEnemy, x: 300, y: 200,  amount: 20},
+	   ],
+	   timeOut: 0,
+	 },
+   ],
+  }
 ];
 class GameScene extends Scene {
   constructor() {
@@ -192,12 +226,32 @@ class GameScene extends Scene {
 	for (const enemyDef of currentLevel.initialEnemies) {
 	  entitiesManager.spawn(enemyDef.cls, enemyDef.x, enemyDef.y);
 	}
+	this.waves = Array.from(currentLevel.waves);
 	currentLevel.loaded = true;
   }
 
   update(dt) {
 	const currentLevel = LEVELS[this.levelIndex];
-	if (!currentLevel.loaded) {
+	if (currentLevel.loaded) {
+	  const liveEnemies = [...entitiesManager.liveEntities].filter(e => e.type == "enemy");
+	  if (liveEnemies.length <= 0) {
+		if (this.waves.length > 0) {
+		  console.log("Loading new wave");
+		  const wave = this.waves.shift();
+		  for (const spawner of wave.spawners) {
+			Array(spawner.amount).fill().forEach(() => {
+			  entitiesManager.spawn(spawner.cls, spawner.x, spawner.y);
+			});
+		  }
+		} else {
+		  // BOSS BATTLE!
+		  // but for now, let's just load the next level
+		  if (this.levelIndex < LEVELS.length - 1) {
+			this.levelIndex++;
+		  }
+		}
+	  }
+	} else {
 	  this.loadLevel();
 	}
 	super.update(dt);
@@ -220,6 +274,11 @@ class GameScene extends Scene {
 	  }
 	}
 	entitiesManager.draw();
+	const lifeBar = {width: 50, height: 10};
+	for (const player of [...entitiesManager.liveEntities].filter(e => e.type == "player")) {
+	  canvasData.context.fillStyle = "green";
+	  canvasData.context.fillRect(10, 10, lifeBar.width, lifeBar.height);
+	}
   }
 }
 
