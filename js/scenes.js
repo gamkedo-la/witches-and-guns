@@ -171,7 +171,16 @@ const LEVELS = [
 		 {cls: BroomEnemy, x: 300, y: 10,  amount: 10},
 		 {cls: BroomEnemy, x: 300, y: 200,  amount: 10},
 	   ],
-	   timeOut: 0,
+	   timeOut: 10,
+	 },
+	 {
+	   spawners: [
+		 {cls: BroomEnemy, x: 100, y: 10,  amount: 12},
+		 {cls: BroomEnemy, x: 100, y: 220,  amount: 12},
+		 {cls: BroomEnemy, x: 10, y: 100,  amount: 12},
+		 {cls: BroomEnemy, x: 300, y: 100,  amount: 12},
+	   ],
+	   timeOut: 10,
 	 },
    ],
    initialEnemies: [
@@ -206,7 +215,7 @@ const LEVELS = [
 		 {cls: BroomEnemy, x: 300, y: 10,  amount: 20},
 		 {cls: BroomEnemy, x: 300, y: 200,  amount: 20},
 	   ],
-	   timeOut: 0,
+	   timeOut: Infinity,
 	 },
    ],
   }
@@ -219,6 +228,7 @@ class GameScene extends Scene {
 	  enemy.hurt(projectile.damage);
 	  projectile.die();
 	});
+	this.waveTimeOut = Infinity;
   }
 
   loadLevel() {
@@ -234,16 +244,17 @@ class GameScene extends Scene {
 	const currentLevel = LEVELS[this.levelIndex];
 	if (currentLevel.loaded) {
 	  const liveEnemies = [...entitiesManager.liveEntities].filter(e => e.type == "enemy");
-	  if (liveEnemies.length <= 0) {
+	  if (this.waveTimeOut <= 0 || liveEnemies.length <= 0) {
 		if (this.waves.length > 0) {
 		  console.log("Loading new wave");
 		  const wave = this.waves.shift();
+		  this.waveTimeOut = wave.timeOut;
 		  for (const spawner of wave.spawners) {
 			Array(spawner.amount).fill().forEach(() => {
 			  entitiesManager.spawn(spawner.cls, spawner.x, spawner.y);
 			});
 		  }
-		} else {
+		} else if (liveEnemies.length <= 0) {
 		  // BOSS BATTLE!
 		  // but for now, let's just load the next level
 		  if (this.levelIndex < LEVELS.length - 1) {
@@ -254,6 +265,7 @@ class GameScene extends Scene {
 	} else {
 	  this.loadLevel();
 	}
+	this.waveTimeOut -= dt;
 	super.update(dt);
 	entitiesManager.update(dt);
   }
