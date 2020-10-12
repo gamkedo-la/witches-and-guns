@@ -112,7 +112,9 @@ export class Entity {
 	}
   }
   
-  reset() {
+  reset(x, y) {
+	this.pos.x = x;
+	this.pos.y = y;
   }
 
   onTopWallCollision(dt) {
