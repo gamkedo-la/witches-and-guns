@@ -1,9 +1,15 @@
 import {assetLoader} from './assets.js';
 
 export class Animation {
-  constructor(sheetId, frameTime, frames, xOffset, yOffset, frameWidth, frameHeight) {
+  // frame times should be in ms
+  constructor(sheetId, frameTimes, frames, xOffset, yOffset, frameWidth, frameHeight) {
 	this.sheetId = sheetId;
-	this.frameTime = frameTime/1000;
+
+	if (frameTimes instanceof Array) {
+	  this.frameTimes = frameTimes;
+	} else { // assume it's a number
+	  this.frameTimes = Array(frames.length).fill(frameTimes);
+	}
 	// TODO: throw error if frames is empty list
 	this.frames = frames;
 	this.xOffset = xOffset;
@@ -21,7 +27,7 @@ export class Animation {
   
   draw(ctx, x, y) {
 	ctx.drawImage(assetLoader.getImage(this.sheetId),
-				  this.xOffset*this.frameWidth, (this.yOffset + this.frames[this.currentFrameIndex])*this.frameHeight,
+				  this.xOffset, this.yOffset + this.frames[this.currentFrameIndex]*this.frameHeight,
 				  this.frameWidth, this.frameHeight,
 				  x, y,
 				  this.frameWidth, this.frameHeight);
@@ -39,8 +45,9 @@ export class Animation {
 	if (!this.playing) {
 	  return;
 	}
+	const frameTime = this.frameTimes[this.currentFrameIndex]/1000;
 	this.timer += dt;
-	if (this.timer >= this.frameTime) {
+	if (this.timer >= frameTime) {
 	  this.timer = 0;
 	  if (this.currentFrameIndex >= this.frames.length - 1) {
 		this.currentFrameIndex = 0;

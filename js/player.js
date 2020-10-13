@@ -57,14 +57,14 @@ class Bullet extends Entity {
 const PLAYER_WIDTH = 20;
 const PLAYER_HEIGHT = 32;
 const PLAYER_ANIMATIONS = {
-	  down: new Animation("player", 150, [0, 1, 2, 3], 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT),
-	  left: new Animation("player", 150, [0, 1, 2, 3], 1, 0, PLAYER_WIDTH, PLAYER_HEIGHT),
-	  up: new Animation("player", 150, [0, 1, 2, 3], 2, 0, PLAYER_WIDTH, PLAYER_HEIGHT),
-	  right: new Animation("player", 150, [0, 1, 2, 3], 3, 0, PLAYER_WIDTH, PLAYER_HEIGHT),
-	  downB: new Animation("player", 150, [3, 2, 1, 0], 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT),
-	  leftB: new Animation("player", 150, [3, 2, 1, 0], 1, 0, PLAYER_WIDTH, PLAYER_HEIGHT),
-	  upB: new Animation("player", 150, [3, 2, 1, 0], 2, 0, PLAYER_WIDTH, PLAYER_HEIGHT),
-	  rightB: new Animation("player", 150, [3, 2, 1, 0], 3, 0, PLAYER_WIDTH, PLAYER_HEIGHT)
+  down: new Animation("player", 150, [0, 1, 2, 3], 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT),
+  left: new Animation("player", 150, [0, 1, 2, 3], PLAYER_WIDTH, 0, PLAYER_WIDTH, PLAYER_HEIGHT),
+  up: new Animation("player", 150, [0, 1, 2, 3], 2*PLAYER_WIDTH, 0, PLAYER_WIDTH, PLAYER_HEIGHT),
+  right: new Animation("player", 150, [0, 1, 2, 3], 3*PLAYER_WIDTH, 0, PLAYER_WIDTH, PLAYER_HEIGHT),
+  downB: new Animation("player", 150, [3, 2, 1, 0], 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT),
+  leftB: new Animation("player", 150, [3, 2, 1, 0], PLAYER_WIDTH, 0, PLAYER_WIDTH, PLAYER_HEIGHT),
+  upB: new Animation("player", 150, [3, 2, 1, 0], 2*PLAYER_WIDTH, 0, PLAYER_WIDTH, PLAYER_HEIGHT),
+  rightB: new Animation("player", 150, [3, 2, 1, 0], 3*PLAYER_WIDTH, 0, PLAYER_WIDTH, PLAYER_HEIGHT)
 };
 export class Player extends Entity {
   constructor(controller, x, y, initialAnimation="right") {
