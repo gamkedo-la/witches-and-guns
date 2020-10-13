@@ -12,11 +12,13 @@ export class Enemy extends Entity {
 
 const BROOM_WIDTH = 14;
 const BROOM_HEIGHT = 26;
+const BROOM_ATTACK_WIDTH = 28;
 
 export class BroomEnemy extends Enemy {
   constructor(x, y) {
 	const animations = {
-	  walk: new Animation("broomEnemy", 200, [0, 1, 2], 0, 0, BROOM_WIDTH, BROOM_HEIGHT)
+	  walk: new Animation("broomEnemy", 200, [0, 1, 2], 0, 0, BROOM_WIDTH, BROOM_HEIGHT),
+	  attack: new Animation("broomEnemy", [100, 200, 100, 50, 200, 50], [0, 1, 2, 3, 4, 5], BROOM_WIDTH, 0, BROOM_ATTACK_WIDTH, BROOM_HEIGHT)
 	};
 	super({x: x, y: y}, BROOM_WIDTH, BROOM_HEIGHT, {width: 14, height: 14}, 1, 1, animations, "walk");
 	this.speed = 50;
@@ -62,7 +64,17 @@ export class BroomEnemy extends Enemy {
 
 	if (minDist < this.attackDistance) {
 	  // attack!
+	  if (this.currentAnimation != this.animations.attack) {
+		this.currentAnimation.stop();
+		this.currentAnimation = this.animations.attack;
+		this.currentAnimation.play();
+	  }
 	} else {
+	  if (this.currentAnimation != this.animations.walk) {
+		this.currentAnimation.stop();
+		this.currentAnimation = this.animations.walk;
+		this.currentAnimation.play();
+	  }
 	  // move towards player
 	  this.vel.x += steer.x;
 	  this.vel.y += steer.y;
