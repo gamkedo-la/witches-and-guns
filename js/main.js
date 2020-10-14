@@ -3,6 +3,10 @@ import {assetLoader} from './assets.js';
 import {inputManager} from './input.js';
 import {currentScene} from './scenes.js';
 
+//WARM UP: This would be a good place to put
+//a practice commit.  Just add a comment like
+//this one and then commit it! :)
+
 let dt = 0, last = timestamp();
 const UPDATE_STEP = 1/60;
 window.debugMode = false;

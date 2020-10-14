@@ -152,6 +152,9 @@ export class Entity {
 	  this.currentAnimation.draw(canvasData.context, this.pos.x, this.pos.y);
 	};
 	if (window.debugMode && (this.collider.width > 0 || this.collider.height > 0)) {
+		//WARM UP: when we make changes to the context state maching
+		//it usually a good idea to wrap those calls in context.save()/context.restore()
+		//calls, so here is a good spot to practice that.
 	  canvasData.context.lineWidth = 1;
 	  canvasData.context.strokeStyle = 'magenta';
 	  canvasData.context.strokeRect(this.collider.x, this.collider.y, this.collider.width, this.collider.height);
