@@ -228,6 +228,11 @@ class GameScene extends Scene {
 	  enemy.hurt(projectile.damage);
 	  projectile.die();
 	});
+
+	entitiesManager.onCollision('enemyAttack', 'player', (attack, player) => {
+	  player.hurt(attack.damage);
+	  attack.damage = 0;
+	});
 	this.waveTimeOut = Infinity;
   }
 

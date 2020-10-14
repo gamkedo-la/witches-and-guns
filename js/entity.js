@@ -77,7 +77,7 @@ export const entitiesManager = new EntitiesManager();
 
 
 const DEFAULT_HP = 10;
-const DEFAULT_DAMAGE = 1;
+export const DEFAULT_DAMAGE = 1;
 
 export class Entity {
   constructor(type, initialPos, width, height, collider, hp=DEFAULT_HP, damage=DEFAULT_DAMAGE, animations={}, initialAnimation='') {

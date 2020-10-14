@@ -1,5 +1,5 @@
 import {Animation} from './animation.js';
-import {Entity, entitiesManager} from './entity.js';
+import {Entity, entitiesManager, DEFAULT_DAMAGE} from './entity.js';
 import {canvasData} from './globals.js';
 
 
@@ -10,9 +10,27 @@ export class Enemy extends Entity {
 }
 
 
+export class Attack extends Entity {
+  constructor(parent, offset, width, height) {
+	super("enemyAttack", {x: parent.pos.x - offset.x, y: parent.pos.y - offset.y}, 0, 0, {width: width, height: height}, 1, 1);
+	this.offset = offset;
+	this.parent = parent;
+	this.canCollideWithTypes.add("player");
+  }
+
+
+  reset(parent, offset, width, height) {
+	super.reset(parent.pos.x - offset.x, parent.pos.y - offset.y);
+	this.damage = DEFAULT_DAMAGE;
+	this.collider.width = width;
+	this.collider.height = height;
+  }
+}
+
 const BROOM_WIDTH = 14;
 const BROOM_HEIGHT = 26;
 const BROOM_ATTACK_WIDTH = 28;
+const BROOM_HEADBUTT_FRAME = 4;
 
 export class BroomEnemy extends Enemy {
   constructor(x, y) {
@@ -27,6 +45,7 @@ export class BroomEnemy extends Enemy {
 	this.vel = {x: 0, y: 0};
 	this.attackDistance = 20;
 	this.steerTimer = Math.random()*0.5 + 0.5;
+	this.headButt = null;
   }
 
   update(dt) {
@@ -47,6 +66,7 @@ export class BroomEnemy extends Enemy {
 	  const desiredVel = {x: 0, y: 0};
 	  if (closestPlayer === null) {
 		console.error('Could not find player closest to %s', this);
+		this.currentAnimation.stop();
 	  } else {
 		desiredVel.x = closestPlayer.pos.x - this.pos.x;
 		desiredVel.y = closestPlayer.pos.y - this.pos.y;
@@ -68,7 +88,17 @@ export class BroomEnemy extends Enemy {
 		this.currentAnimation = this.animations.attack;
 		this.currentAnimation.play();
 	  }
+	  // Attack lasts as much as the actual frame of animation where the broom is attacking
+	  if (!(this.headButt && this.headButt.alive) && this.currentAnimation.currentFrameIndex > BROOM_HEADBUTT_FRAME - 1 ) {
+		this.headButt = entitiesManager.spawn(Attack, this, {x: -(this.width + 8), y: -16}, BROOM_ATTACK_WIDTH - 8, BROOM_HEIGHT/4);
+	  }
+	  if (this.headButt && this.headButt.alive && this.currentAnimation.currentFrameIndex < BROOM_HEADBUTT_FRAME) {
+		this.headButt.die();
+	  }
 	} else {
+	  if (this.headButt && this.headButt.alive) {
+		this.headButt.die();
+	  }
 	  if (this.currentAnimation != this.animations.walk) {
 		this.currentAnimation.stop();
 		this.currentAnimation = this.animations.walk;
@@ -81,6 +111,13 @@ export class BroomEnemy extends Enemy {
 	  this.pos.y += Math.round(this.vel.y*dt);
 	}
 	super.update(dt);
+  }
+
+  die() {
+	if (this.headButt && this.headButt.alive) {
+	  this.headButt.die();
+	}
+	super.die();
   }
 }
 
