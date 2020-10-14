@@ -12,7 +12,6 @@ const SHOTTIME = 1/12;
 class Bullet extends Entity {
   constructor(posX, posY, dirX, dirY, velX, velY) {
 	super('playerProjectile');
-	this.needsCollisionCheck = true;
 	this.canCollideWithTypes.add('enemy');
 	this.collider.width = 3;
 	this.collider.height = 3;

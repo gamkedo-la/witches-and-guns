@@ -22,7 +22,6 @@ export class BroomEnemy extends Enemy {
 	};
 	super({x: x, y: y}, BROOM_WIDTH, BROOM_HEIGHT, {width: 14, height: 14}, 1, 1, animations, "walk");
 	this.speed = 50;
-	this.needsCollisionCheck = true;
 	this.canCollideWithTypes.add('playerProjectile');
 	// TODO: facing
 	this.vel = {x: 0, y: 0};

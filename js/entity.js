@@ -31,20 +31,18 @@ class EntitiesManager {
 	  entity.update(dt);
 	}
 	for (const entity1 of this.liveEntities) {
-	  if (entity1.needsCollisionCheck) {
-		for (const entity2 of this.liveEntities) {
-		  if (entity1 !== entity2 && entity2.needsCollisionCheck &&
-			  entity1.canCollideWithTypes.has(entity2.type) &&
-			  entity1.collider.x < entity2.collider.x + entity2.collider.width &&
-			  entity1.collider.x + entity1.collider.width > entity2.collider.x &&
-			  entity1.collider.y < entity2.collider.y + entity2.collider.height &&
-			  entity1.collider.y + entity1.collider.height > entity2.collider.y) {
-			const listeners = this.collisionListeners[entity1.type + entity2.type];
-			if (typeof(listeners) != "undefined") {
-			  for (const func of listeners) {
-				if (entity1.alive && entity2.alive) {
-				  func(entity1, entity2);
-				}
+	  for (const entity2 of this.liveEntities) {
+		if (entity1 !== entity2 &&
+			entity1.canCollideWithTypes.has(entity2.type) &&
+			entity1.collider.x < entity2.collider.x + entity2.collider.width &&
+			entity1.collider.x + entity1.collider.width > entity2.collider.x &&
+			entity1.collider.y < entity2.collider.y + entity2.collider.height &&
+			entity1.collider.y + entity1.collider.height > entity2.collider.y) {
+		  const listeners = this.collisionListeners[entity1.type + entity2.type];
+		  if (typeof(listeners) != "undefined") {
+			for (const func of listeners) {
+			  if (entity1.alive && entity2.alive) {
+				func(entity1, entity2);
 			  }
 			}
 		  }
@@ -87,7 +85,6 @@ export class Entity {
 	this.width = width;
 	this.height = height;
 	this.type = type;
-	this.needsCollisionCheck = false;
 	this.collider = Object.assign({x: 0, y: 0}, collider);
 	this.canCollideWithTypes = new Set();
 	this.hp = hp;
