@@ -93,30 +93,29 @@ export class Player extends Entity {
 	if (!this.controller) {
 	  return;
 	}
+
+	this.vel.x = this.vel.y = 0;
+
 	if (this.controller.currentState.up) {
-	  this.vel.y = -SPEED*dt;
+	  this.vel.y += -SPEED;
 	}
 	if (this.controller.currentState.down) {
-	  this.vel.y = SPEED*dt;
+	  this.vel.y += SPEED;
 	}
 	if (this.controller.currentState.left) {
-	  this.vel.x = -SPEED*dt;
+	  this.vel.x += -SPEED;
 	}
 	if (this.controller.currentState.right) {
-	  this.vel.x = SPEED*dt;
+	  this.vel.x += SPEED;
 	}
-	if (!(this.controller.currentState.right || this.controller.currentState.left)) {
-	  this.vel.x = 0;
-	}
-	if (!(this.controller.currentState.up || this.controller.currentState.down)) {
-	  this.vel.y = 0;
-	}
+
 	if (Math.abs(this.vel.x) > 0 && Math.abs(this.vel.y) > 0) {
 	  this.vel.x *= Math.sqrt(0.8);
 	  this.vel.y *= Math.sqrt(0.8);
 	}
-	this.pos.x += Math.round(this.vel.x);
-	this.pos.y += Math.round(this.vel.y);
+
+	this.pos.x += Math.round(this.vel.x * dt);
+	this.pos.y += Math.round(this.vel.y * dt);
   }
 
   onTopWallCollision(dt) {
@@ -143,6 +142,7 @@ export class Player extends Entity {
 	if (!this.controller) {
 	  return;
 	}
+
 	if (this.controller.currentState.shootUp) {
 	  this.aim.y = -1;
 	} else 	if (this.controller.currentState.shootDown) {
