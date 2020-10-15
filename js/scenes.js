@@ -53,7 +53,7 @@ class AttractModeScene extends Scene {
 	canvasData.context.fillStyle = 'rgb(0, 64, 88)';
 	canvasData.context.fillRect(0, 0, canvasData.canvas.width, canvasData.canvas.height);
 	canvasData.context.fillStyle = 'white';
-	canvasData.context.fillText('ATTRACT MODE, HIT KEY TO START PLAYING', 10, canvasData.canvas.height/2);
+	canvasData.context.fillText('ATTRACT MODE, HIT "ENTER" KEY TO START PLAYING', 10, canvasData.canvas.height/2);
   }
 
   update(dt) {

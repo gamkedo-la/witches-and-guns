@@ -26,6 +26,8 @@ class SoundOverLaps {
   }
 
   play() {
+	  //WARM UP: Check status of inputManager.controls.keyboardAndMouse.currentState.mute
+	  //to see if the sound should be played
 	if (!this.sounds[this.soundIndex].paused) {
 	  this.sounds.splice(this.soundIndex, 0, this.getAudio());
 	}

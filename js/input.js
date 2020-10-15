@@ -99,6 +99,7 @@ export class KeyboardAndMouseInput extends PlayerInput {
 	  break;
 	case "KeyM":
 	  this.currentState.mute = state;
+	  break;
 	case "Enter":
 	  this.currentState.start = state;
 	  break;
