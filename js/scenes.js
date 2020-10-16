@@ -293,8 +293,32 @@ class GameScene extends Scene {
 	entitiesManager.draw();
 	const lifeBar = {width: 50, height: 10};
 	for (const player of [...entitiesManager.liveEntities].filter(e => e.type == "player")) {
-	  canvasData.context.fillStyle = "green";
+    let x = 10, y = 10;
+	  canvasData.context.fillStyle = "red";
 	  canvasData.context.fillRect(10, 10, lifeBar.width, lifeBar.height);
+	  canvasData.context.fillStyle = "green";
+    canvasData.context.fillRect(10, 10, lifeBar.width * (player.hp / 10), lifeBar.height);
+    
+    x += lifeBar.width;
+    y += lifeBar.height/2;
+
+    const lv = document.createElement('canvas');
+    let sprite = player.currentAnimation;
+    const width = sprite.frameWidth;
+    const height = sprite.frameHeight;
+
+    lv.context = lv.getContext('2d');
+    lv.width = width; 
+    lv.height = height;
+
+    sprite.draw(lv.context, 0, 0);
+    canvasData.context.drawImage(lv, x, y - height/4, width/2, height/2);
+
+    x += width/2;
+
+    canvasData.context.fillStyle = 'white';
+    canvasData.context.textBaseline = 'middle';
+    canvasData.context.fillText('x' + player.lives, x, y);
 	}
   }
 }

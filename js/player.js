@@ -68,18 +68,26 @@ const PLAYER_ANIMATIONS = {
 export class Player extends Entity {
   constructor(controller, x, y, initialAnimation="right") {
 	super("player", {x: x, y: y}, PLAYER_WIDTH, PLAYER_HEIGHT, {width: 12, height: 24}, 10, 1, PLAYER_ANIMATIONS, initialAnimation);
+	//this.lives = 3;
 	this.reset(controller, x, y);
   }
 
   reset(controller, x=0, y=0) {
 	super.reset();
 	this.controller = controller;
-	this.alive = false;
+	this.hp = 10;
+	this.shotTimer = 0;
+	this.resetPosition(x, y);
+  }
+
+  resetPosition(x, y) {
 	this.pos =  {x: x, y: y};
 	this.vel = {x: 0, y: 0};
 	this.aim = {x: 0, y: 0};
-	this.shotTimer = 0;
   }
+
+  get alive() { return this.lives > 0; }
+  set alive(val) { this.lives = val ? 3 : 0; }
 
   draw() {
 	if (canvasData.context) {
@@ -212,5 +220,14 @@ export class Player extends Entity {
 	this.shoot(dt);
 	this.animate(dt);
 	super.update(dt);
+  }
+
+  die() {
+	  if (this.lives > 1) {
+		  this.lives--;
+		  this.reset(this.controller, canvasData.canvas.width/2, canvasData.canvas.height/2);
+	  } else {
+		entitiesManager.kill(this);
+	  }
   }
 }

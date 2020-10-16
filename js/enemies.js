@@ -70,7 +70,7 @@ export class BroomEnemy extends Enemy {
 	  } else {
 		desiredVel.x = closestPlayer.pos.x - this.pos.x;
 		desiredVel.y = closestPlayer.pos.y - this.pos.y;
-		const mag = Math.sqrt(Math.pow(desiredVel.x, 2) + Math.pow(desiredVel.y, 2));
+		const mag = Math.hypot(desiredVel.x, desiredVel.y);
 		desiredVel.x = this.speed*desiredVel.x/mag;
 		desiredVel.y = this.speed*desiredVel.y/mag;
 	  }
