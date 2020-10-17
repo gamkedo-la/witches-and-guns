@@ -4,6 +4,7 @@ import {assetLoader} from './assets.js';
 import {inputManager} from './input.js';
 import {Player} from './player.js';
 import {entitiesManager} from './entity.js';
+import { Grid } from './grid.js';
 
 export let currentScene;
 
@@ -161,8 +162,48 @@ class PlayerSelectScene extends Scene {
   }
 }
 
+const HGRA = "higrass_a";
+const FTLL = "fence_tll";
+const FBLL = "fence_bll";
+const FBLU = "fence_blu";
+const FTRL = "fence_trl";
+const FBRL = "fence_brl";
+const FBRU = "fence_bru";
+const FCTA = "fence_t_a";
+const FCTB = "fence_t_b";
+const FNCL = "fence_l";
+const FNCR = "fence_r";
+const FCBA = "fence_b_a";
+const FCBB = "fence_b_b";
+const SIZE = 16;
+const WIDTH = 20;
+const HEIGHT = 15;
+
+const LVL1GRID = new Grid({
+	width: WIDTH,
+	height: HEIGHT,
+	entries: [
+		FTLL,FCTA,FCTB,FCTA,FCTA,FCTB,FCTA,FCTA,FCTB,FCTA,FCTB,FCTB,FCTA,FCTB,FCTA,FCTA,FCTB,FCTA,FCTB,FTRL,
+		FNCL,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,FNCR,
+		FNCL,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,FNCR,
+		FNCL,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,FNCR,
+		FNCL,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,FNCR,
+		FNCL,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,FNCR,
+		FNCL,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,FNCR,
+		FNCL,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,FNCR,
+		FNCL,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,FNCR,
+		FNCL,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,FNCR,
+		FNCL,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,FNCR,
+		FNCL,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,FNCR,
+		FNCL,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,FNCR,
+		FBLU,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,FBRU,
+		FBLL,FCBA,FCBA,FCBB,FCBA,FCBB,FCBA,FCBA,FCBB,FCBB,FCBA,FCBA,FCBA,FCBB,FCBA,FCBA,FCBB,FCBA,FCBA,FBRL,
+	],
+})
+
 const LEVELS = [
   {name: "Level 1", loaded: false, complete: false, floorTileId: "higrass_a",
+   grid: LVL1GRID,
    waves: [
 	 {
 	   spawners: [
@@ -284,12 +325,23 @@ class GameScene extends Scene {
 	  canvasData.context.fillText('LOADING ...', 10, canvasData.canvas.height/2);
 	  return;
 	}
+	const grid = currentLevel.grid;
+	for (let j=0; j<grid.height; j++) {
+		for (let i=0; i<grid.width; i++) {
+			const img = assetLoader.getImage(grid.get(i,j));
+			const x = i*SIZE;
+			const y = j*SIZE;
+			if (img) canvasData.context.drawImage(img, x, y);
+		}
+	}
+	/*
 	const floorTileImg = assetLoader.getImage(currentLevel.floorTileId);
 	for (let x=0; x<canvasData.canvas.width; x+=floorTileImg.width) {
 	  for (let y=0; y<canvasData.canvas.height; y+=floorTileImg.height) {
 		canvasData.context.drawImage(floorTileImg, x, y);
 	  }
 	}
+	*/
 	entitiesManager.draw();
 	const lifeBar = {width: 50, height: 10};
 	for (const player of [...entitiesManager.liveEntities].filter(e => e.type == "player")) {
