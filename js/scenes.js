@@ -162,7 +162,7 @@ class PlayerSelectScene extends Scene {
 }
 
 const LEVELS = [
-  {name: "Level 1", loaded: false, complete: false, floorTileId: "floorTile",
+  {name: "Level 1", loaded: false, complete: false, floorTileId: "higrass_a",
    waves: [
 	 {
 	   spawners: [
