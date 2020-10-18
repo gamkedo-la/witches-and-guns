@@ -200,10 +200,10 @@ const LVL1GRID = new Grid({
 		FBLU,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,FBRU,
 		FBLL,FCBA,FCBA,FCBB,FCBA,FCBB,FCBA,FCBA,FCBB,FCBB,FCBA,FCBA,FCBA,FCBB,FCBA,FCBA,FCBB,FCBA,FCBA,FBRL,
 	],
-})
+});
 
 const LEVELS = [
-  {name: "Level 1", loaded: false, complete: false, floorTileId: "higrass_a",
+  {name: "Level 1", loaded: false, complete: false,
    grid: LVL1GRID,
    waves: [
 	 {
@@ -230,7 +230,12 @@ const LEVELS = [
 	{cls: BroomEnemy, x: 300, y: 100},
 	{cls: BroomEnemy, x: 300, y: 100}
   ]},
-  {name: "Level 2", loaded: false, complete: false, floorTileId: "floorTile",
+  {name: "Level 2", loaded: false, complete: false,
+   grid: new Grid({
+	 width: WIDTH,
+	 height: HEIGHT,
+	 entries: Array(WIDTH*HEIGHT).fill("floorTile")
+   }),
    initialEnemies: [
 	 {cls: BroomEnemy, x: 300, y: 200},
 	 {cls: BroomEnemy, x: 300, y: 200},
@@ -335,14 +340,6 @@ class GameScene extends Scene {
 			if (img) canvasData.context.drawImage(img, x, y);
 		}
 	}
-	/*
-	const floorTileImg = assetLoader.getImage(currentLevel.floorTileId);
-	for (let x=0; x<canvasData.canvas.width; x+=floorTileImg.width) {
-	  for (let y=0; y<canvasData.canvas.height; y+=floorTileImg.height) {
-		canvasData.context.drawImage(floorTileImg, x, y);
-	  }
-	}
-	*/
 	entitiesManager.draw();
 	const lifeBar = {width: 50, height: 10};
 	for (const player of [...entitiesManager.liveEntities].filter(e => e.type == "player")) {
