@@ -176,11 +176,12 @@ const FNCL = "fence_l";
 const FNCR = "fence_r";
 const FCBA = "fence_b_a";
 const FCBB = "fence_b_b";
+const NOOP = "undefined";
 const SIZE = 16;
 const WIDTH = 20;
 const HEIGHT = 15;
 
-const LVL1GRID = new Grid({
+const LVL1_BG_GRID = new Grid({
 	width: WIDTH,
 	height: HEIGHT,
 	entries: [
@@ -198,13 +199,36 @@ const LVL1GRID = new Grid({
 		FNCL,HGRA,LGRB,LGRB,LGRB,LGRB,LGRB,LGRB,LGRB,LGRB,LGRB,LGRB,LGRB,LGRB,LGRB,LGRB,LGRB,LGRB,HGRA,FNCR,
 		FNCL,HGRA,LGRB,LGRB,LGRB,LGRB,LGRB,LGRB,LGRB,LGRB,LGRB,LGRB,LGRB,LGRB,LGRB,LGRB,LGRB,LGRB,HGRA,FNCR,
 		FBLU,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,FBRU,
+		HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,HGRA,
+	],
+});
+
+const LVL1_FG_GRID = new Grid({
+	width: WIDTH,
+	height: HEIGHT,
+	entries: [
+		NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,
+		NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,
+		NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,
+		NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,
+		NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,
+		NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,
+		NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,
+		NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,
+		NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,
+		NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,
+		NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,
+		NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,
+		NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,
+		NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,
 		FBLL,FCBA,FCBA,FCBB,FCBA,FCBB,FCBA,FCBA,FCBB,FCBB,FCBA,FCBA,FCBA,FCBB,FCBA,FCBA,FCBB,FCBA,FCBA,FBRL,
 	],
 });
 
 const LEVELS = [
   {name: "Level 1", loaded: false, complete: false,
-   grid: LVL1GRID,
+   grid: LVL1_BG_GRID,
+   fg_grid: LVL1_FG_GRID,
    waves: [
 	 {
 	   spawners: [
@@ -327,6 +351,18 @@ class GameScene extends Scene {
 	entitiesManager.update(dt);
   }
 
+  drawGrid(grid) {
+	if (!grid) return;
+	for (let j=0; j<grid.height; j++) {
+		for (let i=0; i<grid.width; i++) {
+			const img = assetLoader.getImage(grid.get(i,j));
+			const x = i*SIZE;
+			const y = j*SIZE;
+			if (img) canvasData.context.drawImage(img, x, y);
+		}
+	}
+  }
+
   draw() {
 	const currentLevel = LEVELS[this.levelIndex];
 	if (!currentLevel.loaded) {
@@ -336,16 +372,11 @@ class GameScene extends Scene {
 	  canvasData.context.fillText('LOADING ...', 10, canvasData.canvas.height/2);
 	  return;
 	}
-	const grid = currentLevel.grid;
-	for (let j=0; j<grid.height; j++) {
-		for (let i=0; i<grid.width; i++) {
-			const img = assetLoader.getImage(grid.get(i,j));
-			const x = i*SIZE;
-			const y = j*SIZE;
-			if (img) canvasData.context.drawImage(img, x, y);
-		}
-	}
+	// draw background tiles
+	this.drawGrid(currentLevel.grid);
 	entitiesManager.draw();
+	// draw foreground tiles (in front of entities)
+	this.drawGrid(currentLevel.fg_grid);
 	const lifeBar = {width: 50, height: 10};
 	for (const player of [...entitiesManager.liveEntities].filter(e => e.type == "player")) {
     let x = 10, y = 10;
