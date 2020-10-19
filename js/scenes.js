@@ -229,7 +229,9 @@ const LEVELS = [
 	{cls: BroomEnemy, x: 300, y: 100},
 	{cls: BroomEnemy, x: 300, y: 100},
 	{cls: BroomEnemy, x: 300, y: 100}
-  ]},
+   ],
+   boss: {cls: BroomEnemy, x: 110, y: 100}
+  },
   {name: "Level 2", loaded: false, complete: false,
    grid: new Grid({
 	 width: WIDTH,
@@ -265,6 +267,7 @@ const LEVELS = [
 	   timeOut: Infinity,
 	 },
    ],
+   boss: {cls: BroomEnemy, x: 110, y: 100}
   }
 ];
 class GameScene extends Scene {
@@ -275,12 +278,12 @@ class GameScene extends Scene {
 	  enemy.hurt(projectile.damage);
 	  projectile.die();
 	});
-
 	entitiesManager.onCollision('enemyAttack', 'player', (attack, player) => {
 	  player.hurt(attack.damage);
 	  attack.damage = 0;
 	});
 	this.waveTimeOut = Infinity;
+	this.boss = null;
   }
 
   loadLevel() {
@@ -306,9 +309,11 @@ class GameScene extends Scene {
 			  entitiesManager.spawn(spawner.cls, spawner.x, spawner.y);
 			});
 		  }
-		} else if (liveEnemies.length <= 0) {
+		} else if (liveEnemies.length <= 0 && this.boss == null) {
 		  // BOSS BATTLE!
-		  // but for now, let's just load the next level
+		  this.boss = entitiesManager.spawn(currentLevel.boss.cls, currentLevel.boss.x, currentLevel.boss.y);
+		} else if (this.boss != null && !this.boss.alive) {
+		  // load next level
 		  if (this.levelIndex < LEVELS.length - 1) {
 			this.levelIndex++;
 		  }
