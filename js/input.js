@@ -102,10 +102,14 @@ export class KeyboardAndMouseInput extends PlayerInput {
 	  break;
 	case "Enter":
 	  this.currentState.start = state;
-	  break;
-	case "KeyQ":
+    break;
+  case "Space":
+    this.currentState.dash = state;
+    break;    
+  case "KeyQ":
 	  this.currentState.debug = state;
-	}
+    break;
+  }
   }
 
   update(dt) {
@@ -188,6 +192,7 @@ const INPUT_EVENTS = [
   "shootDown",
   "shootLeft",
   "shootRight",
+  "dash",
   "gamepadConnected",
   "gamepadDisconnected",
 ];

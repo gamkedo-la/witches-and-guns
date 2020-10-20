@@ -4,11 +4,12 @@ import {canvasData} from './globals.js';
 import {assetLoader} from './assets.js';
 import {inputManager} from './input.js';
 
-
 const SPEED = 110;
 const SHOTSPEED = 320;
 const SHOTTIME = 1/12;
-
+const DASH_SPEED = 400;
+const DASH_TIME = 10;
+const DASH_COOLDOWN = 24;
 
 class Bullet extends Entity {
   constructor(posX, posY, dirX, dirY, velX, velY) {
@@ -66,6 +67,7 @@ const PLAYER_ANIMATIONS = {
   upB: new Animation("player", 150, [3, 2, 1, 0], 2*PLAYER_WIDTH, 0, PLAYER_WIDTH, PLAYER_HEIGHT),
   rightB: new Animation("player", 150, [3, 2, 1, 0], 3*PLAYER_WIDTH, 0, PLAYER_WIDTH, PLAYER_HEIGHT)
 };
+
 export class Player extends Entity {
   constructor(controller, x, y, initialAnimation="right") {
 	super("player", {x: x, y: y}, PLAYER_WIDTH, PLAYER_HEIGHT, {width: 12, height: 24}, 10, 1, PLAYER_ANIMATIONS, initialAnimation);
@@ -78,6 +80,7 @@ export class Player extends Entity {
 	this.controller = controller;
 	this.hp = 10;
 	this.shotTimer = 0;
+	this.dashing = 0;
 	this.resetPosition(x, y);
   }
 
@@ -99,28 +102,23 @@ export class Player extends Entity {
   }
 
   move(dt) {
-	if (!this.controller) {
-	  return;
-	}
+	if (this.controller) {
+		const state = this.controller.currentState;
+		let cv = getAxis(state.up, state.down, state.left, state.right);
 
-	this.vel.x = this.vel.y = 0;
-
-	if (this.controller.currentState.up) {
-	  this.vel.y += -SPEED;
-	}
-	if (this.controller.currentState.down) {
-	  this.vel.y += SPEED;
-	}
-	if (this.controller.currentState.left) {
-	  this.vel.x += -SPEED;
-	}
-	if (this.controller.currentState.right) {
-	  this.vel.x += SPEED;
-	}
-
-	if (Math.abs(this.vel.x) > 0 && Math.abs(this.vel.y) > 0) {
-	  this.vel.x *= Math.sqrt(0.8);
-	  this.vel.y *= Math.sqrt(0.8);
+		if (this.dashing > -DASH_COOLDOWN) {
+			this.dashing--;
+		} else if (this.dashing <= - DASH_COOLDOWN && state.dash) {
+			console.log('dash');
+			this.dashing = DASH_TIME;
+			this.vel.x = cv.x * DASH_SPEED
+			this.vel.y = cv.y * DASH_SPEED
+		}
+		
+		if (this.dashing <= 0) {
+			this.vel.x = cv.x * SPEED;
+			this.vel.y = cv.y * SPEED;
+		}
 	}
 
 	this.pos.x += Math.round(this.vel.x * dt);
@@ -152,21 +150,10 @@ export class Player extends Entity {
 	  return;
 	}
 
-	if (this.controller.currentState.shootUp) {
-	  this.aim.y = -1;
-	} else 	if (this.controller.currentState.shootDown) {
-	  this.aim.y = 1;
-	} else {
-	  this.aim.y = 0;
-	}
-	if (this.controller.currentState.shootLeft) {
-	  this.aim.x = -1;
-	} else if (this.controller.currentState.shootRight) {
-	  this.aim.x = 1;
-	} else {
-	  this.aim.x = 0;
-	}
-	if (this.shotTimer <= 0 && (this.controller.currentState.shootUp || this.controller.currentState.shootDown || this.controller.currentState.shootLeft || this.controller.currentState.shootRight)) {//((this.aim.x != 0 || this.aim.y != 0) && this.shotTimer <= 0) {
+	const state = this.controller.currentState;
+	this.aim = getAxis(state.shootUp, state.shootDown, state.shootLeft, state.shootRight);
+
+	if (this.shotTimer <= 0 && (state.shootUp || state.shootDown || state.shootLeft || state.shootRight)) {//((this.aim.x != 0 || this.aim.y != 0) && this.shotTimer <= 0) {
 	  this.shotTimer = SHOTTIME;
 	  // Using player center as origin of bullets
 	  // TODO: define/find "gun position"
@@ -234,3 +221,19 @@ export class Player extends Entity {
 	  }
   }
 }
+
+function getAxis(up, down, left, right) {
+	let axis = {x: 0, y: 0};
+
+	if (up) axis.y += -1;
+	if (down) axis.y += 1;
+	if (left) axis.x += -1;
+	if (right) axis.x += 1;
+
+	if (axis.x != 0 && axis.y != 0) {
+		axis.x *= Math.sqrt(0.8);
+		axis.y *= Math.sqrt(0.8);
+	  }
+
+	return axis;
+  }
