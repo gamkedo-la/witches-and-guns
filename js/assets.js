@@ -17,6 +17,12 @@ const assetDefs = {
 	{id: "fence_tlu", src: "./images/tiles/fence_tlu.png"},
 	{id: "fence_trl", src: "./images/tiles/fence_trl.png"},
 	{id: "fence_tru", src: "./images/tiles/fence_tru.png"},
+	{id: "fence_gate_ll", src: "./images/tiles/fence_gate_ll.png"},
+	{id: "fence_gate_lu", src: "./images/tiles/fence_gate_lu.png"},
+	{id: "fence_gate_rl", src: "./images/tiles/fence_gate_rl.png"},
+	{id: "fence_gate_ru", src: "./images/tiles/fence_gate_ru.png"},
+	{id: "fence_gate_tl", src: "./images/tiles/fence_gate_tl.png"},
+	{id: "fence_gate_tr", src: "./images/tiles/fence_gate_tr.png"},
 	{id: "higrass_a", src: "./images/tiles/higrass_a.png"},
 	{id: "higrass_b", src: "./images/tiles/higrass_b.png"},
 	{id: "higrass_c", src: "./images/tiles/higrass_c.png"},
@@ -25,6 +31,10 @@ const assetDefs = {
 	{id: "lograss_b", src: "./images/tiles/lograss_b.png"},
 	{id: "lograss_c", src: "./images/tiles/lograss_c.png"},
 	{id: "lograss_d", src: "./images/tiles/lograss_d.png"},
+	{id: "paver_a", src: "./images/tiles/paver_a.png"},
+	{id: "paver_b", src: "./images/tiles/paver_b.png"},
+	{id: "paver_c", src: "./images/tiles/paver_c.png"},
+	{id: "paver_d", src: "./images/tiles/paver_d.png"},
   ],
   // .mp3 and .ogg are required for sounds, and src should not have extension
   sounds: [
