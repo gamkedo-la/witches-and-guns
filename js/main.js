@@ -7,11 +7,6 @@ import {currentScene} from './scenes.js';
 //a practice commit.  Just add a comment like
 //this one and then commit it! :)
 
-//Well that's just what I'll do then! :)
-//Here is a practice commit; so stoked to be on the team!! Will remove shortly!
-//-Rutger was here
-
-
 let dt = 0, last = timestamp();
 const UPDATE_STEP = 1/60;
 window.debugMode = false;
