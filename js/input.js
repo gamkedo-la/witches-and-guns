@@ -244,6 +244,9 @@ class InputManager {
 	for (const input of Object.values(this.controls)) {
 	  input.reset();
 	}
+	this.on("mute", controller => {
+		window.mute = !window.mute;
+	  });
   }
 
   on(eventNames, func) {

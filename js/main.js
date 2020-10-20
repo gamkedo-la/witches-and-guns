@@ -10,6 +10,7 @@ import {currentScene} from './scenes.js';
 let dt = 0, last = timestamp();
 const UPDATE_STEP = 1/60;
 window.debugMode = false;
+window.mute = false;
 
 function runGameStep(browserTimeStamp) {
   dt += Math.min(1, (browserTimeStamp - last)/1000);

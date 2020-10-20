@@ -172,8 +172,8 @@ export class Player extends Entity {
 	  // TODO: define/find "gun position"
 	  entitiesManager.spawn(Bullet, this.pos.x + this.width/2, this.pos.y + this.height/2, this.aim.x, this.aim.y, this.vel.x, this.vel.y);
 	  // TODO: May want to have a central place for audio so we can mute/volume control from there 
-	  if (inputManager.controls.keyboardAndMouse.currentState.mute == false) {
-	  	assetLoader.getSound("shoot").play();
+	  if (!window.mute) {
+		  assetLoader.getSound("shoot").play();
 	  }
 	} else {
 	  this.shotTimer -= dt;
