@@ -1,9 +1,10 @@
-import {BroomEnemy} from './enemies.js';
-import {canvasData} from './globals.js';
 import {assetLoader} from './assets.js';
-import {inputManager} from './input.js';
-import {Player} from './player.js';
+import {canvasData} from './globals.js';
 import {entitiesManager} from './entity.js';
+import {inputManager} from './input.js';
+import {BroomEnemy} from './enemies.js';
+import {LawnMowerBoss} from './bosses.js';
+import {Player} from './player.js';
 import { Grid } from './grid.js';
 
 export let currentScene;
@@ -266,7 +267,7 @@ const LEVELS = [
 	{cls: BroomEnemy, x: 300, y: 100},
 	{cls: BroomEnemy, x: 300, y: 100}
    ],
-   boss: {cls: BroomEnemy, x: 110, y: 100}
+   boss: {cls: LawnMowerBoss, x: 110, y: 30}
   },
   {name: "Level 2", loaded: false, complete: false,
    grid: new Grid({

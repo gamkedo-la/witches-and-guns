@@ -85,7 +85,7 @@ export class Entity {
 	this.width = width;
 	this.height = height;
 	this.type = type;
-	this.collider = Object.assign({x: 0, y: 0}, collider);
+	this.collider = Object.assign({x: 0, y: 0, offsetX: 0, offsetY: 0}, collider);
 	this.canCollideWithTypes = new Set();
 	this.hp = hp;
 	this.damage = damage;
@@ -143,8 +143,8 @@ export class Entity {
 	  this.pos.y = canvasData.canvas.height - this.height;
 	  this.onBottomWallCollision(dt);
 	}
-	this.collider.x = this.pos.x + (this.width - this.collider.width)/2;
-	this.collider.y = this.pos.y + (this.height - this.collider.height)/2;
+	this.collider.x = this.pos.x + (this.width - this.collider.width)/2 + this.collider.offsetX;
+	this.collider.y = this.pos.y + (this.height - this.collider.height)/2 + this.collider.offsetY;
   }
 
   draw() {
