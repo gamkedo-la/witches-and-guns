@@ -135,12 +135,32 @@ export class KeyboardAndMouseInput extends PlayerInput {
 }
 
 
+//Gamepad button indexes, assuming Xbox layout
+const PAD_A = 0;
+const PAD_B = 1;
+const PAD_X = 2;
+const PAD_Y = 3;
+const PAD_LB = 4;
+const PAD_RB = 5;
+const PAD_LT = 6;
+const PAD_RT = 7;
+const PAD_BACK = 8;
+const PAD_START = 9;
+const PAD_L3 = 10;
+const PAD_R3 = 11;
+const PAD_UP = 12;
+const PAD_DOWN = 13;
+const PAD_LEFT = 14;
+const PAD_RIGHT = 15;
+
 export class GamepadInput extends PlayerInput {
   constructor(gamepad) {
 	super();
 	this.gamepad = gamepad;
 	this.name = `Gamepad ${gamepad.index}`;
+	this.pressedButtons = new Set();
 	this.heldButtons = new Set();
+	this.releasedButtons = new Set();
 	console.log('%s - CONNECTED %s', timestamp(), gamepad);
   }
 
@@ -152,27 +172,38 @@ export class GamepadInput extends PlayerInput {
 		break;
 	  }
 	}
+
 	super.update(dt);
-	if (this.gamepad.axes.length >= 2) {
-	  this.currentState.left = this.gamepad.axes[0] < -DEADZONE;
-	  this.currentState.right = this.gamepad.axes[0] > DEADZONE;
-	  this.currentState.up = this.gamepad.axes[1] < -DEADZONE;
-	  this.currentState.down = this.gamepad.axes[1] > DEADZONE;
-	}
-	if (this.gamepad.axes.length >= 4) {
-	  this.currentState.shootLeft = this.gamepad.axes[2] < -DEADZONE;
-	  this.currentState.shootRight = this.gamepad.axes[2] > DEADZONE;
-	  this.currentState.shootUp = this.gamepad.axes[3] < -DEADZONE;
-	  this.currentState.shootDown = this.gamepad.axes[3] > DEADZONE;
-	}
+	this.pressedButtons.clear();
+	this.releasedButtons.clear();
+
 	this.gamepad.buttons.forEach((button, i) => {
 	  if (button == 1.0 || (typeof(button) == "object" && button.pressed)) {
-		this.currentState.start = !this.heldButtons.has(i);
+		//Pressed only if not held last update
+		if (!this.heldButtons.has(i)) this.pressedButtons.add(i);
 		this.heldButtons.add(i);
 	  } else {
+		//Released only if held last udpate
+		if (this.heldButtons.has(i)) this.releasedButtons.add(i);
 		this.heldButtons.delete(i);
 	  }
 	});
+	
+	if (this.gamepad.axes.length >= 2) {
+	  this.currentState.left = (this.gamepad.axes[0] < -DEADZONE) || this.heldButtons.has(PAD_LEFT);
+	  this.currentState.right = (this.gamepad.axes[0] > DEADZONE) || this.heldButtons.has(PAD_RIGHT);
+	  this.currentState.up = (this.gamepad.axes[1] < -DEADZONE) || this.heldButtons.has(PAD_UP);
+	  this.currentState.down = (this.gamepad.axes[1] > DEADZONE) || this.heldButtons.has(PAD_DOWN);
+	}
+	if (this.gamepad.axes.length >= 4) {
+	  this.currentState.shootLeft = (this.gamepad.axes[2] < -DEADZONE) || this.heldButtons.has(PAD_X);
+	  this.currentState.shootRight = (this.gamepad.axes[2] > DEADZONE) || this.heldButtons.has(PAD_B);
+	  this.currentState.shootUp = (this.gamepad.axes[3] < -DEADZONE) || this.heldButtons.has(PAD_Y);
+	  this.currentState.shootDown = (this.gamepad.axes[3] > DEADZONE) || this.heldButtons.has(PAD_A);
+	}
+
+	this.currentState.start = this.pressedButtons.has(PAD_START);
+	this.currentState.dash = this.heldButtons.has(PAD_LB);
   }
 }
 

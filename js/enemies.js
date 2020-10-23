@@ -55,7 +55,7 @@ export class BroomEnemy extends Enemy {
 	const steer = {x: 0, y: 0};
 	// find closest player
 	for (const player of [...entitiesManager.liveEntities].filter(e => e.type == "player")) {
-	  dist = Math.sqrt(Math.pow(player.pos.x - this.pos.x, 2) + Math.pow(player.pos.y - this.pos.y, 2));
+	  dist = Math.hypot(player.pos.x - this.pos.x, player.pos.y - this.pos.y);
 	  if (dist < minDist) {
 		minDist = dist;
 		closestPlayer = player;
