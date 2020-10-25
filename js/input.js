@@ -31,6 +31,9 @@ export class KeyboardAndMouseInput extends PlayerInput {
   constructor() {
 	super();
 	this.name = 'Keyboard & Mouse';
+	this.cntrls1 = 'Move: WASD or Arrows'
+	this.cntrls2 = 'Shoot: Mouse'
+	this.cntrls3 = 'Dash: Spacebar'
 	this.mouseButtonHeld = false;
 	this.mousePos = {x: null, y: null};
 	// TODO: set up mouse input here for shooting and dashing

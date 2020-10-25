@@ -156,6 +156,9 @@ class PlayerSelectScene extends Scene {
 	  if (slot.input != null) {
 		canvasData.context.fillStyle = 'white';
 		canvasData.context.fillText(slot.input.name, 50 + Math.round(canvasData.canvas.width/2)*i , Math.round(canvasData.canvas.height/2)); //+ i*(canvasData.canvas.width/2), canvasData.height/2);
+		canvasData.context.fillText(slot.input.cntrls1, 30 + Math.round(canvasData.canvas.width/2)*i , Math.round(canvasData.canvas.height/2 + 30));
+		canvasData.context.fillText(slot.input.cntrls2, 30 + Math.round(canvasData.canvas.width/2)*i , Math.round(canvasData.canvas.height/2 + 60));
+		canvasData.context.fillText(slot.input.cntrls3, 30 + Math.round(canvasData.canvas.width/2)*i , Math.round(canvasData.canvas.height/2 + 90));
 	  }
 	});
 	// TODO: draw portraits
