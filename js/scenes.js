@@ -277,7 +277,7 @@ const LEVELS = [
    grid: new Grid({
 	 width: WIDTH,
 	 height: HEIGHT,
-	 entries: Array(WIDTH*HEIGHT).fill("floorTile")
+	 entries: Array(WIDTH*HEIGHT).fill("kitchen_tile")
    }),
    initialEnemies: [
 	 {cls: BroomEnemy, x: 300, y: 200},
