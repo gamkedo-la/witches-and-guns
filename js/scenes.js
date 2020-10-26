@@ -193,6 +193,7 @@ const PVRB = "paver_b";
 const PVRC = "paver_c";
 const PVRD = "paver_d";
 const NOOP = "undefined";
+const TILE = "kitchen_tile";
 const SIZE = 16;
 const WIDTH = 20;
 const HEIGHT = 15;
