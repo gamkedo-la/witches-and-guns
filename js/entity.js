@@ -88,6 +88,7 @@ export class Entity {
 	this.collider = Object.assign({x: 0, y: 0, offsetX: 0, offsetY: 0}, collider);
 	this.canCollideWithTypes = new Set();
 	this.hp = hp;
+	this.maxHp = hp;
 	this.damage = damage;
 	this.alive = false;
 	this.animations = animations;
@@ -106,6 +107,13 @@ export class Entity {
 	this.hp -= damage;
 	if (this.hp <= 0) {
 	  this.die();
+	}
+  }
+
+  heal(health) {
+	this.hp += health;
+	if (this.hp > this.maxHp) {
+	  this.hp = this.maxHp;
 	}
   }
   

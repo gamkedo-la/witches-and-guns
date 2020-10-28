@@ -6,6 +6,7 @@ import {BroomEnemy} from './enemies.js';
 import {LawnMowerBoss} from './bosses.js';
 import {Player} from './player.js';
 import { Grid } from './grid.js';
+import {PICKUP_CHANCE, PICKUP_TYPES} from './pickups.js';
 
 export let currentScene;
 
@@ -323,6 +324,10 @@ class GameScene extends Scene {
 	  player.hurt(attack.damage);
 	  attack.damage = 0;
 	});
+	entitiesManager.onCollision("pickup", "player", (pickup, player) => {
+	  pickup.apply(player);
+	  pickup.die();
+	});
 	this.waveTimeOut = Infinity;
 	this.boss = null;
   }
@@ -358,6 +363,11 @@ class GameScene extends Scene {
 		  if (this.levelIndex < LEVELS.length - 1) {
 			this.levelIndex++;
 		  }
+		}
+	  } else {
+		// core gameplay
+		if (1 - Math.random() < PICKUP_CHANCE) {
+		  entitiesManager.spawn(PICKUP_TYPES[Math.floor(Math.random()*PICKUP_TYPES.length)]);
 		}
 	  }
 	} else {
