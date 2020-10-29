@@ -1,12 +1,9 @@
 import {Entity} from './entity.js';
 import {canvasData} from './globals.js';
 
-const DEFAULT_WIDTH = 40;
-const DEFAULT_HEIGHT = 40;
 
 class PickUp extends Entity {
   constructor(width, height, animations, initialAnimation, timeout) {
-	// initialPos, width, height, collider, hp, damage, animations, initialAnimation) {
 	const initialPos = {
 	  x: Math.floor(Math.random()*(canvasData.canvas.width - width)),
 	  y: Math.floor(Math.random()*(canvasData.canvas.height - height))
