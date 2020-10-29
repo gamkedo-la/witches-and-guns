@@ -36,7 +36,8 @@ const assetDefs = {
 	{id: "paver_c", src: "./images/tiles/paver_c.png"},
 	{id: "paver_d", src: "./images/tiles/paver_d.png"},
 	{id: "kitchen_tile", src: "./images/tiles/kitchen_tile.png"},
-	{id: "lawnmower", src: "./images/lawnmower.png"}
+	{id: "lawnmower", src: "./images/lawnmower.png"},
+	{id: "health", src: "./images/health.png"}
   ],
   // .mp3 and .ogg are required for sounds, and src should not have extension
   sounds: [

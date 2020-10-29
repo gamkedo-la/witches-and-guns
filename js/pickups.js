@@ -1,3 +1,4 @@
+import {Animation} from "./animation.js";
 import {Entity} from './entity.js';
 import {canvasData} from './globals.js';
 
@@ -39,15 +40,8 @@ class PickUp extends Entity {
 
 class HealthPickUp extends PickUp {
   constructor() {
-	const animations = [];
-	super(12, 12, animations, null, 4);
-  }
-
-  draw() {
-	if (this.alive) {
-	  canvasData.context.fillStyle = 'red';
-	  canvasData.context.fillRect(this.pos.x, this.pos.y, this.width, this.height);
-	}
+	const animations = {default: new Animation("health", 1, [0], 0, 0, 12, 16)};
+	super(12, 16, animations, "default", 4);
   }
 
   apply(player) {
