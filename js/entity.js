@@ -9,7 +9,7 @@ class EntitiesManager {
 
   // TODO: implement entity recycling
   add(entity) {
-	console.log('Add live entity', entity);
+	//console.log('Add live entity', entity);
 	this.liveEntities.add(entity);
   }
 

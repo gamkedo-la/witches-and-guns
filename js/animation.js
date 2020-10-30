@@ -16,6 +16,7 @@ export class Animation {
 	this.yOffset = yOffset;
 	this.frameWidth = frameWidth;
 	this.frameHeight = frameHeight;
+	this.loop = true;
 	this.reset();
   }
 
@@ -51,6 +52,7 @@ export class Animation {
 	  this.timer = 0;
 	  if (this.currentFrameIndex >= this.frames.length - 1) {
 		this.currentFrameIndex = 0;
+		if (!this.loop) this.stop();
 	  } else {
 		this.currentFrameIndex++;
 	  }
