@@ -68,15 +68,32 @@ const PLAYER_ANIMATIONS = {
   rightB: new Animation("player", 150, [3, 2, 1, 0], 3*PLAYER_WIDTH, 0, PLAYER_WIDTH, PLAYER_HEIGHT)
 };
 
+const PLAYER_ANIMATIONS_ARRAY = [
+    [
+        PLAYER_ANIMATIONS.left,
+        PLAYER_ANIMATIONS.right,
+        PLAYER_ANIMATIONS.up,
+        PLAYER_ANIMATIONS.down,
+    ],
+    [
+        PLAYER_ANIMATIONS.leftB,
+        PLAYER_ANIMATIONS.rightB,
+        PLAYER_ANIMATIONS.upB,
+        PLAYER_ANIMATIONS.downB, 
+    ],
+];
+  
+
 export class Player extends Entity {
   constructor(controller, x, y, initialAnimation="right") {
-	super("player", {x: x, y: y}, PLAYER_WIDTH, PLAYER_HEIGHT, {width: 12, height: 24}, 10, 1, PLAYER_ANIMATIONS, initialAnimation);
+	super("player", {x: x, y: y}, PLAYER_WIDTH, PLAYER_HEIGHT, {width: 12, height: 24}, 10, 1, PLAYER_ANIMATIONS_ARRAY, initialAnimation);
 	//this.lives = 3;
 	this.reset(controller, x, y);
   }
 
   reset(controller, x=0, y=0) {
-	super.reset();
+    super.reset();
+    this.currentAnimation = this.animations[0][0];
 	this.controller = controller;
 	this.hp = 10;
 	this.shotTimer = 0;
@@ -109,7 +126,6 @@ export class Player extends Entity {
 		if (this.dashing > -DASH_COOLDOWN) {
 			this.dashing--;
 		} else if (this.dashing <= - DASH_COOLDOWN && state.dash) {
-			console.log('dash');
 			this.dashing = DASH_TIME;
 			this.vel.x = cv.x * DASH_SPEED
 			this.vel.y = cv.y * DASH_SPEED
@@ -169,36 +185,27 @@ export class Player extends Entity {
 
   animate(dt) {
 	const oldAnimation = this.currentAnimation;
-	if (this.aim.y > 0) {
-	  this.currentAnimation = this.vel.y >= 0 ? this.animations.down : this.animations.downB;
-	} else if (this.aim.y < 0) {
-	  this.currentAnimation = this.vel.y <= 0 ? this.animations.up : this.animations.upB;
-	} else {
-	  if (this.vel.y > 0) {
-		this.currentAnimation = this.animations.down;
-	  } else if (this.vel.y < 0) {
-		this.currentAnimation = this.animations.up;
-	  }
-	}
-	if (this.aim.x > 0) {
-	  this.currentAnimation = this.vel.x >= 0 ? this.animations.right : this.animations.rightB;
-	} else if (this.aim.x < 0) {
-	  this.currentAnimation = this.vel.x <= 0 ? this.animations.left : this.animations.leftB;
-	} else {
-	  if (this.vel.x > 0 && this.aim.y == 0) {
-		this.currentAnimation = this.animations.right;
-	  } else if (this.vel.x < 0 && this.aim.y == 0) {
-		this.currentAnimation = this.animations.left;
-	  }
-	} 
+
+    let animSet = (this.aim.x != 0 && this.aim.y != 0) ? 1 : 0;
+    let axis = animSet ? this.aim : this.vel;
+    if (axis.x != 0) {
+        let index = axis.x < 0 ? 0 : 1;
+        this.currentAnimation = this.animations[animSet][index];
+    } else if (axis.y != 0) {
+        let index = axis.y < 0 ? 0 : 1;
+        this.currentAnimation = this.animations[animSet][index+2];
+    }
+
 	if (this.currentAnimation != oldAnimation) {
 	  this.currentAnimation.reset();
-	}
+    }
+     
 	if (this.vel.x != 0 || this.vel.y != 0) {
 	  this.currentAnimation.play();
 	} else {
 	  this.currentAnimation.stop();
-	}
+    }
+    
 	this.currentAnimation.update(dt);
   }
   
