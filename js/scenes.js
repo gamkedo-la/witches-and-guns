@@ -382,10 +382,10 @@ class GameScene extends Scene {
 	if (!grid) return;
 	for (let j=0; j<grid.height; j++) {
 		for (let i=0; i<grid.width; i++) {
-			const img = assetLoader.getImage(grid.get(i,j));
+			const sprite = assetLoader.getImage(grid.get(i,j));
 			const x = i*SIZE;
 			const y = j*SIZE;
-			if (img) canvasData.context.drawImage(img, x, y);
+			if (sprite) sprite.render(canvasData.context, x, y);
 		}
 	}
   }

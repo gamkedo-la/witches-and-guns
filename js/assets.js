@@ -35,7 +35,10 @@ const assetDefs = {
 	{id: "paver_b", src: "./images/tiles/paver_b.png"},
 	{id: "paver_c", src: "./images/tiles/paver_c.png"},
 	{id: "paver_d", src: "./images/tiles/paver_d.png"},
-	{id: "kitchen_tile", src: "./images/tiles/kitchen_tile.png"},
+	//{id: "kitchen_tile", src: "./images/tiles/kitchen_tile.png"},
+	{id: "kitchen_art", src: "./images/tiles/kitchenart.png", subids: [
+	  {id: "kitchen_tile", width: 16, height: 16, xoffset: 16*5, yoffset: 16*7},
+	]},
 	{id: "lawnmower", src: "./images/lawnmower.png"},
 	{id: "health", src: "./images/health.png"}
   ],
@@ -91,6 +94,7 @@ class AssetLoader {
 		  const image = new Image();
 		  image.onload = () => resolve({
 			id: assetDef.id,
+			subids: assetDef.subids || [],
 			asset: image,
 			type: assetDef.type
 		  });
@@ -106,7 +110,17 @@ class AssetLoader {
 	  });
 	})).then(values => {
 	  values.forEach(value => {
-		this.assets[value.type][value.id] = value.asset;
+		if (value.type === "images") {
+		  const sprite = new Sprite({img: value.asset, id: value.id});
+		  this.assets[value.type][value.id] = sprite;
+		  for (const subid of value.subids) {
+			const subsprite = new Sprite({img: value.asset, id: subid.id, width: subid.width, height: subid.height, xoffset: subid.xoffset, yoffset: subid.yoffset});
+			console.log("subsprite: " + subsprite);
+		    this.assets[value.type][subid.id] = subsprite;
+		  }
+		} else {
+		  this.assets[value.type][value.id] = value.asset;
+		}
 	  });
 	  Object.freeze(this.assets);
 	});
@@ -121,3 +135,27 @@ class AssetLoader {
   }
 }
 export const assetLoader = new AssetLoader();
+
+class Sprite {
+	constructor(spec) {
+		this._id = spec.id;
+		this._img = spec.img;
+		this._xoffset = spec.xoffset || 0;
+		this._yoffset = spec.yoffset || 0;
+		this._width = spec.width || this.img.width;
+		this._height = spec.height || this.img.height;
+	}
+
+	get img() {
+		return this._img;
+	}
+
+	render(ctx, x, y) {
+		if (!this._img) return;
+		ctx.drawImage(this._img, this._xoffset, this._yoffset, this._width, this._height, x, y, this._width, this._height);
+	}
+
+	toString() {
+		return "[Sprite:" + this._id + "]";
+	}
+}

@@ -26,7 +26,7 @@ export class Animation {
   }
   
   draw(ctx, x, y) {
-	ctx.drawImage(assetLoader.getImage(this.sheetId),
+	ctx.drawImage(assetLoader.getImage(this.sheetId).img,
 				  this.xOffset, this.yOffset + this.frames[this.currentFrameIndex]*this.frameHeight,
 				  this.frameWidth, this.frameHeight,
 				  x, y,
