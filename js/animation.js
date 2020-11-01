@@ -1,23 +1,20 @@
-import {assetLoader} from './assets.js';
+import { Util } from './util.js';
 
 export class Animation {
   // frame times should be in ms
-  constructor(sheetId, frameTimes, frames, xOffset, yOffset, frameWidth, frameHeight) {
-	this.sheetId = sheetId;
-
-	if (frameTimes instanceof Array) {
-	  this.frameTimes = frameTimes;
-	} else { // assume it's a number
-	  this.frameTimes = Array(frames.length).fill(frameTimes);
-	}
-	// TODO: throw error if frames is empty list
-	this.frames = frames;
-	this.xOffset = xOffset;
-	this.yOffset = yOffset;
-	this.frameWidth = frameWidth;
-	this.frameHeight = frameHeight;
-	this.loop = true;
+  constructor(spec) {
+	this.id = spec.id;
+	this.img = spec.img;
+	this.frames = spec.frames;
+	this.xOffset = spec.xOffset;
+	this.yOffset = spec.yOffset;
+	this.width = spec.width;
+	this.height = spec.height;
+	this.x = Util.objKeyValue(spec, "x", 0);
+	this.y = Util.objKeyValue(spec, "y", 0);
+	this.loop = Util.objKeyValue(spec, "loop", true);
 	this.reset();
+	this.playing = Util.objKeyValue(spec, "play", false);
   }
 
   reset() {
@@ -26,12 +23,9 @@ export class Animation {
 	this.currentFrameIndex = 0;
   }
   
-  draw(ctx, x, y) {
-	ctx.drawImage(assetLoader.getImage(this.sheetId).img,
-				  this.xOffset, this.yOffset + this.frames[this.currentFrameIndex]*this.frameHeight,
-				  this.frameWidth, this.frameHeight,
-				  x, y,
-				  this.frameWidth, this.frameHeight);
+  draw(ctx, x=0, y=0) {
+	const frame = this.frames[this.currentFrameIndex];
+	ctx.drawImage(this.img, frame.xoffset, frame.yoffset, this.width, this.height, this.x+x, this.y+y, this.width, this.height);
   }
 
   play() {
@@ -46,7 +40,8 @@ export class Animation {
 	if (!this.playing) {
 	  return;
 	}
-	const frameTime = this.frameTimes[this.currentFrameIndex]/1000;
+	const frame = this.frames[this.currentFrameIndex];
+	const frameTime = frame.duration/1000;
 	this.timer += dt;
 	if (this.timer >= frameTime) {
 	  this.timer = 0;

@@ -1,6 +1,8 @@
 import {Animation} from './animation.js';
+import { assetLoader } from './assets.js';
 import {Entity, entitiesManager, DEFAULT_DAMAGE} from './entity.js';
 import {canvasData} from './globals.js';
+import { generate } from './view.js';
 
 
 export class Enemy extends Entity {
@@ -47,8 +49,10 @@ const BROOM_HEADBUTT_FRAME = 4;
 export class BroomEnemy extends Enemy {
   constructor(x, y) {
 	const animations = {
-	  walk: new Animation("broomEnemy", 200, [0, 1, 2], 0, 0, BROOM_WIDTH, BROOM_HEIGHT),
-	  attack: new Animation("broomEnemy", [100, 200, 100, 50, 200, 50], [0, 1, 2, 3, 4, 5], BROOM_WIDTH, 0, BROOM_ATTACK_WIDTH, BROOM_HEIGHT)
+	  walk: generate(assetLoader.getImage("broom.walk")),
+	  attack: generate(assetLoader.getImage("broom.attack")),
+	  //walk: new Animation("broomEnemy", 200, [0, 1, 2], 0, 0, BROOM_WIDTH, BROOM_HEIGHT),
+	  //attack: new Animation("broomEnemy", [100, 200, 100, 50, 200, 50], [0, 1, 2, 3, 4, 5], BROOM_WIDTH, 0, BROOM_ATTACK_WIDTH, BROOM_HEIGHT)
 	};
 	animations.attack.loop = false;
 

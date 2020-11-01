@@ -1,7 +1,78 @@
+import { Fmt } from "./fmt.js";
+
+const PLAYER_WIDTH = 20;
+const PLAYER_HEIGHT = 32;
+const BROOM_WIDTH = 14;
+const BROOM_HEIGHT = 26;
+const BROOM_ATTACK_WIDTH = 28;
+
 const assetDefs = {
   images: [
-	{id: "player", src: "./images/julhilde.png"},
-	{id: "broomEnemy", src: "./images/broom-enemy.png"},
+	{id: "player", src: "./images/julhilde.png", subids: [
+	  { id: "player.down", kind: "anim", width: PLAYER_WIDTH, height: PLAYER_HEIGHT, frames: [
+		  {duration: 150, xoffset: 0, yoffset: 0},
+		  {duration: 150, xoffset: 0, yoffset: PLAYER_HEIGHT*1},
+		  {duration: 150, xoffset: 0, yoffset: PLAYER_HEIGHT*2},
+		  {duration: 150, xoffset: 0, yoffset: PLAYER_HEIGHT*3},
+	  ]},
+	  { id: "player.left", kind: "anim", width: PLAYER_WIDTH, height: PLAYER_HEIGHT, frames: [
+		  {duration: 150, xoffset: PLAYER_WIDTH, yoffset: 0},
+		  {duration: 150, xoffset: PLAYER_WIDTH, yoffset: PLAYER_HEIGHT*1},
+		  {duration: 150, xoffset: PLAYER_WIDTH, yoffset: PLAYER_HEIGHT*2},
+		  {duration: 150, xoffset: PLAYER_WIDTH, yoffset: PLAYER_HEIGHT*3},
+	  ]},
+	  { id: "player.up", kind: "anim", width: PLAYER_WIDTH, height: PLAYER_HEIGHT, frames: [
+		  {duration: 150, xoffset: PLAYER_WIDTH*2, yoffset: 0},
+		  {duration: 150, xoffset: PLAYER_WIDTH*2, yoffset: PLAYER_HEIGHT*1},
+		  {duration: 150, xoffset: PLAYER_WIDTH*2, yoffset: PLAYER_HEIGHT*2},
+		  {duration: 150, xoffset: PLAYER_WIDTH*2, yoffset: PLAYER_HEIGHT*3},
+	  ]},
+	  { id: "player.right", kind: "anim", width: PLAYER_WIDTH, height: PLAYER_HEIGHT, frames: [
+		  {duration: 150, xoffset: PLAYER_WIDTH*3, yoffset: 0},
+		  {duration: 150, xoffset: PLAYER_WIDTH*3, yoffset: PLAYER_HEIGHT*1},
+		  {duration: 150, xoffset: PLAYER_WIDTH*3, yoffset: PLAYER_HEIGHT*2},
+		  {duration: 150, xoffset: PLAYER_WIDTH*3, yoffset: PLAYER_HEIGHT*3},
+	  ]},
+	  { id: "player.downB", kind: "anim", width: PLAYER_WIDTH, height: PLAYER_HEIGHT, frames: [
+		  {duration: 150, xoffset: 0, yoffset: PLAYER_HEIGHT*3},
+		  {duration: 150, xoffset: 0, yoffset: PLAYER_HEIGHT*2},
+		  {duration: 150, xoffset: 0, yoffset: PLAYER_HEIGHT*1},
+		  {duration: 150, xoffset: 0, yoffset: 0},
+	  ]},
+	  { id: "player.leftB", kind: "anim", width: PLAYER_WIDTH, height: PLAYER_HEIGHT, frames: [
+		  {duration: 150, xoffset: PLAYER_WIDTH, yoffset: PLAYER_HEIGHT*3},
+		  {duration: 150, xoffset: PLAYER_WIDTH, yoffset: PLAYER_HEIGHT*2},
+		  {duration: 150, xoffset: PLAYER_WIDTH, yoffset: PLAYER_HEIGHT*1},
+		  {duration: 150, xoffset: PLAYER_WIDTH, yoffset: 0},
+	  ]},
+	  { id: "player.upB", kind: "anim", width: PLAYER_WIDTH, height: PLAYER_HEIGHT, frames: [
+		  {duration: 150, xoffset: PLAYER_WIDTH*2, yoffset: PLAYER_HEIGHT*3},
+		  {duration: 150, xoffset: PLAYER_WIDTH*2, yoffset: PLAYER_HEIGHT*2},
+		  {duration: 150, xoffset: PLAYER_WIDTH*2, yoffset: PLAYER_HEIGHT*1},
+		  {duration: 150, xoffset: PLAYER_WIDTH*2, yoffset: 0},
+	  ]},
+	  { id: "player.rightB", kind: "anim", width: PLAYER_WIDTH, height: PLAYER_HEIGHT, frames: [
+		  {duration: 150, xoffset: PLAYER_WIDTH*3, yoffset: PLAYER_HEIGHT*3},
+		  {duration: 150, xoffset: PLAYER_WIDTH*3, yoffset: PLAYER_HEIGHT*2},
+		  {duration: 150, xoffset: PLAYER_WIDTH*3, yoffset: PLAYER_HEIGHT*1},
+		  {duration: 150, xoffset: PLAYER_WIDTH*3, yoffset: 0},
+	  ]},
+	]},
+	{id: "broomEnemy", src: "./images/broom-enemy.png", subids: [
+	  { id: "broom.walk", kind: "anim", width: BROOM_WIDTH, height: BROOM_HEIGHT, frames: [
+		  { duration: 200, xoffset: 0, yoffset: BROOM_HEIGHT*0},
+		  { duration: 200, xoffset: 0, yoffset: BROOM_HEIGHT*1},
+		  { duration: 200, xoffset: 0, yoffset: BROOM_HEIGHT*2},
+	  ]},
+	  { id: "broom.attack", kind: "anim", width: BROOM_ATTACK_WIDTH, height: BROOM_HEIGHT, frames: [
+		  { duration: 100, xoffset: BROOM_WIDTH, yoffset: BROOM_HEIGHT*0},
+		  { duration: 200, xoffset: BROOM_WIDTH, yoffset: BROOM_HEIGHT*1},
+		  { duration: 100, xoffset: BROOM_WIDTH, yoffset: BROOM_HEIGHT*2},
+		  { duration: 50, xoffset: BROOM_WIDTH, yoffset: BROOM_HEIGHT*3},
+		  { duration: 200, xoffset: BROOM_WIDTH, yoffset: BROOM_HEIGHT*4},
+		  { duration: 50, xoffset: BROOM_WIDTH, yoffset: BROOM_HEIGHT*5},
+	  ]},
+	]},
 	{id: "floorTile", src: "./images/tiles/dungeon-floor.png"},
 	{id: "fence_b_a", src: "./images/tiles/fence_b_a.png"},
 	{id: "fence_b_b", src: "./images/tiles/fence_b_b.png"},
@@ -35,12 +106,19 @@ const assetDefs = {
 	{id: "paver_b", src: "./images/tiles/paver_b.png"},
 	{id: "paver_c", src: "./images/tiles/paver_c.png"},
 	{id: "paver_d", src: "./images/tiles/paver_d.png"},
-	//{id: "kitchen_tile", src: "./images/tiles/kitchen_tile.png"},
 	{id: "kitchen_art", src: "./images/tiles/kitchenart.png", subids: [
-	  {id: "kitchen_tile", width: 16, height: 16, xoffset: 16*5, yoffset: 16*7},
+	  {id: "kitchen_tile", kind: "sprite", width: 16, height: 16, xoffset: 16*5, yoffset: 16*7},
+	  {id: "microwave_lower", kind: "anim", width: 16, height: 16, frames: [
+		{ duration: 500, xoffset: 16*11, yoffset: 16*1},
+		{ duration: 500, xoffset: 16*12, yoffset: 16*1 },
+	  ]},
 	]},
 	{id: "lawnmower", src: "./images/lawnmower.png"},
-	{id: "health", src: "./images/health.png"}
+	{id: "health", src: "./images/health.png", subids: [
+	  { id: "health.dflt", kind: "anim", width: 12, height: 16, frames: [
+		  { duration: 1, xoffset: 0, yoffset: 0 },
+	  ]},
+	]},
   ],
   // .mp3 and .ogg are required for sounds, and src should not have extension
   sounds: [
@@ -111,12 +189,13 @@ class AssetLoader {
 	})).then(values => {
 	  values.forEach(value => {
 		if (value.type === "images") {
-		  const sprite = new Sprite({img: value.asset, id: value.id});
-		  this.assets[value.type][value.id] = sprite;
-		  for (const subid of value.subids) {
-			const subsprite = new Sprite({img: value.asset, id: subid.id, width: subid.width, height: subid.height, xoffset: subid.xoffset, yoffset: subid.yoffset});
-			console.log("subsprite: " + subsprite);
-		    this.assets[value.type][subid.id] = subsprite;
+		  const asset = {img: value.asset, kind: "sprite", id: value.id};
+		  this.assets[value.type][value.id] = asset;
+		  for (const spec of value.subids) {
+			const subasset = Object.assign({}, spec)
+			subasset.img = value.asset;
+			//console.log("subasset: " + Fmt.ofmt(subasset));
+		    this.assets[value.type][subasset.id] = subasset;
 		  }
 		} else {
 		  this.assets[value.type][value.id] = value.asset;
@@ -135,27 +214,3 @@ class AssetLoader {
   }
 }
 export const assetLoader = new AssetLoader();
-
-class Sprite {
-	constructor(spec) {
-		this._id = spec.id;
-		this._img = spec.img;
-		this._xoffset = spec.xoffset || 0;
-		this._yoffset = spec.yoffset || 0;
-		this._width = spec.width || this.img.width;
-		this._height = spec.height || this.img.height;
-	}
-
-	get img() {
-		return this._img;
-	}
-
-	render(ctx, x, y) {
-		if (!this._img) return;
-		ctx.drawImage(this._img, this._xoffset, this._yoffset, this._width, this._height, x, y, this._width, this._height);
-	}
-
-	toString() {
-		return "[Sprite:" + this._id + "]";
-	}
-}

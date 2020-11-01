@@ -1,10 +1,7 @@
 export { Grid };
 
 import { Fmt } from './fmt.js';
-
-function objKeyValue(obj, key, dflt) {
-    return (obj.hasOwnProperty(key)) ? obj[key] : dflt;
-}
+import { Util } from './util.js';
 
 /**
  * a two dimensional grid of objects
@@ -21,8 +18,8 @@ class Grid {
      * - dfltValue
      */
     constructor(spec={}) {
-        this.width = objKeyValue(spec, "width", Grid.defaultSize);
-        this.height = objKeyValue(spec, "height", Grid.defaultSize);
+        this.width = Util.objKeyValue(spec, "width", Grid.defaultSize);
+        this.height = Util.objKeyValue(spec, "height", Grid.defaultSize);
         this.dfltValue = spec.dfltValue;
         this.entries = new Array(this.width * this.height);
         if (spec.entries) {

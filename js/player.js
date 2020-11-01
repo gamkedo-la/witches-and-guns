@@ -3,6 +3,7 @@ import {Entity, entitiesManager} from './entity.js';
 import {canvasData} from './globals.js';
 import {assetLoader} from './assets.js';
 import {inputManager} from './input.js';
+import { generate } from './view.js';
 
 const SPEED = 110;
 const SHOTSPEED = 320;
@@ -57,6 +58,8 @@ class Bullet extends Entity {
 
 const PLAYER_WIDTH = 20;
 const PLAYER_HEIGHT = 32;
+
+/*
 const PLAYER_ANIMATIONS = {
   down: new Animation("player", 150, [0, 1, 2, 3], 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT),
   left: new Animation("player", 150, [0, 1, 2, 3], PLAYER_WIDTH, 0, PLAYER_WIDTH, PLAYER_HEIGHT),
@@ -82,11 +85,26 @@ const PLAYER_ANIMATIONS_ARRAY = [
         PLAYER_ANIMATIONS.downB, 
     ],
 ];
-  
+*/
 
 export class Player extends Entity {
   constructor(controller, x, y, initialAnimation="right") {
-	super("player", {x: x, y: y}, PLAYER_WIDTH, PLAYER_HEIGHT, {width: 12, height: 24}, 10, 1, PLAYER_ANIMATIONS_ARRAY, initialAnimation);
+	// build animations
+	const anims = [
+	  [
+		generate(assetLoader.getImage("player.left")),
+		generate(assetLoader.getImage("player.right")),
+		generate(assetLoader.getImage("player.up")),
+		generate(assetLoader.getImage("player.down")),
+	  ],
+	  [
+		generate(assetLoader.getImage("player.leftB")),
+		generate(assetLoader.getImage("player.rightB")),
+		generate(assetLoader.getImage("player.upB")),
+		generate(assetLoader.getImage("player.downB")),
+	  ],
+    ];
+	super("player", {x: x, y: y}, PLAYER_WIDTH, PLAYER_HEIGHT, {width: 12, height: 24}, 10, 1, anims, initialAnimation);
 	//this.lives = 3;
 	this.reset(controller, x, y);
   }

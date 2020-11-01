@@ -1,6 +1,8 @@
 import {Animation} from "./animation.js";
 import {Entity} from './entity.js';
 import {canvasData} from './globals.js';
+import { generate } from './view.js';
+import {assetLoader} from './assets.js';
 
 
 class PickUp extends Entity {
@@ -40,7 +42,9 @@ class PickUp extends Entity {
 
 class HealthPickUp extends PickUp {
   constructor() {
-	const animations = {default: new Animation("health", 1, [0], 0, 0, 12, 16)};
+	const animations = {
+	  default: generate(assetLoader.getImage("health.dflt")),
+	};
 	super(12, 16, animations, "default", 4);
   }
 

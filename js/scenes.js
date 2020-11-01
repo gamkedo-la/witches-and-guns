@@ -7,8 +7,10 @@ import {LawnMowerBoss} from './bosses.js';
 import {Player} from './player.js';
 import { Grid } from './grid.js';
 import {PICKUP_CHANCE, PICKUP_TYPES} from './pickups.js';
+import { GridView } from './view.js';
+import { Fmt } from './fmt.js';
 
-export let currentScene;
+export let currentScene
 
 function timestamp() {
   return window.performance && window.performance.now ? window.performance.now() : new Date().getTime();
@@ -195,6 +197,7 @@ const PVRC = "paver_c";
 const PVRD = "paver_d";
 const NOOP = "undefined";
 const TILE = "kitchen_tile";
+const MWVL = "microwave_lower";
 const SIZE = 16;
 const WIDTH = 20;
 const HEIGHT = 15;
@@ -334,6 +337,8 @@ class GameScene extends Scene {
 
   loadLevel() {
 	const currentLevel = LEVELS[this.levelIndex];
+	this.gridView = new GridView(currentLevel.grid);
+	this.fgGridView = new GridView(currentLevel.fg_grid);
 	for (const enemyDef of currentLevel.initialEnemies) {
 	  entitiesManager.spawn(enemyDef.cls, enemyDef.x, enemyDef.y);
 	}
@@ -344,6 +349,9 @@ class GameScene extends Scene {
   update(dt) {
 	const currentLevel = LEVELS[this.levelIndex];
 	if (currentLevel.loaded) {
+	  // update grids
+	  this.gridView.update(dt);
+	  this.fgGridView.update(dt);
 	  const liveEnemies = [...entitiesManager.liveEntities].filter(e => e.type == "enemy");
 	  if (this.waveTimeOut <= 0 || liveEnemies.length <= 0) {
 		if (this.waves.length > 0) {
@@ -400,11 +408,12 @@ class GameScene extends Scene {
 	  return;
 	}
 	// draw background tiles
-	this.drawGrid(currentLevel.grid);
+	this.gridView.draw(canvasData.context);
 	entitiesManager.draw();
 	// draw foreground tiles (in front of entities)
-	this.drawGrid(currentLevel.fg_grid);
+	this.fgGridView.draw(canvasData.context);
 	const lifeBar = {width: 50, height: 10};
+
 	for (const player of [...entitiesManager.liveEntities].filter(e => e.type == "player")) {
     let x = 10, y = 10;
 	  canvasData.context.fillStyle = "red";
@@ -416,9 +425,9 @@ class GameScene extends Scene {
     y += lifeBar.height/2;
 
     const lv = document.createElement('canvas');
-    let sprite = player.currentAnimation;
-    const width = sprite.frameWidth;
-    const height = sprite.frameHeight;
+	let sprite = player.currentAnimation;
+    const width = sprite.width;
+    const height = sprite.height;
 
     lv.context = lv.getContext('2d');
     lv.width = width; 
