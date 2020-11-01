@@ -283,6 +283,7 @@ const LEVELS = [
 	 height: HEIGHT,
 	 entries: Array(WIDTH*HEIGHT).fill("kitchen_tile")
    }),
+   fg_grid: {height: 0},
    initialEnemies: [
 	 {cls: BroomEnemy, x: 300, y: 200},
 	 {cls: BroomEnemy, x: 300, y: 200},
