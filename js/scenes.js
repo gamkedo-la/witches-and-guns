@@ -197,7 +197,46 @@ const PVRC = "paver_c";
 const PVRD = "paver_d";
 const NOOP = "undefined";
 const TILE = "kitchen_tile";
-const MWVL = "microwave_lower";
+const TILL = "kitchen_tile_l";
+const TILR = "kitchen_tile_r";
+const TITL = "kitchen_tile_tl";
+const TILT = "kitchen_tile_t";
+const MCWV = "microwave";
+const KWLL = "kwall_l";
+const KWLT = "kwall_t";
+const KTLU = "kwall_tl_u";
+const KWRU = "kwall_r_u";
+const KWRM = "kwall_r_m";
+const KWRL = "kwall_r_l";
+const KWIN = "kwindow";
+const STOV = "stove";
+const FRDG = "fridge";
+const BWLU = "beige_wall_l_u";
+const BWTU = "beige_wall_t_u";
+const BTRU = "beige_wall_tr_u";
+const BWLR = "beige_wall_r";
+const BWRU = "beige_wall_r_u";
+const BWRM = "beige_wall_r_m";
+const BWRL = "beige_wall_r_l";
+const BWLL = "beige_wall_l";
+const BWTL = "beige_wall_tl";
+const BWTR = "beige_wall_tr";
+const CTCL = "counter_cl";
+const SINK = "sink";
+const CTRT = "counter_t";
+const CTTR = "counter_tr";
+const CTTL = "counter_tl";
+const CTRL = "counter_l";
+const CTLB = "counter_lb";
+const CHRL = "chair_l";
+const CHRR = "chair_r";
+const TABL = "table";
+const CBWL = "cab_drawer_l";
+const CBWW = "cab_drawer";
+const CBDL = "cab_door_l";
+const CBDR = "cab_door_r";
+const CBPN = "cab_panel";
+
 const SIZE = 16;
 const WIDTH = 20;
 const HEIGHT = 15;
@@ -246,6 +285,50 @@ const LVL1_FG_GRID = new Grid({
 	],
 });
 
+const LVL2_BG_GRID = new Grid({
+	width: WIDTH,
+	height: HEIGHT,
+	entries: [
+		KWLL,KTLU,MCWV,KWIN,NOOP,KWLT,KWLT,STOV,NOOP,KWLT,KWLT,FRDG,NOOP,TILL,TILR,BWLU,BWTU,BWTU,BTRU,BWLR,
+		KWLL,CTCL,NOOP,SINK,NOOP,CTRT,CTTR,NOOP,NOOP,CTTL,CTTR,NOOP,NOOP,TILL,TILR,CHRL,TABL,NOOP,CHRR,BWLR,
+		KWLL,CTRL,CBWL,CBDL,CBDR,CBDL,CBDR,NOOP,NOOP,CBWW,CBWW,NOOP,NOOP,TILE,TILE,NOOP,NOOP,NOOP,NOOP,BWLR,
+		KWLL,CTRL,TITL,TILT,TILT,TILT,TILT,TILT,TILT,TILT,TILT,TILT,TILT,TILE,TILE,TILE,TILE,TILE,TILR,BWLR,
+		KWRU,CTRL,TILL,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILR,BWRU,
+		KWRM,CTLB,TILL,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILR,BWRM,
+		KWRL,CBPN,TILL,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILR,BWRL,
+		TILT,TILT,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILT,
+		BWTL,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,BWTR,
+		BWLL,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,BWLR,
+		BWLL,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,BWLR,
+		BWLL,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,BWLR,
+		BWLL,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,BWLR,
+		BWLL,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,BWLR,
+		BWLL,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,TILE,BWLR,
+	],
+});
+
+const LVL2_FG_GRID = new Grid({
+	width: WIDTH,
+	height: HEIGHT,
+	entries: [
+		NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,
+		NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,
+		NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,
+		NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,
+		NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,
+		NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,
+		NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,
+		NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,
+		NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,
+		NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,
+		NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,
+		NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,
+		NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,
+		NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,
+		NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,NOOP,
+	],
+});
+
 const LEVELS = [
   {name: "Level 1", loaded: false, complete: false,
    grid: LVL1_BG_GRID,
@@ -278,13 +361,10 @@ const LEVELS = [
    boss: {cls: LawnMowerBoss, x: 110, y: 30}
   },
   {name: "Level 2", loaded: false, complete: false,
-   grid: new Grid({
-	 width: WIDTH,
-	 height: HEIGHT,
-	 entries: Array(WIDTH*HEIGHT).fill("kitchen_tile")
-   }),
-   fg_grid: {height: 0},
+   grid: LVL2_BG_GRID,
+   fg_grid: LVL2_FG_GRID,
    initialEnemies: [
+	   /*
 	 {cls: BroomEnemy, x: 300, y: 200},
 	 {cls: BroomEnemy, x: 300, y: 200},
 	 {cls: BroomEnemy, x: 300, y: 200},
@@ -301,14 +381,15 @@ const LEVELS = [
 	 {cls: BroomEnemy, x: 300, y: 200},
 	 {cls: BroomEnemy, x: 300, y: 200},
 	 {cls: BroomEnemy, x: 300, y: 200},
+	 */
    ],
    waves: [
 	 {
 	   spawners: [
-		 {cls: BroomEnemy, x: 20, y: 10,  amount: 20},
-		 {cls: BroomEnemy, x: 20, y: 200,  amount: 20},
-		 {cls: BroomEnemy, x: 300, y: 10,  amount: 20},
-		 {cls: BroomEnemy, x: 300, y: 200,  amount: 20},
+		 //{cls: BroomEnemy, x: 20, y: 10,  amount: 2},
+		 ////{cls: BroomEnemy, x: 20, y: 200,  amount: 20},
+		 //{cls: BroomEnemy, x: 300, y: 10,  amount: 20},
+		 //{cls: BroomEnemy, x: 300, y: 200,  amount: 20},
 	   ],
 	   timeOut: Infinity,
 	 },

@@ -47,7 +47,7 @@ class Sprite {
 		this._xoffset = spec.xoffset || 0;
 		this._yoffset = spec.yoffset || 0;
 		this._width = spec.width || this.img.width;
-		this._height = spec.height || this.img.height;
+        this._height = spec.height || this.img.height;
 	}
 
 	get img() {
