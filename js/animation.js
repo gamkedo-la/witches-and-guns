@@ -24,8 +24,14 @@ export class Animation {
   }
   
   draw(ctx, x=0, y=0) {
-	const frame = this.frames[this.currentFrameIndex];
-	ctx.drawImage(this.img, frame.xoffset, frame.yoffset, this.width, this.height, this.x+x, this.y+y, this.width, this.height);
+	if (this.frames.length) {
+	  const frame = this.frames[this.currentFrameIndex];
+	  ctx.drawImage(this.img, frame.xoffset, frame.yoffset, this.width, this.height, this.x+x, this.y+y, this.width, this.height);
+	} else {
+	  console.error("Found animation without frames! %s (%s)", this.id, this.img);
+	  ctx.fillStyle = "red";
+	  ctx.fillRect(this.x, this.y, this.width, this.height);
+	}
   }
 
   play() {
@@ -37,7 +43,7 @@ export class Animation {
   }
 
   update(dt) {
-	if (!this.playing) {
+	if (!(this.playing  && typeof(this.frames) != "undefined" && this.frames.length)) {
 	  return;
 	}
 	const frame = this.frames[this.currentFrameIndex];
