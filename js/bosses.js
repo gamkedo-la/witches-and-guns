@@ -1,22 +1,24 @@
+import { assetLoader } from './assets.js';
 import {entitiesManager} from './entity.js';
+import { generate } from './view.js';
 import {Animation} from './animation.js';
 import {Enemy} from './enemies.js';
 
 
-const MOWER_FRONT_WIDTH = 39;
-const MOWER_HEIGHT = 62;
-const MOWER_BACK_WIDTH = 37;
-const MOWER_SIDE_WIDTH = 59;
+export const MOWER_FRONT_WIDTH = 39;
+export const MOWER_BACK_WIDTH = 37;
+export const MOWER_SIDE_WIDTH = 59;
+export const MOWER_HEIGHT = 62;
 const MOWER_ATTACK_DELAY = 3/4;
 const MOWER_ATTACK_DISTANCE = 16;
 
 export class LawnMowerBoss extends Enemy {
   constructor(x, y) {
 	const animations = {
-	  down:  new Animation("lawnmower", 1, [0], 0, 0, MOWER_FRONT_WIDTH, MOWER_HEIGHT),
-	  left: new Animation("lawnmower", 1, [0], MOWER_FRONT_WIDTH, 0, MOWER_SIDE_WIDTH, MOWER_HEIGHT),
-	  up: new Animation("lawnmower", 1, [0], MOWER_FRONT_WIDTH + MOWER_SIDE_WIDTH + 1, 0, MOWER_BACK_WIDTH, MOWER_HEIGHT),
-	  right: new Animation("lawnmower", 1, [0], MOWER_FRONT_WIDTH + MOWER_SIDE_WIDTH + MOWER_BACK_WIDTH, 0, MOWER_SIDE_WIDTH, MOWER_HEIGHT)
+	  down:  generate(assetLoader.getImage("lawnmower.down")),
+	  left: generate(assetLoader.getImage("lawnmower.left")),
+	  up: generate(assetLoader.getImage("lawnmower.up")),
+	  right: generate(assetLoader.getImage("lawnmower.right"))
 	};
 	super({x: x, y: y}, MOWER_BACK_WIDTH, MOWER_HEIGHT, {offsetY: 14, width: MOWER_BACK_WIDTH, height: MOWER_HEIGHT/2}, 60, 2, animations, "down");
 	this.speed = 500;

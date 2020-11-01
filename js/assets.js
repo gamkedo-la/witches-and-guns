@@ -1,4 +1,5 @@
 import { Fmt } from "./fmt.js";
+import {MOWER_FRONT_WIDTH, MOWER_BACK_WIDTH, MOWER_SIDE_WIDTH, MOWER_HEIGHT} from "./bosses.js";
 
 const PLAYER_WIDTH = 20;
 const PLAYER_HEIGHT = 32;
@@ -113,7 +114,20 @@ const assetDefs = {
 		{ duration: 500, xoffset: 16*12, yoffset: 16*1 },
 	  ]},
 	]},
-	{id: "lawnmower", src: "./images/lawnmower.png"},
+	{id: "lawnmower", src: "./images/lawnmower.png", subids: [
+	  {id: "lawnmower.down", kind: "anim", width: MOWER_FRONT_WIDTH, height: MOWER_HEIGHT, frames: [
+		{duration: 1, xoffset: 0, yoffset: 0}
+	  ]},
+	  {id: "lawnmower.left", kind: "anim", width: MOWER_SIDE_WIDTH, height: MOWER_HEIGHT, frames: [
+		{duration: 1, xoffset: MOWER_FRONT_WIDTH, yoffset: 0}
+	  ]},
+	  {id: "lawnmower.up", kind: "anim", width: MOWER_BACK_WIDTH, height: MOWER_HEIGHT, frames: [
+		{duration: 1, xoffset: MOWER_FRONT_WIDTH + MOWER_SIDE_WIDTH, yoffset: 0}
+	  ]},
+	  {id: "lawnmower.right", kind: "anim", width: MOWER_SIDE_WIDTH, height: MOWER_HEIGHT, frames: [
+		{duration: 1, xoffset: MOWER_FRONT_WIDTH + MOWER_SIDE_WIDTH + MOWER_BACK_WIDTH, yoffset: 0}
+	  ]},
+	]},
 	{id: "health", src: "./images/health.png", subids: [
 	  { id: "health.dflt", kind: "anim", width: 12, height: 16, frames: [
 		  { duration: 1, xoffset: 0, yoffset: 0 },
