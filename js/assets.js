@@ -151,6 +151,79 @@ const assetDefs = {
 	  {id: "cab_door_l", kind: "sprite", width: 16, height: 16,		xoffset: 16*3, yoffset: 16*2},
 	  {id: "cab_door_r", kind: "sprite", width: 16, height: 16,		xoffset: 16*4, yoffset: 16*2},
 	  {id: "cab_panel", kind: "sprite", width: 16, height: 16,		xoffset: 16*10, yoffset: 16*2},
+	]},
+	{id: "fridge-boss-anim", src: "./images/fridge-boss-anim.png", subids: [
+	  {id: "fridge.sleep", kind: "anim", width: 16*2, height: 16*3, frames: [
+		{duration: 10000, xoffset: 0, yoffset: 0},
+		{duration: 80, xoffset: 32*1, yoffset: 0},
+		{duration: 80, xoffset: 32*2, yoffset: 0},
+		{duration: 80, xoffset: 32*1, yoffset: 0},
+	  ]},
+	  {id: "fridge.wake", kind: "anim", width: 16*2, height: 16*3, frames: [
+		{duration: 120, xoffset: 32*1, yoffset: 0},
+		{duration: 120, xoffset: 32*2, yoffset: 0},
+		{duration: 120, xoffset: 32*3, yoffset: 0},
+		{duration: 120, xoffset: 32*4, yoffset: 0},
+		{duration: 120, xoffset: 32*5, yoffset: 0},
+		{duration: 120, xoffset: 32*6, yoffset: 0},
+		{duration: 120, xoffset: 32*7, yoffset: 0},
+		{duration: 120, xoffset: 32*8, yoffset: 0},
+		{duration: 120, xoffset: 32*9, yoffset: 0},
+		{duration: 120, xoffset: 32*10, yoffset: 0},
+		{duration: 120, xoffset: 32*11, yoffset: 0},
+	  ]},
+	  {id: "fridge.idlel", kind: "anim", width: 16*2, height: 16*3, frames: [
+		{duration: 1, xoffset: 32*13, yoffset: 0},
+	  ]},
+	  {id: "fridge.shootl", kind: "anim", width: 16*2, height: 16*3, frames: [
+		{duration: 80, xoffset: 32*14, yoffset: 0},
+		{duration: 80, xoffset: 32*15, yoffset: 0},
+		{duration: 80, xoffset: 32*14, yoffset: 0},
+	  ]},
+	  {id: "fridge.idlem", kind: "anim", width: 16*2, height: 16*3, frames: [
+		{duration: 1, xoffset: 32*16, yoffset: 0},
+	  ]},
+	  {id: "fridge.shootm", kind: "anim", width: 16*2, height: 16*3, frames: [
+		{duration: 80, xoffset: 32*17, yoffset: 0},
+		{duration: 80, xoffset: 32*18, yoffset: 0},
+		{duration: 80, xoffset: 32*17, yoffset: 0},
+	  ]},
+	  {id: "fridge.idler", kind: "anim", width: 16*2, height: 16*3, frames: [
+		{duration: 1, xoffset: 32*20, yoffset: 0},
+	  ]},
+	  {id: "fridge.shootr", kind: "anim", width: 16*2, height: 16*3, frames: [
+		{duration: 80, xoffset: 32*21, yoffset: 0},
+		{duration: 80, xoffset: 32*22, yoffset: 0},
+		{duration: 80, xoffset: 32*21, yoffset: 0},
+	  ]},
+	  {id: "fridge.aim.ltr", kind: "anim", width: 16*2, height: 16*3, frames: [
+		{duration: 80, xoffset: 32*12, yoffset: 0},
+		{duration: 80, xoffset: 32*16, yoffset: 0},
+		{duration: 80, xoffset: 32*19, yoffset: 0},
+		{duration: 80, xoffset: 32*20, yoffset: 0},
+	  ]},
+	  {id: "fridge.aim.rtl", kind: "anim", width: 16*2, height: 16*3, frames: [
+		{duration: 80, xoffset: 32*19, yoffset: 0},
+		{duration: 80, xoffset: 32*16, yoffset: 0},
+		{duration: 80, xoffset: 32*12, yoffset: 0},
+		{duration: 80, xoffset: 32*13, yoffset: 0},
+	  ]},
+	  {id: "fridge.aim.ltm", kind: "anim", width: 16*2, height: 16*3, frames: [
+		{duration: 80, xoffset: 32*12, yoffset: 0},
+		{duration: 80, xoffset: 32*16, yoffset: 0},
+	  ]},
+	  {id: "fridge.aim.rtm", kind: "anim", width: 16*2, height: 16*3, frames: [
+		{duration: 80, xoffset: 32*19, yoffset: 0},
+		{duration: 80, xoffset: 32*16, yoffset: 0},
+	  ]},
+	  {id: "fridge.aim.mtl", kind: "anim", width: 16*2, height: 16*3, frames: [
+		{duration: 80, xoffset: 32*12, yoffset: 0},
+		{duration: 80, xoffset: 32*13, yoffset: 0},
+	  ]},
+	  {id: "fridge.aim.mtr", kind: "anim", width: 16*2, height: 16*3, frames: [
+		{duration: 80, xoffset: 32*19, yoffset: 0},
+		{duration: 80, xoffset: 32*20, yoffset: 0},
+	  ]},
 
 	]},
 	{id: "lawnmower", src: "./images/lawnmower.png", subids: [

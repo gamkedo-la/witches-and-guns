@@ -3,7 +3,7 @@ import {canvasData} from './globals.js';
 import {entitiesManager} from './entity.js';
 import {inputManager} from './input.js';
 import {BroomEnemy} from './enemies.js';
-import {LawnMowerBoss} from './bosses.js';
+import {FridgeBoss, LawnMowerBoss} from './bosses.js';
 import {Player} from './player.js';
 import { Grid } from './grid.js';
 import {PICKUP_CHANCE, PICKUP_TYPES} from './pickups.js';
@@ -210,7 +210,7 @@ const KWRM = "kwall_r_m";
 const KWRL = "kwall_r_l";
 const KWIN = "kwindow";
 const STOV = "stove";
-const FRDG = "fridge";
+const FRDG = "fridge.sleep";
 const BWLU = "beige_wall_l_u";
 const BWTU = "beige_wall_t_u";
 const BTRU = "beige_wall_tr_u";
@@ -394,13 +394,13 @@ const LEVELS = [
 	   timeOut: Infinity,
 	 },
    ],
-   boss: {cls: BroomEnemy, x: 110, y: 100}
+   boss: {cls: FridgeBoss, x: 110, y: 100}
   }
 ];
 class GameScene extends Scene {
   constructor() {
 	super();
-	this.levelIndex = 0;
+	this.levelIndex = 1;
 	entitiesManager.onCollision('playerProjectile', 'enemy', (projectile, enemy) => {
 	  enemy.hurt(projectile.damage);
 	  projectile.die();
