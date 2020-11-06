@@ -49,22 +49,25 @@ const BROOM_HEADBUTT_FRAME = 4;
 export class BroomEnemy extends Enemy {
   constructor(x, y) {
 	const animations = {
-	  walk: generate(assetLoader.getImage("broom.walk")),
-	  attack: generate(assetLoader.getImage("broom.attack")),
+	  walkRight: generate(assetLoader.getImage("broom.walkRight")),
+	  walkLeft: generate(assetLoader.getImage("broom.walkLeft")),
+	  attackRight: generate(assetLoader.getImage("broom.attackRight")),
+	  attackLeft: generate(assetLoader.getImage("broom.attackLeft")),
 	  //walk: new Animation("broomEnemy", 200, [0, 1, 2], 0, 0, BROOM_WIDTH, BROOM_HEIGHT),
 	  //attack: new Animation("broomEnemy", [100, 200, 100, 50, 200, 50], [0, 1, 2, 3, 4, 5], BROOM_WIDTH, 0, BROOM_ATTACK_WIDTH, BROOM_HEIGHT)
 	};
-	animations.attack.loop = false;
+	animations.attackRight.loop = animations.attackLeft.loop = false;
 
-	super({x: x, y: y}, BROOM_WIDTH, BROOM_HEIGHT, {width: 14, height: 14}, 1, 1, animations, "walk");
+	super({x: x, y: y}, BROOM_WIDTH, BROOM_HEIGHT, {width: 14, height: 14}, 1, 1, animations, "walkRight");
 	this.speed = 50;
 	this.canCollideWithTypes.add('playerProjectile');
 	// TODO: facing
+	this.dir = {x: 1, y: 0};
 	this.vel = {x: 0, y: 0};
 	this.attackDistance = 20;
 	this.steerTimer = Math.random()*0.5 + 0.5;
 	this.headButt = entitiesManager.spawn(Attack, this, 0, 0, BROOM_ATTACK_WIDTH - 8, BROOM_HEIGHT/4);
-	
+	console.log(this);
   }
 
   update(dt) {
@@ -100,15 +103,17 @@ export class BroomEnemy extends Enemy {
 	  this.steerTimer -= dt;
 	}
 
-	if (minDist < this.attackDistance && this.currentAnimation != this.animations.attack) {
-	  	this.changeAnimation(this.animations.attack);
+	if (minDist < this.attackDistance && !this.attacking) {
+		this.dir.x = (closestPlayer.pos.x - this.pos.x);
+		const attack = (this.dir.x > 0) ? this.animations.attackRight : this.animations.attackLeft;
+		this.changeAnimation(attack);
 
 		let deltaX = (this.pos.x - closestPlayer.pos.x);
 		let offsetX = this.width/2 + (deltaX > 0 ? -BROOM_ATTACK_WIDTH : 0);
 		this.headButt.reset(this, {x: offsetX, y: BROOM_HEIGHT/4}, BROOM_ATTACK_WIDTH, BROOM_HEIGHT/4);
 	}
 
-	if (this.currentAnimation == this.animations.attack) {
+	if (this.attacking) {
 	  // Attack lasts as much as the actual frame of animation where the broom is attacking
 	  if (this.currentAnimation.currentFrameIndex == BROOM_HEADBUTT_FRAME) {
 		this.headButt.alive = true;
@@ -117,7 +122,8 @@ export class BroomEnemy extends Enemy {
 	  // Transition back to walk when attack completes
 	  if (!this.currentAnimation.playing) {
 		this.headButt.alive = false;
-		this.changeAnimation(this.animations.walk);
+		if (this.dir.x >= 0) this.changeAnimation(this.animations.walkRight);
+		else this.changeAnimation(this.animations.walkLeft);
 	  }
 	} else {
 	  // move towards player
@@ -125,6 +131,12 @@ export class BroomEnemy extends Enemy {
 	  this.vel.y += steer.y;
 	  this.pos.x += Math.round(this.vel.x*dt);
 	  this.pos.y += Math.round(this.vel.y*dt);
+
+	  if (steer.x != 0) this.dir.x = steer.x;
+	  if (steer.y != 0) this.dir.y = steer.y;
+
+	  if (this.dir.x >= 0) this.changeAnimation(this.animations.walkRight);
+	  else this.changeAnimation(this.animations.walkLeft);
 	}
 	super.update(dt);
   }
@@ -134,5 +146,9 @@ export class BroomEnemy extends Enemy {
 	  this.headButt.die();
 	}
 	super.die();
+  }
+  
+  get attacking() {
+	  return (this.currentAnimation == this.animations.attackLeft || this.currentAnimation == this.animations.attackRight);
   }
 }
