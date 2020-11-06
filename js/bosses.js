@@ -2,7 +2,7 @@ import { assetLoader } from './assets.js';
 import { Entity, entitiesManager } from './entity.js';
 import { generate } from './view.js';
 import { Animation } from './animation.js';
-import { Enemy } from './enemies.js';
+import { Attack, Enemy } from './enemies.js';
 import { canvasData } from './globals.js';
 
 
@@ -38,11 +38,40 @@ export class LawnMowerBoss extends Enemy {
 		this.target = null;
 		this.attacking = false;
 		this.facing = FACE.down;
+		this.attack = null;
 	}
 
 	update(dt) {
 		this.currentAnimation.update(dt);
 		if (this.attacking) {
+			if (this.attack === null || !this.attack.alive) {
+				let offset = {0: 0}, width, height;
+				switch(this.facing) {
+				case FACE.down:
+					width = 35;
+					height = 36;
+					offset = {x: 2, y: 26};
+					break;
+				case FACE.left:
+					width = 39;
+					height = 24;
+					offset = {x: 0, y: 36};
+					break;
+				case FACE.up:
+					this.changeAnimation(this.animations.up);
+					width = 35;
+					height = 36;
+					offset = {x: 2, y: 26};
+					break;
+				case FACE.right:
+					width = 39;
+					height = 24;
+					offset = {x: 21, y: 36};
+					break;
+				}
+				this.attack = entitiesManager.spawn(Attack, this, offset, width, height);
+				this.attack.damage = 3;
+			}
 			if (this.currentAnimation.id.startsWith("lawnmowerFlames")) {
 				if (!this.currentAnimation.playing) {
 					switch(this.facing) {
@@ -63,6 +92,10 @@ export class LawnMowerBoss extends Enemy {
 			} else {
 				this.pos.x += Math.round(this.vel.x * dt);
 				this.pos.y += Math.round(this.vel.y * dt);
+				if (this.attack !== null && this.attack.alive) {
+					this.attack.pos.x += Math.round(this.vel.x * dt);
+					this.attack.pos.y += Math.round(this.vel.y * dt);
+				}
 				this.attacking = Math.hypot(this.pos.x - this.target.x, this.pos.y - this.target.y) > MOWER_ATTACK_DISTANCE;
 			}
 		} else if (this.attackTimer <= 0) {
@@ -115,6 +148,9 @@ export class LawnMowerBoss extends Enemy {
 				}
 			}
 		} else {
+			if (this.attack) {
+				this.attack.die();
+			}
 			if (!this.currentAnimation.id.startsWith("lawnmowerAccel")) {
 				switch(this.facing) {
 				case FACE.down:
