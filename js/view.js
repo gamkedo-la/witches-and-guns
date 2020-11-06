@@ -7,6 +7,7 @@ import { Fmt } from './fmt.js';
 class GridView {
     constructor(grid) {
         this._views = [];
+        this.properties = Object.assign({}, grid.properties);
         // translate world grid to view grid
         for (let j=0; j<grid.height; j++) {
             for (let i=0; i<grid.width; i++) {

@@ -20,6 +20,7 @@ class Grid {
     constructor(spec={}) {
         this.width = Util.objKeyValue(spec, "width", Grid.defaultSize);
         this.height = Util.objKeyValue(spec, "height", Grid.defaultSize);
+        this.properties = Util.objKeyValue(spec, "properties", {});
         this.dfltValue = spec.dfltValue;
         this.entries = new Array(this.width * this.height);
         if (spec.entries) {

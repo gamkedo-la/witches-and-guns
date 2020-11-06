@@ -266,6 +266,7 @@ const LVL1_BG_GRID = new Grid({
 const LVL1_FG_GRID = new Grid({
 	width: WIDTH,
 	height: HEIGHT,
+	properties: { fg: true },
 	entries: [
 		NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP,
 		FNCL, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, FNCR,
@@ -289,9 +290,9 @@ const LVL2_BG_GRID = new Grid({
 	width: WIDTH,
 	height: HEIGHT,
 	entries: [
-		KWLL, KTLU, MCWV, KWIN, NOOP, KWLT, KWLT, STOV, NOOP, KWLT, KWLT, FRDG, NOOP, TILL, TILR, BWLU, BWTU, BWTU, BTRU, BWLR,
-		KWLL, CTCL, NOOP, SINK, NOOP, CTRT, CTTR, NOOP, NOOP, CTTL, CTTR, NOOP, NOOP, TILL, TILR, CHRL, TABL, NOOP, CHRR, BWLR,
-		KWLL, CTRL, CBWL, CBDL, CBDR, CBDL, CBDR, NOOP, NOOP, CBWW, CBWW, NOOP, NOOP, TILE, TILE, NOOP, NOOP, NOOP, NOOP, BWLR,
+		KWLL, KTLU, KWLT, KWIN, NOOP, KWLT, KWLT, STOV, NOOP, KWLT, KWLT, KWLT, KWRM, TILL, TILR, BWLU, BWTU, BWTU, BTRU, BWLR,
+		KWLL, CTCL, NOOP, SINK, NOOP, CTRT, CTTR, NOOP, NOOP, CTTL, CTTR, TILE, TILE, TILL, TILR, CHRL, TABL, NOOP, CHRR, BWLR,
+		KWLL, CTRL, CBWL, CBDL, CBDR, CBDL, CBDR, NOOP, NOOP, CBWW, CBWW, TILE, TILE, TILL, TILE, NOOP, NOOP, NOOP, NOOP, BWLR,
 		KWLL, CTRL, TITL, TILT, TILT, TILT, TILT, TILT, TILT, TILT, TILT, TILT, TILT, TILE, TILE, TILE, TILE, TILE, TILR, BWLR,
 		KWRU, CTRL, TILL, TILE, TILE, TILE, TILE, TILE, TILE, TILE, TILE, TILE, TILE, TILE, TILE, TILE, TILE, TILE, TILR, BWRU,
 		KWRM, CTLB, TILL, TILE, TILE, TILE, TILE, TILE, TILE, TILE, TILE, TILE, TILE, TILE, TILE, TILE, TILE, TILE, TILR, BWRM,
@@ -307,9 +308,17 @@ const LVL2_BG_GRID = new Grid({
 	],
 });
 
+const LVL2_MID_GRID = new Grid({
+	width: WIDTH,
+	height: HEIGHT,
+});
+LVL2_MID_GRID.set(MCWV, 2, 0);
+LVL2_MID_GRID.set(FRDG, 11, 0);
+
 const LVL2_FG_GRID = new Grid({
 	width: WIDTH,
 	height: HEIGHT,
+	properties: { fg: true },
 	entries: [
 		NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP,
 		NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP,
@@ -332,8 +341,7 @@ const LVL2_FG_GRID = new Grid({
 const LEVELS = [
 	{
 		name: "Level 1", loaded: false, complete: false,
-		grid: LVL1_BG_GRID,
-		fg_grid: LVL1_FG_GRID,
+		grids: [LVL1_BG_GRID, LVL1_FG_GRID],
 		waves: [
 			// {
 			// 	spawners: [
@@ -363,8 +371,7 @@ const LEVELS = [
 	},
 	{
 		name: "Level 2", loaded: false, complete: false,
-		grid: LVL2_BG_GRID,
-		fg_grid: LVL2_FG_GRID,
+		grids: [LVL2_BG_GRID, LVL2_MID_GRID, LVL2_FG_GRID],
 		initialEnemies: [
 			/*
 		  {cls: BroomEnemy, x: 300, y: 200},
@@ -425,8 +432,7 @@ class GameScene extends Scene {
 
 	loadLevel() {
 		const currentLevel = LEVELS[this.levelIndex];
-		this.gridView = new GridView(currentLevel.grid);
-		this.fgGridView = new GridView(currentLevel.fg_grid);
+		this.gridViews = currentLevel.grids.map((grid)=> new GridView(grid));
 		for (const enemyDef of currentLevel.initialEnemies) {
 			entitiesManager.spawn(enemyDef.cls, enemyDef.x, enemyDef.y);
 		}
@@ -438,8 +444,7 @@ class GameScene extends Scene {
 		const currentLevel = LEVELS[this.levelIndex];
 		if (currentLevel.loaded) {
 			// update grids
-			this.gridView.update(dt);
-			this.fgGridView.update(dt);
+			this.gridViews.forEach((gview) => gview.update(dt));
 			const liveEnemies = [...entitiesManager.liveEntities].filter(e => e.type == "enemy");
 			if (this.waveTimeOut <= 0 || liveEnemies.length <= 0) {
 				if (this.waves.length > 0) {
@@ -474,18 +479,6 @@ class GameScene extends Scene {
 		entitiesManager.update(dt);
 	}
 
-	drawGrid(grid) {
-		if (!grid) return;
-		for (let j = 0; j < grid.height; j++) {
-			for (let i = 0; i < grid.width; i++) {
-				const sprite = assetLoader.getImage(grid.get(i, j));
-				const x = i * SIZE;
-				const y = j * SIZE;
-				if (sprite) sprite.render(canvasData.context, x, y);
-			}
-		}
-	}
-
 	draw() {
 		const currentLevel = LEVELS[this.levelIndex];
 		if (!currentLevel.loaded) {
@@ -496,10 +489,10 @@ class GameScene extends Scene {
 			return;
 		}
 		// draw background tiles
-		this.gridView.draw(canvasData.context);
+		this.gridViews.forEach( (gview) => { if (!gview.properties.fg) gview.draw(canvasData.context)} );
 		entitiesManager.draw();
 		// draw foreground tiles (in front of entities)
-		this.fgGridView.draw(canvasData.context);
+		this.gridViews.forEach( (gview) => { if (gview.properties.fg) gview.draw(canvasData.context)} );
 		const lifeBar = { width: 50, height: 10 };
 
 		for (const player of [...entitiesManager.liveEntities].filter(e => e.type == "player")) {
