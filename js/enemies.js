@@ -31,7 +31,7 @@ export class Attack extends Entity {
   }
 
   draw() {
-	  if (this.alive) {
+	  if (this.alive && window.debugMode) {
 		canvasData.context.fillStyle = 'red';
 		canvasData.context.fillRect(this.x, this.y, this.collider.width, this.collider.height);
 	  }
