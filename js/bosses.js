@@ -43,7 +43,7 @@ export class LawnMowerBoss extends Enemy {
 	update(dt) {
 		this.currentAnimation.update(dt);
 		if (this.attacking) {
-			if (this.currentAnimation.id.startsWith("lanwmowerFlames")) {
+			if (this.currentAnimation.id.startsWith("lawnmowerFlames")) {
 				if (!this.currentAnimation.playing) {
 					switch(this.facing) {
 					case FACE.down:
