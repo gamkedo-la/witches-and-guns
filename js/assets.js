@@ -60,12 +60,17 @@ const assetDefs = {
 	  ]},
 	]},
 	{id: "broomEnemy", src: "./images/broom-enemy.png", subids: [
-	  { id: "broom.walk", kind: "anim", width: BROOM_WIDTH, height: BROOM_HEIGHT, frames: [
+	  { id: "broom.walkRight", kind: "anim", width: BROOM_WIDTH, height: BROOM_HEIGHT, frames: [
 		  { duration: 200, xoffset: 0, yoffset: BROOM_HEIGHT*0},
 		  { duration: 200, xoffset: 0, yoffset: BROOM_HEIGHT*1},
 		  { duration: 200, xoffset: 0, yoffset: BROOM_HEIGHT*2},
 	  ]},
-	  { id: "broom.attack", kind: "anim", width: BROOM_ATTACK_WIDTH, height: BROOM_HEIGHT, frames: [
+	  { id: "broom.walkLeft", kind: "anim", width: BROOM_WIDTH, height: BROOM_HEIGHT, frames: [
+		{ duration: 200, xoffset: 0, yoffset: BROOM_HEIGHT*3},
+		{ duration: 200, xoffset: 0, yoffset: BROOM_HEIGHT*4},
+		{ duration: 200, xoffset: 0, yoffset: BROOM_HEIGHT*5},
+	]},
+	  { id: "broom.attackRight", kind: "anim", width: BROOM_ATTACK_WIDTH, height: BROOM_HEIGHT, frames: [
 		  { duration: 100, xoffset: BROOM_WIDTH, yoffset: BROOM_HEIGHT*0},
 		  { duration: 200, xoffset: BROOM_WIDTH, yoffset: BROOM_HEIGHT*1},
 		  { duration: 100, xoffset: BROOM_WIDTH, yoffset: BROOM_HEIGHT*2},
@@ -73,6 +78,14 @@ const assetDefs = {
 		  { duration: 200, xoffset: BROOM_WIDTH, yoffset: BROOM_HEIGHT*4},
 		  { duration: 50, xoffset: BROOM_WIDTH, yoffset: BROOM_HEIGHT*5},
 	  ]},
+	  { id: "broom.attackLeft", kind: "anim", width: BROOM_ATTACK_WIDTH, height: BROOM_HEIGHT, frames: [
+		{ duration: 100, xoffset: BROOM_WIDTH + BROOM_ATTACK_WIDTH, yoffset: BROOM_HEIGHT*0},
+		{ duration: 200, xoffset: BROOM_WIDTH + BROOM_ATTACK_WIDTH, yoffset: BROOM_HEIGHT*1},
+		{ duration: 100, xoffset: BROOM_WIDTH + BROOM_ATTACK_WIDTH, yoffset: BROOM_HEIGHT*2},
+		{ duration: 50, xoffset: BROOM_WIDTH + BROOM_ATTACK_WIDTH, yoffset: BROOM_HEIGHT*3},
+		{ duration: 200, xoffset: BROOM_WIDTH + BROOM_ATTACK_WIDTH, yoffset: BROOM_HEIGHT*4},
+		{ duration: 50, xoffset: BROOM_WIDTH + BROOM_ATTACK_WIDTH, yoffset: BROOM_HEIGHT*5},
+	]},
 	]},
 	{id: "floorTile", src: "./images/tiles/dungeon-floor.png"},
 	{id: "fence_b_a", src: "./images/tiles/fence_b_a.png"},
