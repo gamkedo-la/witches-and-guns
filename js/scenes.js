@@ -202,6 +202,7 @@ const TILR = "kitchen_tile_r";
 const TITL = "kitchen_tile_tl";
 const TILT = "kitchen_tile_t";
 const MCWV = "microwave";
+const TEAP = "teapot";
 const KWLL = "kwall_l";
 const KWLT = "kwall_t";
 const KTLU = "kwall_tl_u";
@@ -314,6 +315,7 @@ const LVL2_MID_GRID = new Grid({
 });
 LVL2_MID_GRID.set(MCWV, 2, 0);
 LVL2_MID_GRID.set(FRDG, 11, 0);
+LVL2_MID_GRID.set(TEAP, 6, 0);
 
 const LVL2_FG_GRID = new Grid({
 	width: WIDTH,

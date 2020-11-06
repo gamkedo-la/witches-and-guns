@@ -118,6 +118,12 @@ const assetDefs = {
 		{ duration: 500, xoffset: 16*21, yoffset: 16*0},
 		{ duration: 500, xoffset: 16*22, yoffset: 16*0 },
 	  ]},
+	  {id: "teapot", kind: "anim", width: 32, height: 32, frames: [
+		{ duration: 100, xoffset: 16*23, yoffset: 16*0},
+		{ duration: 100, xoffset: 16*25, yoffset: 16*0 },
+		{ duration: 100, xoffset: 16*27, yoffset: 16*0 },
+		{ duration: 100, xoffset: 16*29, yoffset: 16*0 },
+	  ]},
 	  {id: "kwindow", kind: "sprite", width: 32, height: 16, 		xoffset: 16*3, yoffset: 16*0},
 	  {id: "stove", kind: "sprite", width: 16*2, height: 16*3, 		xoffset: 16*7, yoffset: 16*0},
 	  {id: "fridge", kind: "sprite", width: 16*2, height: 16*3, 	xoffset: 16*11, yoffset: 16*0},
