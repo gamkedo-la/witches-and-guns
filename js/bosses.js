@@ -66,39 +66,54 @@ export class LawnMowerBoss extends Enemy {
 				this.attacking = Math.hypot(this.pos.x - this.target.x, this.pos.y - this.target.y) > MOWER_ATTACK_DISTANCE;
 			}
 		} else if (this.attackTimer <= 0) {
-			let dist, minDist = Number.MAX_SAFE_INTEGER;
-			let closestPlayer = null;
-			const desiredVel = { x: 0, y: 0 };
-			// find closest player
-			for (const player of [...entitiesManager.liveEntities].filter(e => e.type == "player")) {
-				dist = Math.hypot(player.pos.x - this.pos.x, player.pos.y - this.pos.y);
-				if (dist < minDist) {
-					minDist = dist;
-					closestPlayer = player;
+			if (this.currentAnimation.id.startsWith("lawnmowerFlames")) {
+				if (!this.currentAnimation.playing) {
+					let dist, minDist = Number.MAX_SAFE_INTEGER;
+					let closestPlayer = null;
+					const desiredVel = { x: 0, y: 0 };
+					// find closest player
+					for (const player of [...entitiesManager.liveEntities].filter(e => e.type == "player")) {
+						dist = Math.hypot(player.pos.x - this.pos.x, player.pos.y - this.pos.y);
+						if (dist < minDist) {
+							minDist = dist;
+							closestPlayer = player;
+						}
+					}
+					this.target = Object.assign({}, closestPlayer.pos);
+					this.attacking = true;
+					this.attackTimer = Math.random() * (2 - 0.75) + 0.75;
+					desiredVel.x = this.target.x - this.pos.x;
+					desiredVel.y = this.target.y - this.pos.y;
+					if (desiredVel.y > 0) {
+						this.facing = FACE.down;
+					} else if (desiredVel.y < 0) {
+						this.facing = FACE.up;
+					}
+					if (desiredVel.x > Math.abs(desiredVel.y)) {
+						this.facing = FACE.right;
+					} else if (desiredVel.x < 0 && Math.abs(desiredVel.x) > Math.abs(desiredVel.y)) {
+						this.facing = FACE.left;
+					}
+					const mag = Math.hypot(desiredVel.x, desiredVel.y);
+					this.vel.x = this.speed * desiredVel.x / mag;
+					this.vel.y = this.speed * desiredVel.y / mag;
+				}
+			} else if (!this.attacking) {
+				switch(this.facing) {
+				case FACE.down:
+					this.changeAnimation(this.animations.flamesDown);
+					break;
+				case FACE.left:
+					this.changeAnimation(this.animations.flamesLeft);
+					break;
+				case FACE.up:
+					this.changeAnimation(this.animations.flamesUp);
+					break;
+				case FACE.right:
+					this.changeAnimation(this.animations.flamesRight);
+					break;
 				}
 			}
-			this.target = Object.assign({}, closestPlayer.pos);
-			this.attacking = true;
-			this.attackTimer = Math.random() * (2 - 0.75) + 0.75;
-			desiredVel.x = this.target.x - this.pos.x;
-			desiredVel.y = this.target.y - this.pos.y;
-			if (desiredVel.y > 0) {
-				this.changeAnimation(this.animations.flamesDown);
-				this.facing = FACE.down;
-			} else if (desiredVel.y < 0) {
-				this.changeAnimation(this.animations.flamesUp);
-				this.facing = FACE.up;
-			}
-			if (desiredVel.x > Math.abs(desiredVel.y)) {
-				this.changeAnimation(this.animations.flamesRight);
-				this.facing = FACE.right;
-			} else if (desiredVel.x < 0 && Math.abs(desiredVel.x) > Math.abs(desiredVel.y)) {
-				this.facing = FACE.left;
-				this.changeAnimation(this.animations.flamesLeft);
-			}
-			const mag = Math.hypot(desiredVel.x, desiredVel.y);
-			this.vel.x = this.speed * desiredVel.x / mag;
-			this.vel.y = this.speed * desiredVel.y / mag;
 		} else {
 			if (!this.currentAnimation.id.startsWith("lawnmowerAccel")) {
 				switch(this.facing) {
