@@ -402,7 +402,7 @@ const LEVELS = [
 class GameScene extends Scene {
 	constructor() {
 		super();
-		this.levelIndex = 0;
+		this.levelIndex = 1;
 		entitiesManager.onCollision('playerProjectile', 'enemy', (projectile, enemy) => {
 			enemy.hurt(projectile.damage);
 			projectile.die();

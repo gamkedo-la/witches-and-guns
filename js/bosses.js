@@ -143,12 +143,14 @@ export class LawnMowerBoss extends Enemy {
 }
 
 class EnemyBullet extends Entity {
-	constructor(posX, posY, dirX, dirY, velX, velY) {
+	constructor(posX, posY, dirX, dirY, velX, velY, anim) {
 		super('enemyProjectile');
 		this.canCollideWithTypes.add('player');
 		this.collider.width = 3;
 		this.collider.height = 3;
 		this.reset(posX, posY, dirX, dirY, velX, velY);
+		this.anim = anim;
+		if (this.anim) this.anim.playing = true;
 	}
 
 	reset(posX, posY, dirX, dirY, velX, velY) {
@@ -162,6 +164,7 @@ class EnemyBullet extends Entity {
 
 	update(dt) {
 		super.update(dt);
+		if (this.anim) this.anim.update(dt);
 		const vel = {
 			x: this.vel.x * dt,
 			y: this.vel.y * dt
@@ -181,8 +184,12 @@ class EnemyBullet extends Entity {
 
 	draw() {
 		super.draw();
-		canvasData.context.fillStyle = 'white';
-		canvasData.context.fillRect(this.pos.x - 2, this.pos.y - 2, 4, 4);
+		if (this.anim) {
+			this.anim.draw(canvasData.context, this.pos.x-2, this.pos.y-2);
+		} else {
+			canvasData.context.fillStyle = 'white';
+			canvasData.context.fillRect(this.pos.x - 2, this.pos.y - 2, 4, 4);
+		}
 	}
 }
 
@@ -249,7 +256,8 @@ export class FridgeBoss extends Enemy {
 					this.vel.y = 0;
 				}
 
-				entitiesManager.spawn(EnemyBullet, this.pos.x + this.width / 2, this.pos.y + this.height / 2, 0, 0, this.vel.x, this.vel.y);
+				entitiesManager.spawn(EnemyBullet, this.pos.x + this.width / 2, this.pos.y + this.height / 2, 0, 0, this.vel.x, this.vel.y, 
+					generate(assetLoader.getImage("icecube.dflt")));
 				this.shotTimer = FRIDGE_SHOT_DELAY;
 			}
 			else {

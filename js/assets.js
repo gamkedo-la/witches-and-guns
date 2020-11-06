@@ -224,7 +224,6 @@ const assetDefs = {
 		{duration: 80, xoffset: 32*19, yoffset: 0},
 		{duration: 80, xoffset: 32*20, yoffset: 0},
 	  ]},
-
 	]},
 	{id: "lawnmower", src: "./images/lawnmower.png", subids: [
 	  {id: "lawnmower.down", kind: "anim", width: MOWER_FRONT_WIDTH, height: MOWER_HEIGHT, frames: [
@@ -239,7 +238,6 @@ const assetDefs = {
 	  {id: "lawnmower.right", kind: "anim", width: MOWER_SIDE_WIDTH, height: MOWER_HEIGHT, frames: [
 		{duration: 1, xoffset: MOWER_FRONT_WIDTH + MOWER_SIDE_WIDTH + MOWER_BACK_WIDTH, yoffset: 0}
 	  ]},
-
 	  {id: "lawnmowerAccel.down", kind: "anim", width: MOWER_FRONT_WIDTH, height: MOWER_HEIGHT, loop: true, frames: [
 		{duration: 30, xoffset: 0, yoffset: MOWER_HEIGHT*2},
 		{duration: 30, xoffset: 0, yoffset: MOWER_HEIGHT*3},
@@ -304,6 +302,14 @@ const assetDefs = {
 	{id: "health", src: "./images/health.png", subids: [
 	  { id: "health.dflt", kind: "anim", width: 12, height: 16, frames: [
 		  { duration: 1, xoffset: 0, yoffset: 0 },
+	  ]},
+	]},
+	{id: "icecube", src: "./images/icecube.png", subids: [
+	  { id: "icecube.dflt", kind: "anim", width: 4, height: 4, frames: [
+		  { duration: 50, xoffset: 0, yoffset: 0 },
+		  { duration: 50, xoffset: 4, yoffset: 0 },
+		  { duration: 50, xoffset: 8, yoffset: 0 },
+		  { duration: 50, xoffset: 12, yoffset: 0 },
 	  ]},
 	]},
   ],
