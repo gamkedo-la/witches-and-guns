@@ -10,7 +10,7 @@ import { PICKUP_CHANCE, PICKUP_TYPES } from './pickups.js';
 import { GridView } from './view.js';
 import { Fmt } from './fmt.js';
 
-export let currentScene
+export let currentScene;
 
 function timestamp() {
 	return window.performance && window.performance.now ? window.performance.now() : new Date().getTime();
