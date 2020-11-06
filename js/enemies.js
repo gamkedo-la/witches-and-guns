@@ -129,15 +129,6 @@ export class BroomEnemy extends Enemy {
 	super.update(dt);
   }
 
-  changeAnimation(animation) {
-	if (this.currentAnimation != animation) {
-		this.currentAnimation.stop();
-		this.currentAnimation.currentFrameIndex = 0;
-		this.currentAnimation = animation;
-		this.currentAnimation.play();
-	}
-  }
-
   die() {
 	if (this.headButt && this.headButt.alive) {
 	  this.headButt.die();

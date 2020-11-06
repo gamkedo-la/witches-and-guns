@@ -335,29 +335,29 @@ const LEVELS = [
 		grid: LVL1_BG_GRID,
 		fg_grid: LVL1_FG_GRID,
 		waves: [
-			{
-				spawners: [
-					{ cls: BroomEnemy, x: 20, y: 10, amount: 10 },
-					{ cls: BroomEnemy, x: 20, y: 200, amount: 10 },
-					{ cls: BroomEnemy, x: 300, y: 10, amount: 10 },
-					{ cls: BroomEnemy, x: 300, y: 200, amount: 10 },
-				],
-				timeOut: 10,
-			},
-			{
-				spawners: [
-					{ cls: BroomEnemy, x: 100, y: 10, amount: 12 },
-					{ cls: BroomEnemy, x: 100, y: 220, amount: 12 },
-					{ cls: BroomEnemy, x: 10, y: 100, amount: 12 },
-					{ cls: BroomEnemy, x: 300, y: 100, amount: 12 },
-				],
-				timeOut: 10,
-			},
+			// {
+			// 	spawners: [
+			// 		{ cls: BroomEnemy, x: 20, y: 10, amount: 10 },
+			// 		{ cls: BroomEnemy, x: 20, y: 200, amount: 10 },
+			// 		{ cls: BroomEnemy, x: 300, y: 10, amount: 10 },
+			// 		{ cls: BroomEnemy, x: 300, y: 200, amount: 10 },
+			// 	],
+			// 	timeOut: 10,
+			// },
+			// {
+			// 	spawners: [
+			// 		{ cls: BroomEnemy, x: 100, y: 10, amount: 12 },
+			// 		{ cls: BroomEnemy, x: 100, y: 220, amount: 12 },
+			// 		{ cls: BroomEnemy, x: 10, y: 100, amount: 12 },
+			// 		{ cls: BroomEnemy, x: 300, y: 100, amount: 12 },
+			// 	],
+			// 	timeOut: 10,
+			// },
 		],
 		initialEnemies: [
-			{ cls: BroomEnemy, x: 300, y: 100 },
-			{ cls: BroomEnemy, x: 300, y: 100 },
-			{ cls: BroomEnemy, x: 300, y: 100 }
+			// { cls: BroomEnemy, x: 300, y: 100 },
+			// { cls: BroomEnemy, x: 300, y: 100 },
+			// { cls: BroomEnemy, x: 300, y: 100 }
 		],
 		boss: { cls: LawnMowerBoss, x: 110, y: 30 }
 	},
@@ -402,7 +402,7 @@ const LEVELS = [
 class GameScene extends Scene {
 	constructor() {
 		super();
-		this.levelIndex = 1;
+		this.levelIndex = 0;
 		entitiesManager.onCollision('playerProjectile', 'enemy', (projectile, enemy) => {
 			enemy.hurt(projectile.damage);
 			projectile.die();

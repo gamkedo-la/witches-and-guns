@@ -12,6 +12,7 @@ export const MOWER_SIDE_WIDTH = 59;
 export const MOWER_HEIGHT = 62;
 const MOWER_ATTACK_DELAY = 3 / 4;
 const MOWER_ATTACK_DISTANCE = 16;
+const FACE = {down: 0, left: 1, right: 2, up: 3};
 
 export class LawnMowerBoss extends Enemy {
 	constructor(x, y) {
@@ -19,7 +20,15 @@ export class LawnMowerBoss extends Enemy {
 			down: generate(assetLoader.getImage("lawnmower.down")),
 			left: generate(assetLoader.getImage("lawnmower.left")),
 			up: generate(assetLoader.getImage("lawnmower.up")),
-			right: generate(assetLoader.getImage("lawnmower.right"))
+			right: generate(assetLoader.getImage("lawnmower.right")),
+			accelDown: generate(assetLoader.getImage("lawnmowerAccel.down")),
+			accelLeft: generate(assetLoader.getImage("lawnmowerAccel.left")),
+			accelUp: generate(assetLoader.getImage("lawnmowerAccel.up")),
+			accelRight: generate(assetLoader.getImage("lawnmowerAccel.right")),
+			flamesDown: generate(assetLoader.getImage("lawnmowerFlames.down")),
+			flamesLeft: generate(assetLoader.getImage("lawnmowerFlames.left")),
+			flamesUp: generate(assetLoader.getImage("lawnmowerFlames.up")),
+			flamesRight: generate(assetLoader.getImage("lawnmowerFlames.right")),
 		};
 		super({ x: x, y: y }, MOWER_BACK_WIDTH, MOWER_HEIGHT, { offsetY: 14, width: MOWER_BACK_WIDTH, height: MOWER_HEIGHT / 2 }, 60, 2, animations, "down");
 		this.speed = 500;
@@ -28,17 +37,35 @@ export class LawnMowerBoss extends Enemy {
 		this.attackTimer = MOWER_ATTACK_DELAY;
 		this.target = null;
 		this.attacking = false;
+		this.facing = FACE.down;
 	}
 
 	update(dt) {
 		this.currentAnimation.update(dt);
 		if (this.attacking) {
-			this.pos.x += Math.round(this.vel.x * dt);
-			this.pos.y += Math.round(this.vel.y * dt);
-			this.attacking = Math.hypot(this.pos.x - this.target.x, this.pos.y - this.target.y) > MOWER_ATTACK_DISTANCE;
+			if (this.currentAnimation.id.startsWith("lanwmowerFlames")) {
+				if (!this.currentAnimation.playing) {
+					switch(this.facing) {
+					case FACE.down:
+						this.changeAnimation(this.animations.down);
+						break;
+					case FACE.left:
+						this.changeAnimation(this.animations.left);
+						break;
+					case FACE.up:
+						this.changeAnimation(this.animations.up);
+						break;
+					case FACE.right:
+						this.changeAnimation(this.animations.right);
+						break;
+					}
+				}
+			} else {
+				this.pos.x += Math.round(this.vel.x * dt);
+				this.pos.y += Math.round(this.vel.y * dt);
+				this.attacking = Math.hypot(this.pos.x - this.target.x, this.pos.y - this.target.y) > MOWER_ATTACK_DISTANCE;
+			}
 		} else if (this.attackTimer <= 0) {
-			this.vel.x = 0;
-			this.vel.y = 0;
 			let dist, minDist = Number.MAX_SAFE_INTEGER;
 			let closestPlayer = null;
 			const desiredVel = { x: 0, y: 0 };
@@ -52,29 +79,49 @@ export class LawnMowerBoss extends Enemy {
 			}
 			this.target = Object.assign({}, closestPlayer.pos);
 			this.attacking = true;
-			this.attackTimer = Math.random() * (3 / 4 - 1 / 2) + 1 / 2;
+			this.attackTimer = Math.random() * (2 - 0.75) + 0.75;
 			desiredVel.x = this.target.x - this.pos.x;
 			desiredVel.y = this.target.y - this.pos.y;
+			if (desiredVel.y > 0) {
+				this.changeAnimation(this.animations.flamesDown);
+				this.facing = FACE.down;
+			} else if (desiredVel.y < 0) {
+				this.changeAnimation(this.animations.flamesUp);
+				this.facing = FACE.up;
+			}
+			if (desiredVel.x > Math.abs(desiredVel.y)) {
+				this.changeAnimation(this.animations.flamesRight);
+				this.facing = FACE.right;
+			} else if (desiredVel.x < 0 && Math.abs(desiredVel.x) > Math.abs(desiredVel.y)) {
+				this.facing = FACE.left;
+				this.changeAnimation(this.animations.flamesLeft);
+			}
 			const mag = Math.hypot(desiredVel.x, desiredVel.y);
 			this.vel.x = this.speed * desiredVel.x / mag;
 			this.vel.y = this.speed * desiredVel.y / mag;
 		} else {
+			if (!this.currentAnimation.id.startsWith("lawnmowerAccel")) {
+				switch(this.facing) {
+				case FACE.down:
+					this.changeAnimation(this.animations.accelDown);
+					break;
+				case FACE.left:
+					this.changeAnimation(this.animations.accelLeft);
+					break;
+				case FACE.up:
+					this.changeAnimation(this.animations.accelUp);
+					break;
+				case FACE.right:
+					this.changeAnimation(this.animations.accelRight);
+					break;
+				}
+			}
 			this.attackTimer -= dt;
-		}
-		if (this.vel.y > 0) {
-			this.currentAnimation = this.animations.down;
-		} else if (this.vel.y < 0) {
-			this.currentAnimation = this.animations.up;
-		}
-		if (this.vel.x > Math.abs(this.vel.y)) {
-			this.currentAnimation = this.animations.right;
-		} else if (this.vel.x < 0 && Math.abs(this.vel.x) > Math.abs(this.vel.y)) {
-			this.currentAnimation = this.animations.left;
 		}
 		super.update(dt);
 	}
 
-	onTopWallCollision(dt) {
+	dt(dt) {
 		this.attacking = false;
 		super.onTopWallCollision(dt);
 	}

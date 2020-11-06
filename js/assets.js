@@ -239,6 +239,67 @@ const assetDefs = {
 	  {id: "lawnmower.right", kind: "anim", width: MOWER_SIDE_WIDTH, height: MOWER_HEIGHT, frames: [
 		{duration: 1, xoffset: MOWER_FRONT_WIDTH + MOWER_SIDE_WIDTH + MOWER_BACK_WIDTH, yoffset: 0}
 	  ]},
+
+	  {id: "lawnmowerAccel.down", kind: "anim", width: MOWER_FRONT_WIDTH, height: MOWER_HEIGHT, loop: true, frames: [
+		{duration: 30, xoffset: 0, yoffset: MOWER_HEIGHT*2},
+		{duration: 30, xoffset: 0, yoffset: MOWER_HEIGHT*3},
+		{duration: 30, xoffset: 0, yoffset: MOWER_HEIGHT*4},
+	  ]},
+	  {id: "lawnmowerAccel.left", kind: "anim", width: MOWER_SIDE_WIDTH, height: MOWER_HEIGHT, loop: true, frames: [
+		{duration: 30, xoffset: MOWER_FRONT_WIDTH, yoffset: MOWER_HEIGHT*2},
+		{duration: 30, xoffset: MOWER_FRONT_WIDTH, yoffset: MOWER_HEIGHT*3},
+		{duration: 30, xoffset: MOWER_FRONT_WIDTH, yoffset: MOWER_HEIGHT*4},
+	  ]},
+	  {id: "lawnmowerAccel.up", kind: "anim", width: MOWER_BACK_WIDTH, height: MOWER_HEIGHT, loop: true, frames: [
+		{duration: 30, xoffset: MOWER_FRONT_WIDTH + MOWER_SIDE_WIDTH, yoffset: MOWER_HEIGHT*2},
+		{duration: 30, xoffset: MOWER_FRONT_WIDTH + MOWER_SIDE_WIDTH, yoffset: MOWER_HEIGHT*3},
+		{duration: 30, xoffset: MOWER_FRONT_WIDTH + MOWER_SIDE_WIDTH, yoffset: MOWER_HEIGHT*4},
+	  ]},
+	  {id: "lawnmowerAccel.right", kind: "anim", width: MOWER_SIDE_WIDTH, height: MOWER_HEIGHT, loop: true, frames: [
+		{duration: 30, xoffset: MOWER_FRONT_WIDTH + MOWER_SIDE_WIDTH + MOWER_BACK_WIDTH, yoffset: MOWER_HEIGHT*2},
+		{duration: 30, xoffset: MOWER_FRONT_WIDTH + MOWER_SIDE_WIDTH + MOWER_BACK_WIDTH, yoffset: MOWER_HEIGHT*3},
+		{duration: 30, xoffset: MOWER_FRONT_WIDTH + MOWER_SIDE_WIDTH + MOWER_BACK_WIDTH, yoffset: MOWER_HEIGHT*4},
+	  ]},
+	  {id: "lawnmowerFlames.down", kind: "anim", width: MOWER_FRONT_WIDTH, height: MOWER_HEIGHT, frames: [
+		{duration: 30, xoffset: 0,  yoffset: MOWER_HEIGHT*5},
+		{duration: 30, xoffset: 0,  yoffset: MOWER_HEIGHT*6},
+		{duration: 30, xoffset: 0,  yoffset: MOWER_HEIGHT*7},
+		{duration: 60, xoffset: 0,  yoffset: MOWER_HEIGHT*8},
+		{duration: 100, xoffset: 0, yoffset: MOWER_HEIGHT*9},
+		{duration: 60, xoffset: 0,  yoffset: MOWER_HEIGHT*10},
+		{duration: 100, xoffset: 0, yoffset: MOWER_HEIGHT*11},
+		{duration: 100, xoffset: 0, yoffset: MOWER_HEIGHT*12},
+	  ]},
+	  {id: "lawnmowerFlames.left", kind: "anim", width: MOWER_SIDE_WIDTH, height: MOWER_HEIGHT, frames: [
+		{duration: 30, xoffset: MOWER_FRONT_WIDTH,  yoffset: MOWER_HEIGHT*5},
+		{duration: 30, xoffset: MOWER_FRONT_WIDTH,  yoffset: MOWER_HEIGHT*6},
+		{duration: 30, xoffset: MOWER_FRONT_WIDTH,  yoffset: MOWER_HEIGHT*7},
+		{duration: 60, xoffset: MOWER_FRONT_WIDTH,  yoffset: MOWER_HEIGHT*8},
+		{duration: 100, xoffset: MOWER_FRONT_WIDTH, yoffset: MOWER_HEIGHT*9},
+		{duration: 60, xoffset: MOWER_FRONT_WIDTH,  yoffset: MOWER_HEIGHT*10},
+		{duration: 100, xoffset: MOWER_FRONT_WIDTH, yoffset: MOWER_HEIGHT*11},
+		{duration: 100, xoffset: MOWER_FRONT_WIDTH, yoffset: MOWER_HEIGHT*12},
+	  ]},
+	  {id: "lawnmowerFlames.up", kind: "anim", width: MOWER_BACK_WIDTH, height: MOWER_HEIGHT, frames: [
+		{duration: 30, xoffset: MOWER_FRONT_WIDTH + MOWER_SIDE_WIDTH, yoffset: MOWER_HEIGHT*5},
+		{duration: 30, xoffset: MOWER_FRONT_WIDTH + MOWER_SIDE_WIDTH, yoffset: MOWER_HEIGHT*6},
+		{duration: 30, xoffset: MOWER_FRONT_WIDTH + MOWER_SIDE_WIDTH, yoffset: MOWER_HEIGHT*7},
+		{duration: 60, xoffset: MOWER_FRONT_WIDTH + MOWER_SIDE_WIDTH, yoffset: MOWER_HEIGHT*8},
+		{duration: 100, xoffset: MOWER_FRONT_WIDTH + MOWER_SIDE_WIDTH, yoffset: MOWER_HEIGHT*9},
+		{duration: 60, xoffset: MOWER_FRONT_WIDTH + MOWER_SIDE_WIDTH, yoffset: MOWER_HEIGHT*10},
+		{duration: 100, xoffset: MOWER_FRONT_WIDTH + MOWER_SIDE_WIDTH, yoffset: MOWER_HEIGHT*11},
+		{duration: 100, xoffset: MOWER_FRONT_WIDTH + MOWER_SIDE_WIDTH, yoffset: MOWER_HEIGHT*12},
+	  ]},
+	  {id: "lawnmowerFlames.right", kind: "anim", width: MOWER_SIDE_WIDTH, height: MOWER_HEIGHT, frames: [
+		{duration: 30, xoffset: MOWER_FRONT_WIDTH + MOWER_SIDE_WIDTH + MOWER_BACK_WIDTH, yoffset: MOWER_HEIGHT*5},
+		{duration: 30, xoffset: MOWER_FRONT_WIDTH + MOWER_SIDE_WIDTH + MOWER_BACK_WIDTH, yoffset: MOWER_HEIGHT*6},
+		{duration: 30, xoffset: MOWER_FRONT_WIDTH + MOWER_SIDE_WIDTH + MOWER_BACK_WIDTH, yoffset: MOWER_HEIGHT*7},
+		{duration: 60, xoffset: MOWER_FRONT_WIDTH + MOWER_SIDE_WIDTH + MOWER_BACK_WIDTH, yoffset: MOWER_HEIGHT*8},
+		{duration: 100, xoffset: MOWER_FRONT_WIDTH + MOWER_SIDE_WIDTH + MOWER_BACK_WIDTH, yoffset: MOWER_HEIGHT*9},
+		{duration: 60, xoffset: MOWER_FRONT_WIDTH + MOWER_SIDE_WIDTH + MOWER_BACK_WIDTH, yoffset: MOWER_HEIGHT*10},
+		{duration: 100, xoffset: MOWER_FRONT_WIDTH + MOWER_SIDE_WIDTH + MOWER_BACK_WIDTH, yoffset: MOWER_HEIGHT*11},
+		{duration: 100, xoffset: MOWER_FRONT_WIDTH + MOWER_SIDE_WIDTH + MOWER_BACK_WIDTH, yoffset: MOWER_HEIGHT*12},
+	  ]},
 	]},
 	{id: "health", src: "./images/health.png", subids: [
 	  { id: "health.dflt", kind: "anim", width: 12, height: 16, frames: [

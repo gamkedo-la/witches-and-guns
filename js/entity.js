@@ -168,4 +168,13 @@ export class Entity {
 	  canvasData.context.strokeRect(this.collider.x, this.collider.y, this.collider.width, this.collider.height);
 	}
   }
+
+  changeAnimation(animation) {
+	if (this.currentAnimation != animation) {
+		this.currentAnimation.stop();
+		this.currentAnimation.currentFrameIndex = 0;
+		this.currentAnimation = animation;
+		this.currentAnimation.play();
+	}
+  }
 }
