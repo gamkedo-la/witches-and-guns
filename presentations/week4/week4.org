@@ -1,0 +1,56 @@
+#+OPTIONS: reveal_title_slide:nil reveal_center:t reveal_progress:t reveal_history:nil reveal_control:t
+#+OPTIONS: reveal_rolling_links:t reveal_keyboard:t reveal_overview:t num:nil
+#+OPTIONS: toc:0
+#+REVEAL_ROOT: https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/
+#+REVEAL_MARGIN: 0.2
+#+REVEAL_MIN_SCALE: 0.8
+#+REVEAL_TRANS: fast
+#+REVEAL_THEME: blood
+
+
+* Witches n' Guns
+
+  #+BEGIN_export html
+  <h1>Week 4</h1>
+  #+END_export
+
+* Stats
+  
+  - 3 new members in Slack channel
+  - 23 new commits
+
+* Contributions
+
+  - Greg :: First commit!
+  - Tylor Allison :: fridge boss animations and integration, ice cube
+    attack art, more kitchen art, grid view array implementation,
+    kitchen level.
+  - Bilal :: fridge boss attack implementation
+
+** Contributions
+
+  - Andrew Mushel :: broom enemy left/right walk and attack animations.
+  - Gonzalo Delgado :: washing machine stomp sprites, lawnmower boss
+    animations and attack, book enemy sprite WIP.
+
+* Demo
+
+#+BEGIN_export html
+<iframe src="./demo/index.html" width="640" height="480"></iframe>
+#+END_export
+
+
+* Schedule
+
+#+BEGIN_export html
+<blockquote class="trello-board-compact">
+  <a href="https://trello.com/b/5VhElD09/witches-n-guns">
+  Witches 'n Guns Schedule
+  </a>
+</blockquote>
+<script src="https://p.trellocdn.com/embed.min.js"></script>
+#+END_export
+
+* Join!
+
+  *#team-witches-n-guns*
