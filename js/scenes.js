@@ -499,6 +499,7 @@ class GameScene extends Scene {
 		}
 		this.waves = Array.from(currentLevel.waves);
 		currentLevel.loaded = true;
+		this.boss = null;
 	}
 
 	update(dt) {
