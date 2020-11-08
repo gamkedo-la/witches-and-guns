@@ -411,7 +411,7 @@ const LEVELS = [
 class GameScene extends Scene {
 	constructor() {
 		super();
-		this.levelIndex = 0;
+		this.levelIndex = 1;//0;
 		entitiesManager.onCollision('playerProjectile', 'enemy', (projectile, enemy) => {
 			enemy.hurt(projectile.damage);
 			projectile.die();
@@ -434,7 +434,7 @@ class GameScene extends Scene {
 
 	loadLevel() {
 		const currentLevel = LEVELS[this.levelIndex];
-		this.gridViews = currentLevel.grids.map((grid)=> new GridView(grid));
+		this.gridViews = currentLevel.grids.map((grid) => new GridView(grid));
 		for (const enemyDef of currentLevel.initialEnemies) {
 			entitiesManager.spawn(enemyDef.cls, enemyDef.x, enemyDef.y);
 		}
@@ -491,10 +491,10 @@ class GameScene extends Scene {
 			return;
 		}
 		// draw background tiles
-		this.gridViews.forEach( (gview) => { if (!gview.properties.fg) gview.draw(canvasData.context)} );
+		this.gridViews.forEach((gview) => { if (!gview.properties.fg) gview.draw(canvasData.context) });
 		entitiesManager.draw();
 		// draw foreground tiles (in front of entities)
-		this.gridViews.forEach( (gview) => { if (gview.properties.fg) gview.draw(canvasData.context)} );
+		this.gridViews.forEach((gview) => { if (gview.properties.fg) gview.draw(canvasData.context) });
 		const lifeBar = { width: 50, height: 10 };
 
 		for (const player of [...entitiesManager.liveEntities].filter(e => e.type == "player")) {

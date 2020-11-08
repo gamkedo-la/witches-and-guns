@@ -12,7 +12,7 @@ export const MOWER_SIDE_WIDTH = 59;
 export const MOWER_HEIGHT = 62;
 const MOWER_ATTACK_DELAY = 3 / 4;
 const MOWER_ATTACK_DISTANCE = 16;
-const FACE = {down: 0, left: 1, right: 2, up: 3};
+const FACE = { down: 0, left: 1, right: 2, up: 3 };
 
 export class LawnMowerBoss extends Enemy {
 	constructor(x, y) {
@@ -45,48 +45,48 @@ export class LawnMowerBoss extends Enemy {
 		this.currentAnimation.update(dt);
 		if (this.attacking) {
 			if (this.attack === null || !this.attack.alive) {
-				let offset = {0: 0}, width, height;
-				switch(this.facing) {
-				case FACE.down:
-					width = 35;
-					height = 36;
-					offset = {x: 2, y: 26};
-					break;
-				case FACE.left:
-					width = 39;
-					height = 24;
-					offset = {x: 0, y: 36};
-					break;
-				case FACE.up:
-					this.changeAnimation(this.animations.up);
-					width = 35;
-					height = 36;
-					offset = {x: 2, y: 26};
-					break;
-				case FACE.right:
-					width = 39;
-					height = 24;
-					offset = {x: 21, y: 36};
-					break;
+				let offset = { 0: 0 }, width, height;
+				switch (this.facing) {
+					case FACE.down:
+						width = 35;
+						height = 36;
+						offset = { x: 2, y: 26 };
+						break;
+					case FACE.left:
+						width = 39;
+						height = 24;
+						offset = { x: 0, y: 36 };
+						break;
+					case FACE.up:
+						this.changeAnimation(this.animations.up);
+						width = 35;
+						height = 36;
+						offset = { x: 2, y: 26 };
+						break;
+					case FACE.right:
+						width = 39;
+						height = 24;
+						offset = { x: 21, y: 36 };
+						break;
 				}
 				this.attack = entitiesManager.spawn(Attack, this, offset, width, height);
 				this.attack.damage = 3;
 			}
 			if (this.currentAnimation.id.startsWith("lawnmowerFlames")) {
 				if (!this.currentAnimation.playing) {
-					switch(this.facing) {
-					case FACE.down:
-						this.changeAnimation(this.animations.down);
-						break;
-					case FACE.left:
-						this.changeAnimation(this.animations.left);
-						break;
-					case FACE.up:
-						this.changeAnimation(this.animations.up);
-						break;
-					case FACE.right:
-						this.changeAnimation(this.animations.right);
-						break;
+					switch (this.facing) {
+						case FACE.down:
+							this.changeAnimation(this.animations.down);
+							break;
+						case FACE.left:
+							this.changeAnimation(this.animations.left);
+							break;
+						case FACE.up:
+							this.changeAnimation(this.animations.up);
+							break;
+						case FACE.right:
+							this.changeAnimation(this.animations.right);
+							break;
 					}
 				}
 			} else {
@@ -132,19 +132,19 @@ export class LawnMowerBoss extends Enemy {
 					this.vel.y = this.speed * desiredVel.y / mag;
 				}
 			} else if (!this.attacking) {
-				switch(this.facing) {
-				case FACE.down:
-					this.changeAnimation(this.animations.flamesDown);
-					break;
-				case FACE.left:
-					this.changeAnimation(this.animations.flamesLeft);
-					break;
-				case FACE.up:
-					this.changeAnimation(this.animations.flamesUp);
-					break;
-				case FACE.right:
-					this.changeAnimation(this.animations.flamesRight);
-					break;
+				switch (this.facing) {
+					case FACE.down:
+						this.changeAnimation(this.animations.flamesDown);
+						break;
+					case FACE.left:
+						this.changeAnimation(this.animations.flamesLeft);
+						break;
+					case FACE.up:
+						this.changeAnimation(this.animations.flamesUp);
+						break;
+					case FACE.right:
+						this.changeAnimation(this.animations.flamesRight);
+						break;
 				}
 			}
 		} else {
@@ -152,19 +152,19 @@ export class LawnMowerBoss extends Enemy {
 				this.attack.die();
 			}
 			if (!this.currentAnimation.id.startsWith("lawnmowerAccel")) {
-				switch(this.facing) {
-				case FACE.down:
-					this.changeAnimation(this.animations.accelDown);
-					break;
-				case FACE.left:
-					this.changeAnimation(this.animations.accelLeft);
-					break;
-				case FACE.up:
-					this.changeAnimation(this.animations.accelUp);
-					break;
-				case FACE.right:
-					this.changeAnimation(this.animations.accelRight);
-					break;
+				switch (this.facing) {
+					case FACE.down:
+						this.changeAnimation(this.animations.accelDown);
+						break;
+					case FACE.left:
+						this.changeAnimation(this.animations.accelLeft);
+						break;
+					case FACE.up:
+						this.changeAnimation(this.animations.accelUp);
+						break;
+					case FACE.right:
+						this.changeAnimation(this.animations.accelRight);
+						break;
 				}
 			}
 			this.attackTimer -= dt;
@@ -208,8 +208,8 @@ class EnemyBullet extends Entity {
 		super.reset();
 		this.pos = { x: posX, y: posY };
 		this.vel = {
-			x: dirX * 500 + velX,
-			y: dirY * 500 + velY
+			x: (dirX * 500.0) + velX,
+			y: (dirY * 500.0) + velY
 		};
 	}
 
@@ -236,7 +236,7 @@ class EnemyBullet extends Entity {
 	draw() {
 		super.draw();
 		if (this.anim) {
-			this.anim.draw(canvasData.context, this.pos.x-2, this.pos.y-2);
+			this.anim.draw(canvasData.context, this.pos.x - 2, this.pos.y - 2);
 		} else {
 			canvasData.context.fillStyle = 'white';
 			canvasData.context.fillRect(this.pos.x - 2, this.pos.y - 2, 4, 4);
@@ -270,7 +270,7 @@ export class FridgeBoss extends Enemy {
 			aimrtm: generate(assetLoader.getImage("fridge.aim.rtm")),
 		};
 		super({ x: x, y: y }, FRIDGE_WIDTH, FRIDGE_HEIGHT, { offsetY: 0, width: FRIDGE_WIDTH, height: FRIDGE_HEIGHT }, 100, 2, animations, "idlel");
-		this.speed = 150;
+		this.speed = 150.0;
 		this.canCollideWithTypes.add('playerProjectile');
 		this.vel = { x: 0, y: 0 };
 
@@ -281,6 +281,7 @@ export class FridgeBoss extends Enemy {
 
 		this.projectileAttacking = false;
 		this.projectileAttackTimer = FRIDGE_PROJECTILE_ATTACK_TIME;
+		this.projectileAttackIndex = 0;
 
 		this.projectileAttackAfterTurns = FRIDGE_PROJECTILE_ATTACK_AFTER_TURNS;
 
@@ -307,7 +308,34 @@ export class FridgeBoss extends Enemy {
 					this.vel.y = 0;
 				}
 
-				entitiesManager.spawn(EnemyBullet, this.pos.x + this.width / 2, this.pos.y + this.height / 2, 0, 0, this.vel.x, this.vel.y, 
+				var sequenceVelX = [
+					this.speed,
+					this.speed / 1.5,
+					0,
+					-this.speed / 1.5,
+					-this.speed,
+					-this.speed / 1.5,
+					0,
+					this.speed / 1.5
+				];
+				var sequenceVelY = [
+					0,
+					this.speed / 1.5,
+					this.speed,
+					this.speed / 1.5,
+					0,
+					-this.speed / 1.5,
+					-this.speed,
+					-this.speed / 1.5,
+				];
+				this.vel.x = sequenceVelX[this.projectileAttackIndex];
+				this.vel.y = sequenceVelY[this.projectileAttackIndex];
+
+				this.projectileAttackIndex++;
+				if (this.projectileAttackIndex >= sequenceVelX.length)
+					this.projectileAttackIndex = 0;
+
+				entitiesManager.spawn(EnemyBullet, this.pos.x + this.width / 2, this.pos.y + this.height / 2, 0, 0, this.vel.x, this.vel.y,
 					generate(assetLoader.getImage("icecube.dflt")));
 				this.shotTimer = FRIDGE_SHOT_DELAY;
 			}
@@ -318,6 +346,7 @@ export class FridgeBoss extends Enemy {
 			this.projectileAttackTimer -= dt;
 			if (this.projectileAttackTimer <= 0) {
 				this.projectileAttacking = false;
+				this.projectileAttackIndex = 0;
 			}
 		}
 		else if (this.attacking) {
