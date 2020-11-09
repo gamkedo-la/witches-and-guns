@@ -11,14 +11,24 @@ let dt = 0, last = timestamp();
 const UPDATE_STEP = 1/60;
 window.debugMode = false;
 window.mute = false;
+window.paused = false;
 
 function runGameStep(browserTimeStamp) {
-  dt += Math.min(1, (browserTimeStamp - last)/1000);
-  while(dt > UPDATE_STEP) {
-	dt -= UPDATE_STEP;
-	currentScene.update(UPDATE_STEP);
+  dt += Math.min(1, (browserTimeStamp - last) / 1000);
+  if (window.paused) {
+    //just continue to listen to input only
+    while (dt > UPDATE_STEP) {
+      dt -= UPDATE_STEP;
+      inputManager.update(dt);
+    }
+    //TODO display some paused game overlay
+  } else {
+    while (dt > UPDATE_STEP) {
+      dt -= UPDATE_STEP;
+      currentScene.update(UPDATE_STEP);
+    }
+    currentScene.draw();
   }
-  currentScene.draw();
   last = browserTimeStamp;
   window.requestAnimationFrame(runGameStep);
 }
@@ -37,6 +47,11 @@ window.onload = function() {
 function startGame(values) {
   currentScene.init();
   window.requestAnimationFrame(runGameStep);
+}
+
+window.pauseGame = function(){
+  //TODO add some cooldown e.g. 300ms: handle if both players press pause button at almost the same time
+  window.paused = !window.paused;
 }
 
 

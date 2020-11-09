@@ -286,6 +286,10 @@ class InputManager {
 	this.on("mute", controller => {
 		window.mute = !window.mute;
 	  });
+
+	this.on("pause", controller => {
+		window.pauseGame();
+	});
   }
 
   on(eventNames, func) {
