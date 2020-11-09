@@ -52,6 +52,7 @@ function startGame(values) {
 window.pauseGame = function(){
   //TODO add some cooldown e.g. 300ms: handle if both players press pause button at almost the same time
   window.paused = !window.paused;
+  console.log("paused game: "+window.paused)
 }
 
 
