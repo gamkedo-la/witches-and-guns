@@ -2,7 +2,7 @@ import { assetLoader } from './assets.js';
 import { canvasData } from './globals.js';
 import { entitiesManager } from './entity.js';
 import { inputManager } from './input.js';
-import { BroomEnemy } from './enemies.js';
+import { BroomEnemy, ShovelEnemy } from './enemies.js';
 import { FridgeBoss, LawnMowerBoss, TVBoss } from './bosses.js';
 import { Player } from './player.js';
 import { Grid } from './grid.js';

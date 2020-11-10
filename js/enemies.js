@@ -152,3 +152,23 @@ export class BroomEnemy extends Enemy {
 	  return (this.currentAnimation == this.animations.attackLeft || this.currentAnimation == this.animations.attackRight);
   }
 }
+
+
+export const SHOVEL_WIDTH = 16;
+export const SHOVEL_HEIGHT = 40;
+
+
+export class ShovelEnemy extends Enemy {
+  constructor(x, y) {
+	const animations = {
+	  idle: generate(assetLoader.getImage("shovel.idle")),
+	  jump: generate(assetLoader.getImage("shovel.jump"))
+	};
+	super({x: x, y: y}, SHOVEL_WIDTH, SHOVEL_HEIGHT, {width: 12, height: 14}, 1, 1, animations, "jump");
+  }
+
+  update(dt) {
+	this.currentAnimation.update(dt);
+	super.update(dt);
+  }
+}

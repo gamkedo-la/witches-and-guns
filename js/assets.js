@@ -1,5 +1,6 @@
 import { Fmt } from "./fmt.js";
 import {MOWER_FRONT_WIDTH, MOWER_BACK_WIDTH, MOWER_SIDE_WIDTH, MOWER_HEIGHT} from "./bosses.js";
+import {SHOVEL_WIDTH, SHOVEL_HEIGHT} from "./enemies.js";
 
 const PLAYER_WIDTH = 20;
 const PLAYER_HEIGHT = 32;
@@ -85,7 +86,22 @@ const assetDefs = {
 		{ duration: 50, xoffset: BROOM_WIDTH + BROOM_ATTACK_WIDTH, yoffset: BROOM_HEIGHT*3},
 		{ duration: 200, xoffset: BROOM_WIDTH + BROOM_ATTACK_WIDTH, yoffset: BROOM_HEIGHT*4},
 		{ duration: 50, xoffset: BROOM_WIDTH + BROOM_ATTACK_WIDTH, yoffset: BROOM_HEIGHT*5},
+	  ]},
 	]},
+	{id: "shovelEnemy", src: "./images/shovel-enemy.png", subids: [
+	  {id: "shovel.idle", kind: "anim", width: SHOVEL_WIDTH, height: SHOVEL_HEIGHT, frames: [
+		{duration: 1, xoffset: 0, yoffset: 0},
+	  ]},
+	  {id: "shovel.jump", kind: "anim", width: SHOVEL_WIDTH, height: SHOVEL_HEIGHT, frames: [
+		{duration: 60, xoffset: 0, yoffset: SHOVEL_HEIGHT},
+		{duration: 300, xoffset: 0, yoffset: SHOVEL_HEIGHT * 2},
+		{duration: 50, xoffset: 0, yoffset: SHOVEL_HEIGHT * 3},
+		{duration: 100, xoffset: 0, yoffset: SHOVEL_HEIGHT * 4},
+		{duration: 100, xoffset: 0, yoffset: SHOVEL_HEIGHT * 5},
+		{duration: 100, xoffset: 0, yoffset: SHOVEL_HEIGHT * 6},
+		{duration: 100, xoffset: 0, yoffset: SHOVEL_HEIGHT * 7},
+		{duration: 200, xoffset: 0, yoffset: SHOVEL_HEIGHT * 8},
+	  ]},
 	]},
 	{id: "floorTile", src: "./images/tiles/dungeon-floor.png"},
 	{id: "fence_b_a", src: "./images/tiles/fence_b_a.png"},
