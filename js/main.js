@@ -6,7 +6,6 @@ import {currentScene} from './scenes.js';
 //WARM UP: This would be a good place to put
 //a practice commit.  Just add a comment like
 //this one and then commit it! :)
-//Test Comment, will delete 
 
 let dt = 0, last = timestamp();
 const UPDATE_STEP = 1/60;
