@@ -71,6 +71,10 @@ class EntitiesManager {
 	  entity.draw();
 	}
   }
+
+  getLiveForType(type) {
+	return [...this.liveEntities].filter(e => e.type == type);
+  }
 }
 
 export const entitiesManager = new EntitiesManager();

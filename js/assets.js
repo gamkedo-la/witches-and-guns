@@ -92,10 +92,20 @@ const assetDefs = {
 	  {id: "shovel.idle", kind: "anim", width: SHOVEL_WIDTH, height: SHOVEL_HEIGHT, frames: [
 		{duration: 1, xoffset: 0, yoffset: 0},
 	  ]},
-	  {id: "shovel.jump", kind: "anim", width: SHOVEL_WIDTH, height: SHOVEL_HEIGHT, frames: [
+	  {id: "shovel.jumpLeft", kind: "anim", width: SHOVEL_WIDTH, height: SHOVEL_HEIGHT, loop: false, frames: [
 		{duration: 60, xoffset: 0, yoffset: SHOVEL_HEIGHT},
 		{duration: 300, xoffset: 0, yoffset: SHOVEL_HEIGHT * 2},
 		{duration: 50, xoffset: 0, yoffset: SHOVEL_HEIGHT * 3},
+		{duration: 100, xoffset: 0, yoffset: SHOVEL_HEIGHT * 4},
+		{duration: 100, xoffset: 0, yoffset: SHOVEL_HEIGHT * 5},
+		{duration: 100, xoffset: 0, yoffset: SHOVEL_HEIGHT * 6},
+		{duration: 100, xoffset: 0, yoffset: SHOVEL_HEIGHT * 7},
+		{duration: 200, xoffset: 0, yoffset: SHOVEL_HEIGHT * 8},
+	  ]},
+	  {id: "shovel.jumpRight", kind: "anim", width: SHOVEL_WIDTH, height: SHOVEL_HEIGHT, loop: false, frames: [
+		{duration: 60, xoffset: SHOVEL_WIDTH, yoffset: SHOVEL_HEIGHT},
+		{duration: 300, xoffset: SHOVEL_WIDTH, yoffset: SHOVEL_HEIGHT * 2},
+		{duration: 50, xoffset: SHOVEL_WIDTH, yoffset: SHOVEL_HEIGHT * 3},
 		{duration: 100, xoffset: 0, yoffset: SHOVEL_HEIGHT * 4},
 		{duration: 100, xoffset: 0, yoffset: SHOVEL_HEIGHT * 5},
 		{duration: 100, xoffset: 0, yoffset: SHOVEL_HEIGHT * 6},

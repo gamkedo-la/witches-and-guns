@@ -410,9 +410,15 @@ const LEVELS = [
 			// },
 		],
 		initialEnemies: [
-			// { cls: BroomEnemy, x: 300, y: 100 },
-			// { cls: BroomEnemy, x: 300, y: 100 },
-			// { cls: BroomEnemy, x: 300, y: 100 }
+			{ cls: ShovelEnemy, x: 302, y: 101 },
+			{ cls: ShovelEnemy, x: 304, y: 103 },
+			{ cls: ShovelEnemy, x: 305, y: 105 },
+			{ cls: ShovelEnemy, x: 301, y: 107 },
+			{ cls: ShovelEnemy, x: 303, y: 99 },
+			{ cls: ShovelEnemy, x: 305, y: 97 },
+			{ cls: ShovelEnemy, x: 299, y: 95 },
+			{ cls: ShovelEnemy, x: 295, y: 92 },
+			{ cls: ShovelEnemy, x: 293, y: 104 }
 		],
 		boss: { cls: LawnMowerBoss, x: 110, y: 30 }
 	},

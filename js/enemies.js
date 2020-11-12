@@ -156,19 +156,102 @@ export class BroomEnemy extends Enemy {
 
 export const SHOVEL_WIDTH = 16;
 export const SHOVEL_HEIGHT = 40;
-
+const SHOVEL_ATTACK_DELAY = 3 / 4;
+const SHOVEL_MAX_JUMP_DIST = 48;
+const SHOVEL_JUMP_SPEED = 120;
+const SHOVEL_JUMP_GRAVITY = 300;
 
 export class ShovelEnemy extends Enemy {
   constructor(x, y) {
 	const animations = {
 	  idle: generate(assetLoader.getImage("shovel.idle")),
-	  jump: generate(assetLoader.getImage("shovel.jump"))
+	  jumpLeft: generate(assetLoader.getImage("shovel.jumpLeft")),
+	  jumpRight: generate(assetLoader.getImage("shovel.jumpRight"))
 	};
-	super({x: x, y: y}, SHOVEL_WIDTH, SHOVEL_HEIGHT, {width: 12, height: 14}, 1, 1, animations, "jump");
+	super({x: x, y: y}, SHOVEL_WIDTH, SHOVEL_HEIGHT, {width: 12, height: 14}, 1, 1, animations, "idle");
+	this.target = null;
+	this.jumping = false;
+	this.attacking = false;
+	this.attack = null;
+	this.jumpTimer = SHOVEL_ATTACK_DELAY;
+	this.jumpAnimTimer = (300 + 50 + 100)/1000;
+	this.vel = {x: 0, y: 0};
   }
 
-  update(dt) {
+  findTarget() {
+	let closestPlayer = null;
+	let dist, minDist = Number.MAX_SAFE_INTEGER;
+	for (const player of entitiesManager.getLiveForType("player")) {
+	  dist = Math.hypot(player.pos.x - this.pos.x, player.pos.y - this.pos.y);
+	  if (dist < minDist) {
+		minDist = dist;
+		closestPlayer = player;
+	  }
+	}
+	if (dist > SHOVEL_MAX_JUMP_DIST) {
+	  const angle = Math.atan2(closestPlayer.pos.x, closestPlayer.pos.y) + Math.random()*(Math.PI/3);
+	  const signX = Math.sign(closestPlayer.pos.x - this.pos.x);
+	  const signY = Math.sign(closestPlayer.pos.y - this.pos.y);
+	  this.target = {
+		x: Math.round(this.pos.x + signX*Math.cos(angle)*SHOVEL_MAX_JUMP_DIST),
+		y: Math.round(this.pos.y + signY*Math.sin(angle)*SHOVEL_MAX_JUMP_DIST)
+	  };
+	} else {
+	  this.target = {
+		x: closestPlayer.pos.x + Math.floor(Math.random() * 5 - 2),
+		y: closestPlayer.pos.y + Math.floor(Math.random() * 5 - 2)
+	  };
+	}
+  }
+
+  update(dt) {	
 	this.currentAnimation.update(dt);
 	super.update(dt);
+	if (this.jumping) {
+	  if (this.jumpAnimTimer > 0) {
+		this.jumpAnimTimer -= dt;
+	  } else {
+		this.vel.y += SHOVEL_JUMP_GRAVITY*dt;
+		this.pos.x += Math.round(this.vel.x*dt);
+		this.pos.y += Math.round(this.vel.y*dt);
+		this.attacking = this.vel.y > 0;
+		this.jumping = !(this.attacking && this.pos.y > this.target.y);
+	  }
+	} else if (this.jumpTimer <= 0) {
+	  this.findTarget();
+	  const jumpAnimation = this.target.x > this.pos.x ? this.animations.jumpLeft : this.animations.jumpRight;
+	  if (this.currentAnimation != jumpAnimation) {
+		this.changeAnimation(jumpAnimation);
+		this.jumpAnimTimer = (300 + 50 + 100)/1000;
+	  }
+	  this.jumping = true;
+	  this.vel.y = -SHOVEL_JUMP_SPEED;
+	  this.vel.x = Math.sign(this.target.x - this.pos.x) * SHOVEL_JUMP_SPEED/2;
+	  this.jumpTimer = SHOVEL_ATTACK_DELAY;
+	} else {
+	  if (this.currentAnimation != this.animations.idle) {
+		this.changeAnimation(this.animations.idle);
+	  }
+	  this.attacking = false;
+	  this.vel.x = 0;
+	  this.vel.y = 0;
+	  this.jumpTimer -= dt;
+	}
+	if (this.attacking) {
+	  if (this.attack === null) {
+		this.attack = entitiesManager.spawn(Attack, this, {x: 0, y: SHOVEL_HEIGHT/2}, SHOVEL_WIDTH, SHOVEL_HEIGHT/2);
+	  }
+	} else if (this.attack !== null) {
+	  this.attack.die();
+	  this.attack = null;
+	}
+  }
+
+  draw() {
+	super.draw();
+	if (this.target) {
+	  canvasData.context.fillStyle = 'red';
+	  canvasData.context.arc(this.target.x, this.target.y, 2, 0, Math.PI);
+	}
   }
 }
