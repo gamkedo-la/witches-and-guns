@@ -171,7 +171,7 @@ export class LawnMowerBoss extends Enemy {
 		super.update(dt);
 	}
 
-	dt(dt) {
+	onTopWallCollision(dt) {
 		this.attacking = false;
 		super.onTopWallCollision(dt);
 	}
