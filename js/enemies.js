@@ -155,7 +155,7 @@ export class BroomEnemy extends Enemy {
 
 
 export const SHOVEL_WIDTH = 16;
-export const SHOVEL_HEIGHT = 40;
+export const SHOVEL_HEIGHT = 24;
 const SHOVEL_ATTACK_DELAY = 3 / 4;
 const SHOVEL_MAX_JUMP_DIST = 48;
 const SHOVEL_JUMP_SPEED = 120;
@@ -165,8 +165,10 @@ export class ShovelEnemy extends Enemy {
   constructor(x, y) {
 	const animations = {
 	  idle: generate(assetLoader.getImage("shovel.idle")),
-	  jumpLeft: generate(assetLoader.getImage("shovel.jumpLeft")),
-	  jumpRight: generate(assetLoader.getImage("shovel.jumpRight"))
+	  bendLeft: generate(assetLoader.getImage("shovel.bendLeft")),
+	  bendRight: generate(assetLoader.getImage("shovel.bendRight")),
+	  jump: generate(assetLoader.getImage("shovel.jump")),
+	  land: generate(assetLoader.getImage("shovel.land")),
 	};
 	super({x: x, y: y}, SHOVEL_WIDTH, SHOVEL_HEIGHT, {width: 12, height: 14}, 1, 1, animations, "idle");
 	this.target = null;
@@ -174,7 +176,6 @@ export class ShovelEnemy extends Enemy {
 	this.attacking = false;
 	this.attack = null;
 	this.jumpTimer = SHOVEL_ATTACK_DELAY;
-	this.jumpAnimTimer = (300 + 50 + 100)/1000;
 	this.vel = {x: 0, y: 0};
   }
 
@@ -208,8 +209,10 @@ export class ShovelEnemy extends Enemy {
 	this.currentAnimation.update(dt);
 	super.update(dt);
 	if (this.jumping) {
-	  if (this.jumpAnimTimer > 0) {
-		this.jumpAnimTimer -= dt;
+	  if (this.currentAnimation.id.startsWith("shovel.bend")) {
+		if (!this.currentAnimation.playing) {
+		  this.changeAnimation(this.animations.jump);
+		}
 	  } else {
 		this.vel.y += SHOVEL_JUMP_GRAVITY*dt;
 		this.pos.x += Math.round(this.vel.x*dt);
@@ -219,17 +222,18 @@ export class ShovelEnemy extends Enemy {
 	  }
 	} else if (this.jumpTimer <= 0) {
 	  this.findTarget();
-	  const jumpAnimation = this.target.x > this.pos.x ? this.animations.jumpLeft : this.animations.jumpRight;
-	  if (this.currentAnimation != jumpAnimation) {
-		this.changeAnimation(jumpAnimation);
-		this.jumpAnimTimer = (300 + 50 + 100)/1000;
+	  const bendAnimation = this.target.x > this.pos.x ? this.animations.bendLeft : this.animations.bendRight;
+	  if (this.currentAnimation != bendAnimation) {
+		this.changeAnimation(bendAnimation);
 	  }
 	  this.jumping = true;
 	  this.vel.y = -SHOVEL_JUMP_SPEED;
 	  this.vel.x = Math.sign(this.target.x - this.pos.x) * SHOVEL_JUMP_SPEED/2;
 	  this.jumpTimer = SHOVEL_ATTACK_DELAY;
 	} else {
-	  if (this.currentAnimation != this.animations.idle) {
+	  if (this.currentAnimation === this.animations.jump) {
+		this.changeAnimation(this.animations.land);
+	  } else if (this.currentAnimation === this.animations.land && !this.currentAnimation.playing) {
 		this.changeAnimation(this.animations.idle);
 	  }
 	  this.attacking = false;
