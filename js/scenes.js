@@ -358,14 +358,22 @@ const LTRC = "lr_wall_trc";
 const LBRC = "lr_wall_brc";
 const LAND = "lr_landing";
 const DOOR = "lr_door";
+const LRWD = "lr_window";
 const LAMP = "lamp";
 const TELE = "tv";
+const LCHR = "lr_chair";
+const STBL = "side_table";
+const BKCS = "bookcase";
+const BKCL = "bookcase_l";
+const BKCR = "bookcase_r";
+const PLNT = "plant";
+const CTRK = "coatrack";
 
 const LVL3_BG_GRID = new Grid({
 	width: WIDTH,
 	height: HEIGHT,
 	entries: [
-		LWLL, LWTL, LWLT, LWLT, LWLT, LWLT, LWLT, LWLT, LWLT, DOOR, NOOP, LWLT, LWLT, LWLT, LWLT, LWLT, LWLT, LWLT, LWTR, LWLR,
+		LWLL, LWTL, LWLT, LWLT, LRWD, NOOP, LWLT, LWLT, LWLT, DOOR, NOOP, LWLT, LWLT, LRWD, NOOP, LWLT, LWLT, LWLT, LWTR, LWLR,
 		LWLL, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, LWLR,
 		LWLL, CRTL, CRPT, CRPT, CRPT, CRPT, CRPT, CRPT, CRPT, LAND, NOOP, CRPT, CRPT, CRPT, CRPT, CRPT, CRPT, CRPT, CRTR, LWLR,
 		LWLL, CRPL, CARP, CARP, CARP, CARP, CARP, CARP, CARP, CARP, CARP, CARP, CARP, CARP, CARP, CARP, CARP, CARP, CRPR, LWLR,
@@ -387,8 +395,16 @@ const LVL3_MID_GRID = new Grid({
 	width: WIDTH,
 	height: HEIGHT,
 });
-LVL3_MID_GRID.set(LAMP, 11, 0);
-LVL3_MID_GRID.set(TELE, 6, 1);
+LVL3_MID_GRID.set(PLNT, 1, 1);
+LVL3_MID_GRID.set(LCHR, 2, 1);
+LVL3_MID_GRID.set(STBL, 4, 1);
+LVL3_MID_GRID.set(BKCS, 7, 0);
+LVL3_MID_GRID.set(CTRK, 11, 0);
+LVL3_MID_GRID.set(TELE, 13, 1);
+LVL3_MID_GRID.set(LCHR, 15, 1);
+LVL3_MID_GRID.set(LAMP, 17, 0);
+LVL3_MID_GRID.set(BKCL, 1, 10);
+LVL3_MID_GRID.set(BKCR, 18, 10);
 
 const LVL3_FG_GRID = new Grid({
 	width: WIDTH,

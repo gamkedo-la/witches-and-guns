@@ -374,9 +374,17 @@ const assetDefs = {
 	  {id: "lr_wall_brc", kind: "sprite", width: 16, height: 16, 	xoffset: 16*19, yoffset: 16*8},
 	  {id: "lr_landing", kind: "sprite", width: 32, height: 16, 	xoffset: 16*6, yoffset: 16*2},
 	  {id: "lr_door", kind: "sprite", width: 32, height: 32, 		xoffset: 16*6, yoffset: 16*0},
-	  {id: "lamp", kind: "anim", width: 48, height: 64, frames: [
+	  {id: "lr_window", kind: "sprite", width: 32, height: 32, 		xoffset: 16*9, yoffset: 16*0},
+	  {id: "lr_chair", kind: "sprite", width: 32, height: 32, 		xoffset: 16*22, yoffset: 16*2},
+	  {id: "side_table", kind: "sprite", width: 16, height: 32, 	xoffset: 16*24, yoffset: 16*2},
+	  {id: "plant", kind: "sprite", width: 16, height: 32, 			xoffset: 16*25, yoffset: 16*2},
+	  {id: "bookcase", kind: "sprite", width: 32, height: 48, 		xoffset: 16*20, yoffset: 16*4},
+	  {id: "bookcase_l", kind: "sprite", width: 16, height: 64, 	xoffset: 16*22, yoffset: 16*4},
+	  {id: "bookcase_r", kind: "sprite", width: 16, height: 64, 	xoffset: 16*23, yoffset: 16*4},
+	  {id: "coatrack", kind: "sprite", width: 32, height: 48, 		xoffset: 16*26, yoffset: 16*2},
+	  {id: "lamp", kind: "anim", width: 32, height: 48, frames: [
 		  { duration: 3000, xoffset: 16*28, yoffset: 0 },
-		  { duration: 3000, xoffset: 16*31, yoffset: 0 },
+		  { duration: 3000, xoffset: 16*30, yoffset: 0 },
 	  ]},
 	  {id: "tv", kind: "anim", width: 32, height: 32, frames: [
 		  { duration: 500, xoffset: 16*20, yoffset: 0 },
