@@ -1,0 +1,50 @@
+#+OPTIONS: reveal_title_slide:nil reveal_center:t reveal_progress:t reveal_history:nil reveal_control:t
+#+OPTIONS: reveal_rolling_links:t reveal_keyboard:t reveal_overview:t num:nil
+#+OPTIONS: toc:0
+#+REVEAL_ROOT: https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/
+#+REVEAL_MARGIN: 0.2
+#+REVEAL_MIN_SCALE: 0.8
+#+REVEAL_TRANS: fast
+#+REVEAL_THEME: blood
+
+
+* Witches n' Guns
+
+  #+BEGIN_export html
+  <h1>Week 5</h1>
+  #+END_export
+
+* Stats
+  
+  - 2 new members in Slack channel
+  - 18 new commits
+
+* Contributions
+
+  - Greg :: Pause event implementation and console log.
+  - Tylor Allison :: Living Room level art and placing.
+  - Bilal :: Fridge boss shooting animation. Level 3 and TV boss WIP.
+  - Wesley Stagg :: test commits.
+  - Gonzalo :: Gardening shovel enemy. Boss bugfix.
+
+* Demo
+
+#+BEGIN_export html
+<iframe src="./demo/index.html" width="640" height="480"></iframe>
+#+END_export
+
+
+* Schedule
+
+#+BEGIN_export html
+<blockquote class="trello-board-compact">
+  <a href="https://trello.com/b/5VhElD09/witches-n-guns">
+  Witches 'n Guns Schedule
+  </a>
+</blockquote>
+<script src="https://p.trellocdn.com/embed.min.js"></script>
+#+END_export
+
+* Join!
+
+  *#team-witches-n-guns*
