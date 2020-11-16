@@ -4,58 +4,13 @@ import { canvasData } from './globals.js';
 import { assetLoader } from './assets.js';
 import { inputManager } from './input.js';
 import { generate } from './view.js';
+import { Gun, GUNS} from './guns.js';
 
 const SPEED = 110;
-const SHOTSPEED = 320;
 const SHOTTIME = 1 / 12;
 const DASH_SPEED = 400;
 const DASH_TIME = 10;
 const DASH_COOLDOWN = 24;
-
-class Bullet extends Entity {
-	constructor(posX, posY, dirX, dirY, velX, velY) {
-		super('playerProjectile');
-		this.canCollideWithTypes.add('enemy');
-		this.collider.width = 3;
-		this.collider.height = 3;
-		this.reset(posX, posY, dirX, dirY, velX, velY);
-	}
-
-	reset(posX, posY, dirX, dirY, velX, velY) {
-		super.reset();
-		this.pos = { x: posX, y: posY };
-		this.vel = {
-			x: dirX * SHOTSPEED + velX,
-			y: dirY * SHOTSPEED + velY
-		};
-	}
-
-	update(dt) {
-		super.update(dt);
-		const vel = {
-			x: this.vel.x * dt,
-			y: this.vel.y * dt
-		};
-		if (Math.abs(vel.x) > 0 && Math.abs(vel.y) > 0) {
-			vel.x *= Math.SQRT1_2;
-			vel.y *= Math.SQRT1_2;
-		}
-		this.pos.x += Math.round(vel.x);
-		this.pos.y += Math.round(vel.y);
-		this.collider.x = this.pos.x - 1;
-		this.collider.y = this.pos.y - 1;
-		if (this.pos.x < 0 || this.pos.x > canvasData.canvas.width || this.pos.y < 0 || this.pos.y > canvasData.canvas.height) {
-			this.die();
-		}
-	}
-
-	draw() {
-		super.draw();
-		canvasData.context.fillStyle = 'white';
-		canvasData.context.fillRect(this.pos.x - 2, this.pos.y - 2, 4, 4);
-	}
-}
-
 const PLAYER_WIDTH = 20;
 const PLAYER_HEIGHT = 32;
 
@@ -106,6 +61,7 @@ export class Player extends Entity {
 		];
 		super("player", { x: x, y: y }, PLAYER_WIDTH, PLAYER_HEIGHT, { width: 12, height: 24 }, 10, 1, anims, initialAnimation);
 		//this.lives = 3;
+		this.gun = entitiesManager.spawn(Gun, this, GUNS.basic);
 		this.reset(controller, x, y);
 	}
 
@@ -183,21 +139,10 @@ export class Player extends Entity {
 		if (!this.controller) {
 			return;
 		}
-
 		const state = this.controller.currentState;
 		this.aim = getAxis(state.shootUp, state.shootDown, state.shootLeft, state.shootRight);
-
-		if (this.shotTimer <= 0 && (state.shootUp || state.shootDown || state.shootLeft || state.shootRight)) {//((this.aim.x != 0 || this.aim.y != 0) && this.shotTimer <= 0) {
-			this.shotTimer = SHOTTIME;
-			// Using player center as origin of bullets
-			// TODO: define/find "gun position"
-			entitiesManager.spawn(Bullet, this.pos.x + this.width / 2, this.pos.y + this.height / 2, this.aim.x, this.aim.y, this.vel.x, this.vel.y);
-			// TODO: May want to have a central place for audio so we can mute/volume control from there 
-			if (!window.mute) {
-				assetLoader.getSound("shoot").play();
-			}
-		} else {
-			this.shotTimer -= dt;
+		if (state.shootUp || state.shootDown || state.shootLeft || state.shootRight) {
+			this.gun.shoot(this.aim);
 		}
 	}
 
