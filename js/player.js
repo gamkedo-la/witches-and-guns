@@ -61,8 +61,12 @@ export class Player extends Entity {
 		];
 		super("player", { x: x, y: y }, PLAYER_WIDTH, PLAYER_HEIGHT, { width: 12, height: 24 }, 10, 1, anims, initialAnimation);
 		//this.lives = 3;
-		this.gun = entitiesManager.spawn(Gun, this, GUNS.basic);
+		this.setBasicGun();
 		this.reset(controller, x, y);
+	}
+
+	setBasicGun() {
+		this.gun = entitiesManager.spawn(Gun, this, GUNS.basic);
 	}
 
 	reset(controller, x = 0, y = 0) {

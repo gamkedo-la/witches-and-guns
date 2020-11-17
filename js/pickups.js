@@ -1,8 +1,9 @@
 import {Animation} from "./animation.js";
-import {Entity} from './entity.js';
+import { Entity, entitiesManager } from "./entity.js";
 import {canvasData} from './globals.js';
 import { generate } from './view.js';
 import {assetLoader} from './assets.js';
+import { Gun, GUNS } from "./guns.js";
 
 
 class PickUp extends Entity {
@@ -54,5 +55,35 @@ class HealthPickUp extends PickUp {
   }
 }
 
-export const PICKUP_TYPES = [HealthPickUp];
+
+function getRandomGunSpec() {
+  const specs = Object.values(GUNS).filter(s => s.hasOwnProperty("iconId"));
+  return specs[Math.floor(Math.random() * specs.length)];
+}
+
+class GunPickUp extends PickUp {
+	constructor() {
+	  const spec = getRandomGunSpec();
+	  const animations = {
+		default: generate(assetLoader.getImage(spec.iconId))
+	  };
+	  super(12, 12, animations, "default", 5);
+	  this.spec = spec;
+  }
+
+  reset() {
+	this.spec = getRandomGunSpec();
+	this.animations = {
+	  default: generate(assetLoader.getImage(this.spec.iconId))
+	};
+	super.reset();
+  }
+
+  apply(player) {
+	super.apply(player);
+	player.gun = entitiesManager.spawn(Gun, player, this.spec);
+  }
+}
+
+export const PICKUP_TYPES = [HealthPickUp, GunPickUp];
 export const PICKUP_CHANCE = 0.005;
