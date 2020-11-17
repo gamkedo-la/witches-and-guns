@@ -68,6 +68,20 @@ export const GUNS = {
 			entitiesManager.spawn(Bullet, origin.x, origin.y, dir.x, dir.y, vel.x, vel.y);
 		}
 	},
+	spread: {
+		shotTime: 1 / 10,
+		ammo: 50,
+	    soundId: "shoot",
+	    iconId: "spreadGun",
+		bulletSpawner: (origin, dir, vel) => {
+			const angle = Math.atan2(dir.x, -dir.y) - Math.PI/2;
+			const spreadAngle = Math.PI/16;
+			entitiesManager.spawn(Bullet, origin.x, origin.y, Math.cos(angle - 2*spreadAngle), Math.sin(angle - 2*spreadAngle), vel.x, vel.y);
+			entitiesManager.spawn(Bullet, origin.x, origin.y, Math.cos(angle - spreadAngle), Math.sin(angle - spreadAngle), vel.x, vel.y);
+			entitiesManager.spawn(Bullet, origin.x, origin.y, Math.cos(angle + spreadAngle), Math.sin(angle + spreadAngle), vel.x, vel.y);
+			entitiesManager.spawn(Bullet, origin.x, origin.y, Math.cos(angle + 2*spreadAngle), Math.sin(angle + 2*spreadAngle), vel.x, vel.y);
+		}
+	},
 };
 
 export class Gun extends Entity {
