@@ -348,6 +348,11 @@ const assetDefs = {
 		  { duration: 1, xoffset: 0, yoffset: 0 },
 	  ]},
 	]},
+	{id: "pickUpsSheet", src: "./images/pickups.png", subids: [
+	  { id: "spreadGun", kind: "anim", width: 12, height: 12, frames: [
+		{duration: 1, xoffset: 0, yoffset: 0},
+	  ]}
+	]},
 	{id: "icecube", src: "./images/icecube.png", subids: [
 	  { id: "icecube.dflt", kind: "anim", width: 4, height: 4, frames: [
 		  { duration: 50, xoffset: 0, yoffset: 0 },
