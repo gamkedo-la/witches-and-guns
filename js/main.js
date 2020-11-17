@@ -12,6 +12,7 @@ const UPDATE_STEP = 1/60;
 window.debugMode = false;
 window.mute = false;
 window.paused = false;
+let pauseCooldownEndTime = 0;
 
 function runGameStep(browserTimeStamp) {
   dt += Math.min(1, (browserTimeStamp - last) / 1000);
@@ -53,9 +54,22 @@ function startGame(values) {
 }
 
 window.pauseGame = function(){
-  //TODO add some cooldown e.g. 300ms: handle if both players press pause button at almost the same time
-  window.paused = !window.paused;
-  console.log("paused game: "+window.paused)
+  //using a short cooldown after pausing the game,
+  //so smashing the pause button in a hurry or by both players at almost the same time does not unpause unintentionally
+  let currentTime = timestamp();
+  if(pauseCooldownEndTime <= currentTime){
+    window.paused = !window.paused;
+    console.log("paused game: " + window.paused)
+    if(window.paused){
+      // for pausing again a very short cooldown is enough, so players can almost instantly return to the pause screen
+      pauseCooldownEndTime = currentTime + 150;
+    } else if(!window.paused){
+      // it could harm the game if the players accidently unpause the game immediately, so using a bit longer pause
+      pauseCooldownEndTime = currentTime + 250;
+    }
+  } else {
+    console.log("pause button was smashed");
+  }
 }
 
 function drawPauseOverlay() {
