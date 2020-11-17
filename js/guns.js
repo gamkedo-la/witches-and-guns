@@ -62,7 +62,7 @@ function getPositionForGun(player) {
 export const GUNS = {
 	basic: {
 		shotTime: 1 / 12,
-		timeOut: Infinity,
+		ammo: Infinity,
 		soundId: "shoot",
 		bulletSpawner: (origin, dir, vel) => {
 			entitiesManager.spawn(Bullet, origin.x, origin.y, dir.x, dir.y, vel.x, vel.y);
@@ -86,13 +86,8 @@ export const GUNS = {
 
 export class Gun extends Entity {
 	constructor(player, spec) {
-		super("weapon", getPositionForGun(player), 10, 10, {width: 10, height: 10});
-		this.player = player;
-		this.shotTime = spec.shotTime;
-		this.timer = spec.shotTime;
-		this.timeOut = spec.timeout;
-		this.spawnBullets = spec.bulletSpawner;
-		this.soundId = spec.soundId || "shoot";
+		super("gun", getPositionForGun(player), 10, 10, {width: 10, height: 10});
+		this.reset(player, spec);
 	}
 
 	reset(player, spec) {
@@ -100,7 +95,10 @@ export class Gun extends Entity {
 		super.reset(position.x, position.y);
 		this.player = player;
 		this.shotTime = spec.shotTime;
+	  	this.spawnBullets = spec.bulletSpawner;
 		this.timer = spec.shotTime;
+	  	this.soundId = spec.soundId || "shoot";
+		this.ammo = spec.ammo;
 	}
 
 	shoot(aim) {
@@ -111,10 +109,15 @@ export class Gun extends Entity {
 			if (!window.mute) {
 				assetLoader.getSound(this.soundId).play();
 			}
+			this.ammo--;
 		}
 	}
 
 	update(dt) {
+		if (this.ammo < 0) {
+			this.die();
+			this.player.setBasicGun();
+		}
 		this.pos = getPositionForGun(this.player);
 		this.timer -= dt;
 		super.update(dt);
