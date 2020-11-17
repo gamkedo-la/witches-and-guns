@@ -60,10 +60,11 @@ window.pauseGame = function(){
   if(pauseCooldownEndTime <= currentTime){
     window.paused = !window.paused;
     console.log("paused game: " + window.paused)
+
     if(window.paused){
       // for pausing again a very short cooldown is enough, so players can almost instantly return to the pause screen
       pauseCooldownEndTime = currentTime + 150;
-    } else if(!window.paused){
+    } else {
       // it could harm the game if the players accidently unpause the game immediately, so using a bit longer pause
       pauseCooldownEndTime = currentTime + 250;
     }
