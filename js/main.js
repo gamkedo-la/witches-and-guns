@@ -29,12 +29,8 @@ function runGameStep(browserTimeStamp) {
   }
   //we draw the scene also when paused, so the transparent overlay is really transparent
   currentScene.draw();
-
   if (window.paused) {
-    canvasData.context.fillStyle = 'rgba(0, 0, 0, .5)';
-    canvasData.context.fillRect(0, 0, canvasData.canvas.width, canvasData.canvas.height);
-    canvasData.context.fillStyle = 'white';
-    canvasData.context.fillText('Paused', 10, canvasData.canvas.height / 2);
+    drawPauseOverlay();
   }
   last = browserTimeStamp;
   window.requestAnimationFrame(runGameStep);
@@ -60,6 +56,13 @@ window.pauseGame = function(){
   //TODO add some cooldown e.g. 300ms: handle if both players press pause button at almost the same time
   window.paused = !window.paused;
   console.log("paused game: "+window.paused)
+}
+
+function drawPauseOverlay() {
+  canvasData.context.fillStyle = 'rgba(0, 0, 0, .5)';
+  canvasData.context.fillRect(0, 0, canvasData.canvas.width, canvasData.canvas.height);
+  canvasData.context.fillStyle = 'white';
+  canvasData.context.fillText('Paused', 10, canvasData.canvas.height / 2);
 }
 
 
