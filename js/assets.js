@@ -398,6 +398,17 @@ const assetDefs = {
 		  { duration: 500, xoffset: 16*26, yoffset: 0 },
 	  ]},
 	]},
+	{id: "laundry_art", src: "./images/tiles/laundry_art.png", subids: [
+	  {id: "laundry_wall_l", kind: "sprite", width: 16, height: 16, 		xoffset: 16*0, yoffset: 16*0},
+	  {id: "laundry_wall_bl", kind: "sprite", width: 16, height: 48, 		xoffset: 16*0, yoffset: 16*4},
+	  {id: "laundry_wall_tl", kind: "sprite", width: 16, height: 48, 		xoffset: 16*0, yoffset: 16*8},
+	  {id: "laundry_tile_a", kind: "sprite", width: 16, height: 16, 		xoffset: 16*4, yoffset: 16*5},
+	  {id: "laundry_tile_a_t", kind: "sprite", width: 16, height: 16, 		xoffset: 16*0, yoffset: 16*7},
+	  {id: "laundry_tile_b", kind: "sprite", width: 16, height: 16, 		xoffset: 16*4, yoffset: 16*4},
+	  {id: "laundry_tile_b_t", kind: "sprite", width: 16, height: 16, 		xoffset: 16*1, yoffset: 16*7},
+	  {id: "laundry_tile_b_l", kind: "sprite", width: 16, height: 16, 		xoffset: 16*2, yoffset: 16*4},
+	  {id: "laundry_tile_c", kind: "sprite", width: 16, height: 16, 		xoffset: 16*3, yoffset: 16*4},
+	]},
   ],
   // .mp3 and .ogg are required for sounds, and src should not have extension
   sounds: [

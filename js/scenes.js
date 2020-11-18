@@ -429,6 +429,43 @@ const LVL3_FG_GRID = new Grid({
 	],
 });
 
+const LTLa = "laundry_tile_a";
+const LTaT = "laundry_tile_a_t";
+const LTLb = "laundry_tile_b";
+const LTbT = "laundry_tile_b_t";
+const LTbL = "laundry_tile_b_l";
+const LTLc = "laundry_tile_c";
+const UWLL = "laundry_wall_l";
+const UWBL = "laundry_wall_bl";
+const UWTL = "laundry_wall_tl";
+
+const LVL4_BG_GRID = new Grid({
+	width: WIDTH,
+	height: HEIGHT,
+	entries: [
+		UWLL, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP,
+		UWLL, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP,
+		UWLL, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP,
+		UWLL, NOOP, NOOP, LTbT, NOOP, LTbT, NOOP, LTLb, NOOP, LTbT, NOOP, LTbT, NOOP, LTbT, NOOP, LTbT, NOOP, NOOP, NOOP, NOOP,
+		UWBL, NOOP, LTbL, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, NOOP, NOOP,
+		NOOP, NOOP, NOOP, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, NOOP, NOOP,
+		NOOP, NOOP, LTbL, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, NOOP, NOOP,
+		LTaT, LTbT, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, NOOP, NOOP,
+		UWTL, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, NOOP, NOOP,
+		UWLL, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, NOOP, NOOP,
+		UWLL, NOOP, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, NOOP, NOOP,
+		UWLL, LTbL, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, NOOP, NOOP,
+		UWLL, NOOP, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, NOOP, NOOP,
+		UWLL, LTbL, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, NOOP, NOOP,
+		UWLL, NOOP, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, NOOP, NOOP,
+	],
+});
+
+const LVL4_MID_GRID = new Grid({
+	width: WIDTH,
+	height: HEIGHT,
+});
+
 const LEVELS = [
 	{
 		name: "Level 1", loaded: false, complete: false,
@@ -515,7 +552,21 @@ const LEVELS = [
 			},
 		],
 		boss: { cls: TVBoss, x: 110, y: 100 }
-	}
+	},
+	{
+		name: "Level 4", loaded: false, complete: false,
+		grids: [LVL4_BG_GRID, LVL4_MID_GRID],
+		initialEnemies: [
+		],
+		waves: [
+			{
+				spawners: [
+				],
+				timeOut: Infinity,
+			},
+		],
+		boss: { cls: TVBoss, x: 110, y: 100 }
+	},
 ];
 class GameScene extends Scene {
 	constructor() {
