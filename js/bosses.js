@@ -552,3 +552,6 @@ export class TVBoss extends Enemy {
 		super.onRightWallCollision(dt);
 	}
 }
+
+export const WASHER_WIDTH = 51;
+export const WASHER_HEIGHT = 67;
