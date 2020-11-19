@@ -431,33 +431,67 @@ const LVL3_FG_GRID = new Grid({
 
 const LTLa = "laundry_tile_a";
 const LTaT = "laundry_tile_a_t";
+const LTaR = "laundry_tile_a_r";
+const LTaL = "laundry_tile_a_l";
+const LaTL = "laundry_tile_a_ttl";
+
 const LTLb = "laundry_tile_b";
 const LTbT = "laundry_tile_b_t";
 const LTbL = "laundry_tile_b_l";
+const LTbR = "laundry_tile_b_r";
+const LbRT = "laundry_tile_b_rtt";
+
 const LTLc = "laundry_tile_c";
+const LTcT = "laundry_tile_c_t";
+const LTcL = "laundry_tile_c_l";
+
 const UWLL = "laundry_wall_l";
 const UWBL = "laundry_wall_bl";
 const UWTL = "laundry_wall_tl";
+const UWLT = "laundry_wall_t";
+const UTTL = "laundry_wall_ttl";
+const ULTT = "laundry_wall_ltt";
+const UTTR = "laundry_wall_ttr";
+const URTT = "laundry_wall_rtt";
+const UWLR = "laundry_wall_r";
+const BTTR = "laundry_bwall_ttr";
+const BRTB = "laundry_bwall_rtb";
+
+const TWLT = "laundry_twall_t";
+const TWRT = "laundry_twall_rtt";
+
+const LCTL = "laundry_ctr_ttl";
+const LCL_ = "laundry_ctr_l";
+const LCLT = "laundry_ctr_ltt";
+const LCT_ = "laundry_ctr_t";
+const LCTR = "laundry_ctr_ttr";
+const LCRT = "laundry_ctr_rtt";
+
+const CBLS = "laundry_cab_lside";
+const CBLD = "laundry_cab_ldoor";
+const CBRD = "laundry_cab_rdoor";
+const CBSH = "laundry_cab_shelf";
+const CBOP = "laundry_cab_open";
 
 const LVL4_BG_GRID = new Grid({
 	width: WIDTH,
 	height: HEIGHT,
 	entries: [
-		UWLL, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP,
-		UWLL, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP,
-		UWLL, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP, NOOP,
-		UWLL, NOOP, NOOP, LTbT, NOOP, LTbT, NOOP, LTLb, NOOP, LTbT, NOOP, LTbT, NOOP, LTbT, NOOP, LTbT, NOOP, NOOP, NOOP, NOOP,
-		UWBL, NOOP, LTbL, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, NOOP, NOOP,
-		NOOP, NOOP, NOOP, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, NOOP, NOOP,
-		NOOP, NOOP, LTbL, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, NOOP, NOOP,
-		LTaT, LTbT, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, NOOP, NOOP,
-		UWTL, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, NOOP, NOOP,
-		UWLL, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, NOOP, NOOP,
-		UWLL, NOOP, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, NOOP, NOOP,
-		UWLL, LTbL, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, NOOP, NOOP,
-		UWLL, NOOP, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, NOOP, NOOP,
-		UWLL, LTbL, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, NOOP, NOOP,
-		UWLL, NOOP, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, NOOP, NOOP,
+		UWLL, UTTL, UWLT, UWLT, UWLT, UWLT, ULTT, LTcL, LTbR, UTTR, UWLT, UWLT, UWLT, UWLT, UWLT, UWLT, UWLT, UWLT, URTT, UWLR,
+		UWLL, LCTL, LCT_, LCT_, LCT_, LCT_, LCRT, LTbL, LTaR, LCTR, LCT_, LCRT, TWLT, TWLT, TWLT, TWLT, TWLT, TWLT, TWRT, UWLR,
+		UWLL, LCL_, CBLD, CBSH, NOOP, CBLD, CBRD, LTcL, LTbR, CBLD, LTbT, LTcT, LTbT, LTcT, LTbT, LTcT, LTbT, LTcT, LbRT, UWLR,
+		UWLL, LCL_, LaTL, LTbT, LTaT, LTbT, LTaT, LTLb, LTLa, LTbT, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTaR, UWLR,
+		UWBL, LCL_, LTbL, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTbR, BTTR,
+		NOOP, LCLT, LTaL, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTaR, NOOP,
+		NOOP, CBLS, LTbL, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTbR, NOOP,
+		LTaT, LTbT, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTbT,
+		UWTL, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, BRTB,
+		UWLL, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, UWLR,
+		UWLL, LTcL, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTbR, UWLR,
+		UWLL, LTbL, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTaR, UWLR,
+		UWLL, LTcL, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTbR, UWLR,
+		UWLL, LTbL, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTLa, LTLb, LTaR, UWLR,
+		UWLL, LTcL, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTLb, LTLc, LTbR, UWLR,
 	],
 });
 
@@ -465,6 +499,9 @@ const LVL4_MID_GRID = new Grid({
 	width: WIDTH,
 	height: HEIGHT,
 });
+LVL4_MID_GRID.set(CBOP, 10, 2);
+LVL4_MID_GRID.set("wash_dryer", 12, 0);
+LVL4_MID_GRID.set("laundry_sink", 5, 0);
 
 const LEVELS = [
 	{
@@ -571,7 +608,7 @@ const LEVELS = [
 class GameScene extends Scene {
 	constructor() {
 		super();
-		this.levelIndex = 2;
+		this.levelIndex = 3;
 		entitiesManager.onCollision('playerProjectile', 'enemy', (projectile, enemy) => {
 			enemy.hurt(projectile.damage);
 			projectile.die();
