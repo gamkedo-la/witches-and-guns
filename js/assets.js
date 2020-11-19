@@ -1,5 +1,5 @@
 import { Fmt } from "./fmt.js";
-import {MOWER_FRONT_WIDTH, MOWER_BACK_WIDTH, MOWER_SIDE_WIDTH, MOWER_HEIGHT} from "./bosses.js";
+import {MOWER_FRONT_WIDTH, MOWER_BACK_WIDTH, MOWER_SIDE_WIDTH, MOWER_HEIGHT, TV_WIDTH, TV_HEIGHT, WASHER_WIDTH, WASHER_HEIGHT} from "./bosses.js";
 import {SHOVEL_WIDTH, SHOVEL_HEIGHT} from "./enemies.js";
 
 const PLAYER_WIDTH = 20;
@@ -341,6 +341,45 @@ const assetDefs = {
 		{duration: 60, xoffset: MOWER_FRONT_WIDTH + MOWER_SIDE_WIDTH + MOWER_BACK_WIDTH, yoffset: MOWER_HEIGHT*10},
 		{duration: 100, xoffset: MOWER_FRONT_WIDTH + MOWER_SIDE_WIDTH + MOWER_BACK_WIDTH, yoffset: MOWER_HEIGHT*11},
 		{duration: 100, xoffset: MOWER_FRONT_WIDTH + MOWER_SIDE_WIDTH + MOWER_BACK_WIDTH, yoffset: MOWER_HEIGHT*12},
+	  ]},
+	]},
+	{id: "tv", src: "./images/tv-boss.png", subids: [
+		{id: "tv.idle", kind: "anim", width: TV_WIDTH, height: TV_HEIGHT, loop: true, frames: [
+			{duration: 100, xoffset: TV_WIDTH*0, yoffset: 0},
+			{duration: 100, xoffset: TV_WIDTH*1, yoffset: 0},
+			{duration: 100, xoffset: TV_WIDTH*2, yoffset: 0},
+			{duration: 100, xoffset: TV_WIDTH*3, yoffset: 0},
+			{duration: 100, xoffset: TV_WIDTH*2, yoffset: 0},
+			{duration: 100, xoffset: TV_WIDTH*1, yoffset: 0},
+			{duration: 100, xoffset: TV_WIDTH*0, yoffset: 0},
+		]},
+		{id: "tv.att", kind: "anim", width: TV_WIDTH, height: TV_HEIGHT, loop: true, frames: [
+			{duration: 50, xoffset: TV_WIDTH*0, yoffset: TV_HEIGHT},
+			{duration: 50, xoffset: TV_WIDTH*1, yoffset: TV_HEIGHT},
+			{duration: 50, xoffset: TV_WIDTH*2, yoffset: TV_HEIGHT},
+			{duration: 50, xoffset: TV_WIDTH*3, yoffset: TV_HEIGHT},
+			{duration: 50, xoffset: TV_WIDTH*2, yoffset: TV_HEIGHT},
+			{duration: 50, xoffset: TV_WIDTH*1, yoffset: TV_HEIGHT},
+			{duration: 50, xoffset: TV_WIDTH*0, yoffset: TV_HEIGHT},
+		]},
+	]},
+	{id: "washer", src: "./images/washingmachine.png", subids: [
+	  {id: "washer.idle", kind: "anim", width: WASHER_WIDTH, height: WASHER_HEIGHT, frames: [
+		{duration: 1, xoffset: 0, yoffset: 0},
+	  ]},
+	  {id: "washer.jump", kind: "anim", width: WASHER_WIDTH, height: WASHER_HEIGHT, loop: false, frames: [
+		{duration: 60, xoffset: 0, yoffset: WASHER_HEIGHT},
+		{duration: 200, xoffset: 0, yoffset: WASHER_HEIGHT*2},
+		{duration: 60, xoffset: 0, yoffset: WASHER_HEIGHT*3},
+		{duration: 100, xoffset: 0, yoffset: WASHER_HEIGHT*4},
+		{duration: 80, xoffset: 0, yoffset: WASHER_HEIGHT*5},
+		{duration: 100, xoffset: 0, yoffset: WASHER_HEIGHT*6},
+		{duration: 100, xoffset: 0, yoffset: WASHER_HEIGHT*7},
+	  ]},
+	  {id: "washer.stomp", kind: "anim", width: WASHER_WIDTH, height: WASHER_HEIGHT, loop: false, frames: [
+		{duration: 90, xoffset: 0, yoffset: WASHER_HEIGHT*8},
+		{duration: 160, xoffset: 0, yoffset: WASHER_HEIGHT*9},
+		{duration: 90, xoffset: 0, yoffset: WASHER_HEIGHT*10},
 	  ]},
 	]},
 	{id: "health", src: "./images/health.png", subids: [
