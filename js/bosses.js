@@ -554,4 +554,5 @@ export class TVBoss extends Enemy {
 }
 
 export const WASHER_WIDTH = 51;
+export const WASHER_OPEN_WIDTH = 69;
 export const WASHER_HEIGHT = 67;

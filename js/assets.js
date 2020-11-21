@@ -1,5 +1,5 @@
 import { Fmt } from "./fmt.js";
-import {MOWER_FRONT_WIDTH, MOWER_BACK_WIDTH, MOWER_SIDE_WIDTH, MOWER_HEIGHT, TV_WIDTH, TV_HEIGHT, WASHER_WIDTH, WASHER_HEIGHT} from "./bosses.js";
+import {MOWER_FRONT_WIDTH, MOWER_BACK_WIDTH, MOWER_SIDE_WIDTH, MOWER_HEIGHT, TV_WIDTH, TV_HEIGHT, WASHER_WIDTH, WASHER_HEIGHT, WASHER_OPEN_WIDTH} from "./bosses.js";
 import {SHOVEL_WIDTH, SHOVEL_HEIGHT} from "./enemies.js";
 
 const PLAYER_WIDTH = 20;
@@ -380,6 +380,17 @@ const assetDefs = {
 		{duration: 90, xoffset: 0, yoffset: WASHER_HEIGHT*8},
 		{duration: 160, xoffset: 0, yoffset: WASHER_HEIGHT*9},
 		{duration: 90, xoffset: 0, yoffset: WASHER_HEIGHT*10},
+	  ]},
+	  {id: "washer.open", kind: "anim", width: WASHER_OPEN_WIDTH, height: WASHER_HEIGHT, loop: false, frames: [
+		{duration: 60, xoffset: WASHER_WIDTH, yoffset: WASHER_HEIGHT},
+		{duration: 200, xoffset: WASHER_WIDTH, yoffset: WASHER_HEIGHT*2},
+		{duration: 40, xoffset: WASHER_WIDTH, yoffset: WASHER_HEIGHT*3},
+		{duration: 60, xoffset: WASHER_WIDTH, yoffset: WASHER_HEIGHT*4},
+		{duration: 100, xoffset: WASHER_WIDTH, yoffset: WASHER_HEIGHT*5},
+	  ]},
+	  {id: "washer.close", kind: "anim", width: WASHER_OPEN_WIDTH, height: WASHER_HEIGHT, loop: false, frames: [
+		{duration: 60, xoffset: WASHER_WIDTH, yoffset: WASHER_HEIGHT*5},
+		{duration: 100, xoffset: WASHER_WIDTH, yoffset: WASHER_HEIGHT*6},
 	  ]},
 	]},
 	{id: "health", src: "./images/health.png", subids: [
