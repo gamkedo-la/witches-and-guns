@@ -2,7 +2,7 @@ import { assetLoader } from './assets.js';
 import { Entity, entitiesManager } from './entity.js';
 import { generate } from './view.js';
 import { Animation } from './animation.js';
-import { Attack, Enemy } from './enemies.js';
+import { Attack, Enemy, JumpAttackEnemy } from './enemies.js';
 import { canvasData } from './globals.js';
 
 export const MOWER_FRONT_WIDTH = 39;
@@ -497,7 +497,7 @@ export class TVBoss extends Enemy {
 
 			// find closest player
 			for (const player of [...entitiesManager.liveEntities].filter(e => e.type == "player")) {
-				dist = Math.hypot(player.pos.x - this.pos.x, player.pos.y - this.pos.y);
+				dist = Math.hypot(pplayer.pos.x - this.pos.x, player.pos.y - this.pos.y);
 				if (dist === NaN) dist = 0;
 				if (dist < minDist) {
 					minDist = dist;
@@ -556,3 +556,25 @@ export class TVBoss extends Enemy {
 export const WASHER_WIDTH = 51;
 export const WASHER_OPEN_WIDTH = 69;
 export const WASHER_HEIGHT = 67;
+const WASHER_ATTACK_DELAY = 3 / 4;
+const WASHER_MAX_JUMP_DIST = 48;
+const WASHER_JUMP_SPEED = 120;
+
+
+export class WasherBoss extends JumpAttackEnemy {
+  constructor(x, y) {
+	const animations = {
+	  'idle': generate(assetLoader.getImage("washer.idle")),
+	  'preJump': generate(assetLoader.getImage("washer.preJump")),
+	  'jump': generate(assetLoader.getImage("washer.jump")),
+	  'stomp': generate(assetLoader.getImage("washer.stomp")),
+	  'open': generate(assetLoader.getImage("washer.open")),
+	  'close': generate(assetLoader.getImage("washer.close")),
+	};
+	super({ x: x, y: y }, WASHER_WIDTH, WASHER_HEIGHT, { width: WASHER_WIDTH, height: WASHER_HEIGHT }, 100, 2, animations, "idle", WASHER_JUMP_SPEED, WASHER_ATTACK_DELAY, WASHER_MAX_JUMP_DIST, "washer.preJump", "jump", "stomp");
+  }
+
+  getPreJumpAnim() {
+	return this.animations.preJump;
+  }
+}

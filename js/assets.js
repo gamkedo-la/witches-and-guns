@@ -367,11 +367,13 @@ const assetDefs = {
 	  {id: "washer.idle", kind: "anim", width: WASHER_WIDTH, height: WASHER_HEIGHT, frames: [
 		{duration: 1, xoffset: 0, yoffset: 0},
 	  ]},
-	  {id: "washer.jump", kind: "anim", width: WASHER_WIDTH, height: WASHER_HEIGHT, loop: false, frames: [
+	  {id: "washer.preJump", kind: "anim", width: WASHER_WIDTH, height: WASHER_HEIGHT, loop: false, frames: [
 		{duration: 60, xoffset: 0, yoffset: WASHER_HEIGHT},
 		{duration: 200, xoffset: 0, yoffset: WASHER_HEIGHT*2},
 		{duration: 60, xoffset: 0, yoffset: WASHER_HEIGHT*3},
 		{duration: 100, xoffset: 0, yoffset: WASHER_HEIGHT*4},
+	  ]},
+	  {id: "washer.jump", kind: "anim", width: WASHER_WIDTH, height: WASHER_HEIGHT, loop: false, frames: [		
 		{duration: 80, xoffset: 0, yoffset: WASHER_HEIGHT*5},
 		{duration: 100, xoffset: 0, yoffset: WASHER_HEIGHT*6},
 		{duration: 100, xoffset: 0, yoffset: WASHER_HEIGHT*7},
@@ -379,7 +381,7 @@ const assetDefs = {
 	  {id: "washer.stomp", kind: "anim", width: WASHER_WIDTH, height: WASHER_HEIGHT, loop: false, frames: [
 		{duration: 90, xoffset: 0, yoffset: WASHER_HEIGHT*8},
 		{duration: 160, xoffset: 0, yoffset: WASHER_HEIGHT*9},
-		{duration: 90, xoffset: 0, yoffset: WASHER_HEIGHT*10},
+		{duration: 40, xoffset: 0, yoffset: WASHER_HEIGHT*10},
 	  ]},
 	  {id: "washer.open", kind: "anim", width: WASHER_OPEN_WIDTH, height: WASHER_HEIGHT, loop: false, frames: [
 		{duration: 60, xoffset: WASHER_WIDTH, yoffset: WASHER_HEIGHT},
