@@ -497,7 +497,7 @@ export class TVBoss extends Enemy {
 
 			// find closest player
 			for (const player of [...entitiesManager.liveEntities].filter(e => e.type == "player")) {
-				dist = Math.hypot(pplayer.pos.x - this.pos.x, player.pos.y - this.pos.y);
+				dist = Math.hypot(player.pos.x - this.pos.x, player.pos.y - this.pos.y);
 				if (dist === NaN) dist = 0;
 				if (dist < minDist) {
 					minDist = dist;
