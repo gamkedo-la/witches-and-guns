@@ -502,6 +502,10 @@ const LVL4_MID_GRID = new Grid({
 LVL4_MID_GRID.set(CBOP, 10, 2);
 LVL4_MID_GRID.set("wash_dryer", 12, 0);
 LVL4_MID_GRID.set("laundry_sink", 5, 0);
+LVL4_MID_GRID.set("laundry_rack", 15, 0);
+LVL4_MID_GRID.set("laundry_basket", 17, 1);
+LVL4_MID_GRID.set("laundry_basket", 11, 0);
+LVL4_MID_GRID.set("mop", 18, 0);
 
 const LEVELS = [
 	{

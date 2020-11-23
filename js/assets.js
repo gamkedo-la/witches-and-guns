@@ -477,6 +477,9 @@ const assetDefs = {
 	  {id: "laundry_cab_open", kind: "sprite", width: 32, height: 16, 		xoffset: 16*25, yoffset: 16*0},
 	  {id: "wash_dryer", kind: "sprite", width: 48, height: 48, 			xoffset: 16*20, yoffset: 16*0},
 	  {id: "laundry_sink", kind: "sprite", width: 32, height: 32,			xoffset: 16*23, yoffset: 16*0},
+	  {id: "laundry_rack", kind: "sprite", width: 32, height: 48,			xoffset: 16*27, yoffset: 16*0},
+	  {id: "laundry_basket", kind: "sprite", width: 16, height: 32,			xoffset: 16*29, yoffset: 16*0},
+	  {id: "mop", kind: "sprite", width: 16, height: 48,					xoffset: 16*30, yoffset: 16*0},
 
 	]},
   ],
