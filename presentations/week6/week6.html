@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="author" content="Gonzalo"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/css/reveal.css"/>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/css/theme/blood.css" id="theme"/>
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+
+<section>
+<section id="slide-org720a9f5">
+<h2 id="org720a9f5">Witches n' Guns</h2>
+<h1>Week 6</h1>
+<strong>2 weeks before release!</strong>
+
+</section>
+</section>
+<section>
+<section id="slide-orgad934cb">
+<h2 id="orgad934cb">Stats</h2>
+<ul>
+<li>20 new commits</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orgccdbfdf">
+<h2 id="orgccdbfdf">Contributions</h2>
+<dl>
+<dt>Greg</dt><dd>Paused game overlay with input cooldown.</dd>
+<dt>Tylor Allison</dt><dd>Laundry room art and level. Washer and dryer sprites.</dd>
+<dt>Bilal</dt><dd>Animated TV boss sprites, integrated to game.</dd>
+<dt>Gonzalo</dt><dd>Gun pickups, spread gun. Washer boss integration and updates.</dd>
+
+</dl>
+
+</section>
+</section>
+<section>
+<section id="slide-orgad572d7">
+<h2 id="orgad572d7">Demo</h2>
+<iframe src="./demo/index.html" width="640" height="480"></iframe>
+
+
+</section>
+</section>
+<section>
+<section id="slide-orgd103611">
+<h2 id="orgd103611">Schedule</h2>
+<blockquote class="trello-board-compact">
+  <a href="https://trello.com/b/5VhElD09/witches-n-guns">
+  Witches 'n Guns Schedule
+  </a>
+</blockquote>
+<script src="https://p.trellocdn.com/embed.min.js"></script>
+
+</section>
+</section>
+<section>
+<section id="slide-orgc853480">
+<h2 id="orgc853480">Join!</h2>
+<p>
+<b>#team-witches-n-guns</b>
+</p>
+</section>
+</section>
+</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/lib/js/head.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/js/reveal.js"></script>
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: true,
+keyboard: true,
+mouseWheel: false,
+fragmentInURL: false,
+hashOneBasedIndex: false,
+pdfSeparateFragments: true,
+
+overview: true,
+margin: 0.20,
+minScale: 0.80,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'fast', // see README of reveal.js for options
+transitionSpeed: 'default',
+
+// Optional libraries used to extend reveal.js
+dependencies: [
+ { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } }]
+
+});
+</script>
+</body>
+</html>

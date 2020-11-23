@@ -3,7 +3,7 @@ import { canvasData } from './globals.js';
 import { entitiesManager } from './entity.js';
 import { inputManager } from './input.js';
 import { BroomEnemy, ShovelEnemy } from './enemies.js';
-import { FridgeBoss, LawnMowerBoss, TVBoss } from './bosses.js';
+import { FridgeBoss, LawnMowerBoss, TVBoss, WasherBoss } from './bosses.js';
 import { Player } from './player.js';
 import { Grid } from './grid.js';
 import { PICKUP_CHANCE, PICKUP_TYPES } from './pickups.js';
@@ -606,7 +606,7 @@ const LEVELS = [
 				timeOut: Infinity,
 			},
 		],
-		boss: { cls: TVBoss, x: 110, y: 100 }
+		boss: { cls: WasherBoss, x: 110, y: 100 }
 	},
 ];
 class GameScene extends Scene {

@@ -154,28 +154,21 @@ export class BroomEnemy extends Enemy {
 }
 
 
-export const SHOVEL_WIDTH = 16;
-export const SHOVEL_HEIGHT = 24;
-const SHOVEL_ATTACK_DELAY = 3 / 4;
-const SHOVEL_MAX_JUMP_DIST = 48;
-const SHOVEL_JUMP_SPEED = 120;
-const SHOVEL_JUMP_GRAVITY = 300;
+export const JUMP_GRAVITY = 300;
 
-export class ShovelEnemy extends Enemy {
-  constructor(x, y) {
-	const animations = {
-	  idle: generate(assetLoader.getImage("shovel.idle")),
-	  bendLeft: generate(assetLoader.getImage("shovel.bendLeft")),
-	  bendRight: generate(assetLoader.getImage("shovel.bendRight")),
-	  jump: generate(assetLoader.getImage("shovel.jump")),
-	  land: generate(assetLoader.getImage("shovel.land")),
-	};
-	super({x: x, y: y}, SHOVEL_WIDTH, SHOVEL_HEIGHT, {width: 12, height: 14}, 1, 1, animations, "idle");
+export class JumpAttackEnemy extends Enemy {
+  constructor(initialPos, width, height, collider, hp, damage, animations, initialAnimation, jumpSpeed, attackDelay, maxJumpDist, preJumpAnimPrefix, jumpAnimId, landAnimId) {
+	super(initialPos, width, height, collider, hp, damage, animations, initialAnimation);
 	this.target = null;
 	this.jumping = false;
 	this.attacking = false;
 	this.attack = null;
-	this.jumpTimer = SHOVEL_ATTACK_DELAY;
+	this.jumpSpeed = jumpSpeed;
+	this.jumpTimer = this.attackDelay = attackDelay;
+	this.maxJumpDist = maxJumpDist;
+	this.preJumpAnimPrefix = preJumpAnimPrefix;
+	this.jumpAnimId = jumpAnimId;
+	this.landAnimId = landAnimId;
 	this.vel = {x: 0, y: 0};
   }
 
@@ -189,13 +182,13 @@ export class ShovelEnemy extends Enemy {
 		closestPlayer = player;
 	  }
 	}
-	if (dist > SHOVEL_MAX_JUMP_DIST) {
+	if (dist > this.maxJumpDist) {
 	  const angle = Math.atan2(closestPlayer.pos.x, closestPlayer.pos.y) + Math.random()*(Math.PI/3);
 	  const signX = Math.sign(closestPlayer.pos.x - this.pos.x);
 	  const signY = Math.sign(closestPlayer.pos.y - this.pos.y);
 	  this.target = {
-		x: Math.round(this.pos.x + signX*Math.cos(angle)*SHOVEL_MAX_JUMP_DIST),
-		y: Math.round(this.pos.y + signY*Math.sin(angle)*SHOVEL_MAX_JUMP_DIST)
+		x: Math.round(this.pos.x + signX*Math.cos(angle)*this.maxJumpDist),
+		y: Math.round(this.pos.y + signY*Math.sin(angle)*this.maxJumpDist)
 	  };
 	} else {
 	  this.target = {
@@ -205,16 +198,20 @@ export class ShovelEnemy extends Enemy {
 	}
   }
 
+  getPreJumpAnim() {
+	throw new Error("Not implemented");
+  }
+
   update(dt) {	
 	this.currentAnimation.update(dt);
 	super.update(dt);
 	if (this.jumping) {
-	  if (this.currentAnimation.id.startsWith("shovel.bend")) {
-		if (!this.currentAnimation.playing) {
-		  this.changeAnimation(this.animations.jump);
+	  if (this.currentAnimation.id.startsWith(this.preJumpAnimPrefix)) {
+	  	if (!this.currentAnimation.playing) {
+		  this.changeAnimation(this.animations[this.jumpAnimId]);
 		}
 	  } else {
-		this.vel.y += SHOVEL_JUMP_GRAVITY*dt;
+		this.vel.y += JUMP_GRAVITY*dt;
 		this.pos.x += Math.round(this.vel.x*dt);
 		this.pos.y += Math.round(this.vel.y*dt);
 		this.attacking = this.vel.y > 0;
@@ -222,18 +219,18 @@ export class ShovelEnemy extends Enemy {
 	  }
 	} else if (this.jumpTimer <= 0) {
 	  this.findTarget();
-	  const bendAnimation = this.target.x > this.pos.x ? this.animations.bendLeft : this.animations.bendRight;
-	  if (this.currentAnimation != bendAnimation) {
-		this.changeAnimation(bendAnimation);
+	  const preJumpAnim = this.getPreJumpAnim();
+	  if (this.currentAnimation != preJumpAnim) {
+		this.changeAnimation(preJumpAnim);
 	  }
 	  this.jumping = true;
-	  this.vel.y = -SHOVEL_JUMP_SPEED;
-	  this.vel.x = Math.sign(this.target.x - this.pos.x) * SHOVEL_JUMP_SPEED/2;
-	  this.jumpTimer = SHOVEL_ATTACK_DELAY;
+	  this.vel.y = -this.jumpSpeed;
+	  this.vel.x = Math.sign(this.target.x - this.pos.x) * this.jumpSpeed/2;
+	  this.jumpTimer = this.attackDelay;
 	} else {
-	  if (this.currentAnimation === this.animations.jump) {
-		this.changeAnimation(this.animations.land);
-	  } else if (this.currentAnimation === this.animations.land && !this.currentAnimation.playing) {
+	  if (this.currentAnimation === this.animations[this.jumpAnimId]) {
+		this.changeAnimation(this.animations[this.landAnimId]);
+	  } else if (this.currentAnimation === this.animations[this.landAnimId] && !this.currentAnimation.playing) {
 		this.changeAnimation(this.animations.idle);
 	  }
 	  this.attacking = false;
@@ -243,12 +240,31 @@ export class ShovelEnemy extends Enemy {
 	}
 	if (this.attacking) {
 	  if (this.attack === null) {
-		this.attack = entitiesManager.spawn(Attack, this, {x: 0, y: SHOVEL_HEIGHT/2}, SHOVEL_WIDTH, SHOVEL_HEIGHT/2);
+		this.attack = entitiesManager.spawn(Attack, this, {x: 0, y: this.height/2}, this.width, this.height/2);
 	  }
 	} else if (this.attack !== null) {
 	  this.attack.die();
 	  this.attack = null;
 	}
+  }
+}
+
+export const SHOVEL_WIDTH = 16;
+export const SHOVEL_HEIGHT = 24;
+const SHOVEL_ATTACK_DELAY = 3 / 4;
+const SHOVEL_MAX_JUMP_DIST = 48;
+const SHOVEL_JUMP_SPEED = 120;
+
+export class ShovelEnemy extends JumpAttackEnemy {
+  constructor(x, y) {
+	const animations = {
+	  idle: generate(assetLoader.getImage("shovel.idle")),
+	  bendLeft: generate(assetLoader.getImage("shovel.bendLeft")),
+	  bendRight: generate(assetLoader.getImage("shovel.bendRight")),
+	  jump: generate(assetLoader.getImage("shovel.jump")),
+	  land: generate(assetLoader.getImage("shovel.land")),
+	};
+	super({x: x, y: y}, SHOVEL_WIDTH, SHOVEL_HEIGHT, {width: 12, height: 14}, 1, 1, animations, "idle", SHOVEL_JUMP_SPEED, SHOVEL_ATTACK_DELAY, SHOVEL_MAX_JUMP_DIST, "shovel.bend", "jump", "land");
   }
 
   draw() {
@@ -257,5 +273,9 @@ export class ShovelEnemy extends Enemy {
 	  canvasData.context.fillStyle = 'red';
 	  canvasData.context.arc(this.target.x, this.target.y, 2, 0, Math.PI);
 	}
+  }
+
+  getPreJumpAnim() {
+	return this.target.x > this.pos.x ? this.animations.bendLeft : this.animations.bendRight;
   }
 }
