@@ -339,6 +339,11 @@ LVL4_MID_GRID.set("laundry_rack", 15, 0);
 LVL4_MID_GRID.set("laundry_basket", 17, 1);
 LVL4_MID_GRID.set("laundry_basket", 11, 0);
 LVL4_MID_GRID.set("mop", 18, 0);
+LVL4_MID_GRID.set("potion_yellow_o", 9, 0);
+LVL4_MID_GRID.set("potion_cluster_a", 10, 0);
+LVL4_MID_GRID.set("potion_cluster_b", 1, 3);
+LVL4_MID_GRID.set("potion_yellow_o", 1, 2);
+LVL4_MID_GRID.set("potion_purple_o", 1, 1);
 
 export const LEVELS = [
 	{
