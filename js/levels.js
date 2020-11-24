@@ -1,4 +1,6 @@
+import {canvasData} from './globals.js';
 import { Grid } from './grid.js';
+import { Entity } from './entity.js';
 import { BroomEnemy, ShovelEnemy } from './enemies.js';
 import { FridgeBoss, LawnMowerBoss, TVBoss, WasherBoss } from './bosses.js';
 
@@ -384,6 +386,7 @@ export const LEVELS = [
 			{ cls: ShovelEnemy, x: 295, y: 92 },
 			{ cls: ShovelEnemy, x: 293, y: 104 }
 		],
+		unwalkables: [],
 		boss: { cls: LawnMowerBoss, x: 110, y: 30 }
 	},
 	{
@@ -420,6 +423,14 @@ export const LEVELS = [
 				timeOut: Infinity,
 			},
 		],
+		unwalkables: [
+			{x: 0, y: 0, width: SIZE*11, height: SIZE*2},
+			{x: SIZE*15, y: 0, width: SIZE*4, height: SIZE*2},
+			{x: SIZE*19, y: 0, width: SIZE, height: SIZE*6},
+			{x: 0, y: SIZE*2, width: SIZE*2, height: SIZE*4},
+			{x: 0, y: SIZE*8, width: SIZE, height: SIZE*7},
+			{x: SIZE*19, y: SIZE*8, width: SIZE, height: SIZE*7},
+		],
 		boss: { cls: FridgeBoss, x: 110, y: 100 }
 	},
 	{
@@ -433,6 +444,21 @@ export const LEVELS = [
 				],
 				timeOut: Infinity,
 			},
+		],
+		unwalkables: [
+			{x: 0, y: 0, width: SIZE*5, height: SIZE*2},
+			{x: SIZE*5, y: 0, width: SIZE*2, height: SIZE},
+			{x: SIZE*7, y: 0, width: SIZE*2, height: SIZE*2},
+			{x: SIZE*9, y: 0, width: SIZE*2, height: SIZE},
+			{x: SIZE*11, y: 0, width: SIZE*8, height: SIZE*2},
+			{x: SIZE*20, y: 0, width: SIZE, height: SIZE*6},
+			{x: 0, y: SIZE*2, width: SIZE, height: SIZE*4},
+			{x: 0, y: SIZE*8, width: SIZE, height: SIZE*2},
+			{x: 0, y: SIZE*10, width: SIZE*1.5, height: SIZE*4},
+			{x: 0, y: SIZE*13, width: SIZE, height: SIZE*2},
+			{x: SIZE*20, y: SIZE*8, width: SIZE, height: SIZE*2},
+			{x: SIZE*18.5, y: SIZE*10, width: SIZE*1.5, height: SIZE*4},
+			{x: SIZE*20, y: SIZE*13, width: SIZE, height: SIZE*2},
 		],
 		boss: { cls: TVBoss, x: 110, y: 100 }
 	},
@@ -448,6 +474,41 @@ export const LEVELS = [
 				timeOut: Infinity,
 			},
 		],
+		unwalkables: [
+			{x: 0, y: 0, width: SIZE*7, height: SIZE*2},
+			{x: SIZE*9, y: 0, width: SIZE*3, height: SIZE*2},
+			{x: SIZE*15, y: 0, width: SIZE*4, height: SIZE*2},
+			{x: SIZE*20, y: 0, width: SIZE, height: SIZE*6},
+			{x: 0, y: SIZE*2, width: SIZE*2, height: SIZE*4},
+			{x: 0, y: SIZE*8, width: SIZE, height: SIZE*7},
+			{x: SIZE*20, y: SIZE*8, width: SIZE, height: SIZE*7},
+		],
 		boss: { cls: WasherBoss, x: 110, y: 100 }
 	},
 ];
+
+
+export class UnWalkable extends Entity {
+	constructor(spec) {
+		const x = spec.x;
+		const y = spec.y;
+		const width = spec.width;
+		const height = spec.height;
+		super("unwalkable", {x: x, y: y}, width, height, {x: x, y: y, width: width, height: height}, Infinity);
+		this.canCollideWithTypes.add("player");
+	}
+
+	reset(spec) {
+		this.pos.x = this.collider.x = spec.x;
+		this.pos.y = this.collider.y = spec.y;
+		this.width = this.collider.width = spec.width;
+		this.height = this.collider.height = spec.height;
+	}
+
+	draw() {
+		if (window.debugMode) {
+			canvasData.context.fillStyle = 'cyan';
+			canvasData.context.fillRect(this.collider.x, this.collider.y, this.collider.width, this.collider.height);
+		}
+	}
+}

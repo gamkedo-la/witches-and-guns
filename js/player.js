@@ -61,6 +61,7 @@ export class Player extends Entity {
 		];
 		super("player", { x: x, y: y }, PLAYER_WIDTH, PLAYER_HEIGHT, { width: 12, height: 24 }, 10, 1, anims, initialAnimation);
 		//this.lives = 3;
+		this.prevPos = Object.assign({}, this.pos);
 		this.setBasicGun();
 		this.reset(controller, x, y);
 	}
@@ -114,9 +115,15 @@ export class Player extends Entity {
 				this.vel.y = cv.y * SPEED;
 			}
 		}
-
+		Object.assign(this.prevPos, this.pos);
 		this.pos.x += Math.round(this.vel.x * dt);
 		this.pos.y += Math.round(this.vel.y * dt);
+	}
+
+	stopWalking() {
+		Object.assign(this.pos, this.prevPos);
+		this.vel.x = 0;
+		this.vel.y = 0;
 	}
 
 	onTopWallCollision(dt) {

@@ -7,7 +7,7 @@ import { Player } from './player.js';
 import { PICKUP_CHANCE, PICKUP_TYPES } from './pickups.js';
 import { GridView } from './view.js';
 import { Fmt } from './fmt.js';
-import { LEVELS } from "./levels.js";
+import { LEVELS, UnWalkable } from "./levels.js";
 
 export let currentScene;
 
@@ -188,6 +188,9 @@ class GameScene extends Scene {
 			pickup.apply(player);
 			pickup.die();
 		});
+		entitiesManager.onCollision("unwalkable", "player", (unwalkable, player) => {
+			player.stopWalking();
+		});
 		this.waveTimeOut = Infinity;
 		this.boss = null;
 	}
@@ -200,6 +203,9 @@ class GameScene extends Scene {
 				this.boss = null;
 				for (const enemy of entitiesManager.getLiveForType("enemy")) {
 					enemy.die();
+				}
+				for (const unwalkable of entitiesManager.getLiveForType("unwalkable")) {
+					unwalkable.die();
 				}
 				this.levelIndex = i;
 			});
@@ -216,6 +222,9 @@ class GameScene extends Scene {
 		this.gridViews = currentLevel.grids.map((grid) => new GridView(grid));
 		for (const enemyDef of currentLevel.initialEnemies) {
 			entitiesManager.spawn(enemyDef.cls, enemyDef.x, enemyDef.y);
+		}
+		for (const unwalkableDef of currentLevel.unwalkables) {
+			entitiesManager.spawn(UnWalkable, unwalkableDef);
 		}
 		this.waves = Array.from(currentLevel.waves);
 		currentLevel.loaded = true;
