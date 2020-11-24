@@ -195,6 +195,7 @@ const assetDefs = {
 	  {id: "cab_door_l", kind: "sprite", width: 16, height: 16,		xoffset: 16*3, yoffset: 16*2},
 	  {id: "cab_door_r", kind: "sprite", width: 16, height: 16,		xoffset: 16*4, yoffset: 16*2},
 	  {id: "cab_panel", kind: "sprite", width: 16, height: 16,		xoffset: 16*10, yoffset: 16*2},
+	  {id: "cauldron", kind: "sprite", width: 16, height: 32,		xoffset: 16*21, yoffset: 16*2},
 	]},
 	{id: "fridge-boss-anim", src: "./images/fridge-boss-anim.png", subids: [
 	  {id: "fridge.sleep", kind: "anim", width: 16*2, height: 16*3, frames: [

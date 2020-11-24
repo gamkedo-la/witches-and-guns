@@ -149,6 +149,10 @@ const LVL2_MID_GRID = new Grid({
 LVL2_MID_GRID.set(MCWV, 2, 0);
 LVL2_MID_GRID.set(FRDG, 11, 0);
 LVL2_MID_GRID.set(TEAP, 6, 0);
+LVL2_MID_GRID.set("cauldron", 9, 0);
+LVL2_MID_GRID.set("potion_cluster_b", 5, 0);
+LVL2_MID_GRID.set("potion_cluster_a", 1, 0);
+LVL2_MID_GRID.set("potion_black_o", 1, 3);
 
 const LVL2_FG_GRID = new Grid({
 	width: WIDTH,
