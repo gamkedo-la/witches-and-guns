@@ -126,7 +126,7 @@ class PlayerSelectScene extends Scene {
 				const selectedSlots = this.slots.filter(slot => slot.selected);
 				for (let i = 0; i < selectedSlots.length; i++) {
 					const controller = selectedSlots[i].input;
-					const player = entitiesManager.spawn(Player, controller, i * (canvasData.canvas.width - 20), canvasData.canvas.height / 2, i == 0 ? "right" : "left");
+					const player = entitiesManager.spawn(Player, controller, i * (canvasData.canvas.width - 20), canvasData.canvas.height / 2 - 20, i == 0 ? "right" : "left");
 					controller.player = player;
 				}
 				this.switchTo(SCENES.game);
@@ -189,7 +189,16 @@ class GameScene extends Scene {
 			pickup.die();
 		});
 		entitiesManager.onCollision("unwalkable", "player", (unwalkable, player) => {
-			player.stopWalking();
+			const horizontalCollision = player.collider.x + player.collider.width > unwalkable.collider.x + unwalkable.collider.width || player.collider.x < unwalkable.collider.x;
+			const verticalCollision = player.collider.y + player.collider.height > unwalkable.collider.y + unwalkable.collider.height || player.collider.y < unwalkable.collider.y;
+			if (horizontalCollision) {
+				player.pos.x = player.prevPos.x;
+				player.vel.x = 0;
+			}
+			if (verticalCollision) {
+				player.pos.y = player.prevPos.y;
+				player.vel.y = 0;
+			}
 		});
 		this.waveTimeOut = Infinity;
 		this.boss = null;
