@@ -113,6 +113,12 @@ export class KeyboardAndMouseInput extends PlayerInput {
 	  this.currentState.debug = state;
     break;
   }
+	if (code.startsWith("Digit")) {
+	  const number = Number(code.slice("Digit".length));
+	  if (number > 0) {
+		this.currentState[`warpToLevel${number}`] = state;
+	  }
+	}
   }
 
   update(dt) {
@@ -229,6 +235,15 @@ const INPUT_EVENTS = [
   "dash",
   "gamepadConnected",
   "gamepadDisconnected",
+  "warpToLevel1",
+  "warpToLevel2",
+  "warpToLevel3",
+  "warpToLevel4",
+  "warpToLevel5",
+  "warpToLevel6",
+  "warpToLevel7",
+  "warpToLevel8",
+  "warpToLevel9",
 ];
 
 class InputManager {
@@ -305,7 +320,8 @@ class InputManager {
 	for (const input of Object.values(this.controls)) {
 	  for (const [event, state] of Object.entries(input.currentState)) {
 		if (state && !input.previousState[event]) {
-		  for (const func of this.listeners[event]) {
+		  const listeners = this.listeners[event] || [];
+		  for (const func of listeners) {
 			func(input);
 		  }
 		}

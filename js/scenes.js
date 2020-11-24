@@ -612,7 +612,7 @@ const LEVELS = [
 class GameScene extends Scene {
 	constructor() {
 		super();
-		this.levelIndex = 3;
+		this.levelIndex = 0;
 		entitiesManager.onCollision('playerProjectile', 'enemy', (projectile, enemy) => {
 			enemy.hurt(projectile.damage);
 			projectile.die();
@@ -631,6 +631,25 @@ class GameScene extends Scene {
 		});
 		this.waveTimeOut = Infinity;
 		this.boss = null;
+	}
+
+	setUpInput() {
+		for (let i=0; i<LEVELS.length; i++) {
+			inputManager.on(`warpToLevel${i+1}`, (controller) => {
+				LEVELS[this.levelIndex].loaded = false;
+				this.waveTimeOut = Infinity;
+				this.boss = null;
+				for (const enemy of entitiesManager.getLiveForType("enemy")) {
+					enemy.die();
+				}
+				this.levelIndex = i;
+			});
+		}
+	}
+
+	reset() {
+		this.setUpInput();
+		return super.reset();
 	}
 
 	loadLevel() {
