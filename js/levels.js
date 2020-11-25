@@ -415,10 +415,10 @@ export const LEVELS = [
 		waves: [
 			{
 				spawners: [
-					//{cls: BroomEnemy, x: 20, y: 10,  amount: 2},
-					////{cls: BroomEnemy, x: 20, y: 200,  amount: 20},
-					//{cls: BroomEnemy, x: 300, y: 10,  amount: 20},
-					//{cls: BroomEnemy, x: 300, y: 200,  amount: 20},
+					{cls: BroomEnemy, x: SIZE*20, y: SIZE*6,  amount: 20},
+					{cls: BroomEnemy, x: 0, y: SIZE*6,  amount: 20},
+					{cls: BroomEnemy, x: SIZE*14, y: 0,  amount: 20},
+					{cls: BroomEnemy, x: SIZE*12, y: SIZE*20,  amount: 20},
 				],
 				timeOut: Infinity,
 			},
