@@ -171,7 +171,7 @@ class PlayerSelectScene extends Scene {
 class GameScene extends Scene {
 	constructor() {
 		super();
-		this.levelIndex = 1;
+		this.levelIndex = 0;
 		entitiesManager.onCollision('playerProjectile', 'enemy', (projectile, enemy) => {
 			enemy.hurt(projectile.damage);
 			projectile.die();

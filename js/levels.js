@@ -99,6 +99,12 @@ const LVL1_BG_GRID = new Grid({
 	],
 });
 
+const LVL1_MID_GRID = new Grid({
+	width: WIDTH,
+	height: HEIGHT,
+});
+LVL1_MID_GRID.set("wateringCan", 17, 0);
+
 const LVL1_FG_GRID = new Grid({
 	width: WIDTH,
 	height: HEIGHT,
@@ -354,7 +360,7 @@ LVL4_MID_GRID.set("potion_purple_o", 1, 1);
 export const LEVELS = [
 	{
 		name: "Level 1", loaded: false, complete: false,
-		grids: [LVL1_BG_GRID, LVL1_FG_GRID],
+		grids: [LVL1_BG_GRID, LVL1_MID_GRID, LVL1_FG_GRID],
 		waves: [
 			// {
 			// 	spawners: [

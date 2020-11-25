@@ -113,6 +113,7 @@ const assetDefs = {
 	  ]},
 	]},
 	{id: "floorTile", src: "./images/tiles/dungeon-floor.png"},
+	{id: "wateringCan", src: "./images/tiles/watering-can.png"},
 	{id: "fence_b_a", src: "./images/tiles/fence_b_a.png"},
 	{id: "fence_b_b", src: "./images/tiles/fence_b_b.png"},
 	{id: "fence_bll", src: "./images/tiles/fence_bll.png"},
