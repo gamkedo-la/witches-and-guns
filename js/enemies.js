@@ -70,7 +70,7 @@ export class BroomEnemy extends Enemy {
 	console.log(this);
   }
 
-  update(dt) {
+  performActions(dt) {
 	let dist, minDist = Number.MAX_SAFE_INTEGER;
 	this.currentAnimation.update(dt);
 	let closestPlayer = null;
@@ -138,7 +138,7 @@ export class BroomEnemy extends Enemy {
 	  if (this.dir.x >= 0) this.changeAnimation(this.animations.walkRight);
 	  else this.changeAnimation(this.animations.walkLeft);
 	}
-	super.update(dt);
+	super.performActions(dt);
   }
 
   die() {

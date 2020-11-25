@@ -200,6 +200,18 @@ class GameScene extends Scene {
 				player.vel.y = 0;
 			}
 		});
+	  	entitiesManager.onCollision("unwalkable", "enemy", (unwalkable, enemy) => {
+			const horizontalCollision = enemy.collider.x + enemy.collider.width > unwalkable.collider.x + unwalkable.collider.width || enemy.collider.x < unwalkable.collider.x;
+			const verticalCollision = enemy.collider.y + enemy.collider.height > unwalkable.collider.y + unwalkable.collider.height || enemy.collider.y < unwalkable.collider.y;
+			if (horizontalCollision) {
+				enemy.pos.x = enemy.prevPos.x;
+				enemy.vel.x = 0;
+			}
+			if (verticalCollision) {
+				enemy.pos.y = enemy.prevPos.y;
+				enemy.vel.y = 0;
+			}
+		});
 		this.waveTimeOut = Infinity;
 		this.boss = null;
 	}

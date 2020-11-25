@@ -496,6 +496,7 @@ export class UnWalkable extends Entity {
 		const height = spec.height;
 		super("unwalkable", {x: x, y: y}, width, height, {x: x, y: y, width: width, height: height}, Infinity);
 		this.canCollideWithTypes.add("player");
+		this.canCollideWithTypes.add("enemy");
 	}
 
 	reset(spec) {

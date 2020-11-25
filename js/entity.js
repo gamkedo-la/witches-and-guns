@@ -86,6 +86,7 @@ export const DEFAULT_DAMAGE = 1;
 export class Entity {
   constructor(type, initialPos, width, height, collider, hp=DEFAULT_HP, damage=DEFAULT_DAMAGE, animations={}, initialAnimation='') {
 	this.pos = Object.assign({}, initialPos);
+	this.prevPos = Object.assign({}, this.pos);
 	this.width = width;
 	this.height = height;
 	this.type = type;
@@ -137,8 +138,13 @@ export class Entity {
   
   onRightWallCollision(dt) {
   }
-  
+
+  performActions(dt) {
+  }
+
   update(dt) {
+	Object.assign(this.prevPos, this.pos);
+	this.performActions(dt);
 	if (this.pos.x < 0) {
 	  this.pos.x = 0;
 	  this.onLeftWallCollision(dt);
