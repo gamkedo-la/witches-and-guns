@@ -125,6 +125,7 @@ export class Entity {
   reset(x, y) {
 	this.pos.x = x;
 	this.pos.y = y;
+	this.hp = this.maxHp;
   }
 
   onTopWallCollision(dt) {
