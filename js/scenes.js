@@ -220,14 +220,9 @@ class GameScene extends Scene {
 		for (let i=0; i<LEVELS.length; i++) {
 			inputManager.on(`warpToLevel${i+1}`, (controller) => {
 				LEVELS[this.levelIndex].loaded = false;
+				LEVELS[this.levelIndex].started = false;
 				this.waveTimeOut = Infinity;
 				this.boss = null;
-				for (const enemy of entitiesManager.getLiveForType("enemy")) {
-					enemy.die();
-				}
-				for (const unwalkable of entitiesManager.getLiveForType("unwalkable")) {
-					unwalkable.die();
-				}
 				this.levelIndex = i;
 			});
 		}
