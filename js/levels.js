@@ -359,7 +359,7 @@ LVL4_MID_GRID.set("potion_purple_o", 1, 1);
 
 export const LEVELS = [
 	{
-		name: "Level 1", loaded: false, complete: false,
+		name: "Level 1", loaded: false, complete: false, started: false,
 		grids: [LVL1_BG_GRID, LVL1_MID_GRID, LVL1_FG_GRID],
 		waves: [
 			// {
@@ -396,7 +396,7 @@ export const LEVELS = [
 		boss: { cls: LawnMowerBoss, x: 110, y: 30 }
 	},
 	{
-		name: "Level 2", loaded: false, complete: false,
+		name: "Level 2", loaded: false, complete: false, started: false,
 		grids: [LVL2_BG_GRID, LVL2_MID_GRID, LVL2_FG_GRID],
 		initialEnemies: [
 			/*
@@ -440,7 +440,7 @@ export const LEVELS = [
 		boss: { cls: FridgeBoss, x: 110, y: 100 }
 	},
 	{
-		name: "Level 3", loaded: false, complete: false,
+		name: "Level 3", loaded: false, complete: false, started: false,
 		grids: [LVL3_BG_GRID, LVL3_MID_GRID, LVL3_FG_GRID],
 		initialEnemies: [
 		],
@@ -469,7 +469,7 @@ export const LEVELS = [
 		boss: { cls: TVBoss, x: 110, y: 100 }
 	},
 	{
-		name: "Level 4", loaded: false, complete: false,
+		name: "Level 4", loaded: false, complete: false, started: false,
 		grids: [LVL4_BG_GRID, LVL4_MID_GRID],
 		initialEnemies: [
 		],

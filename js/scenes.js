@@ -240,6 +240,19 @@ class GameScene extends Scene {
 
 	loadLevel() {
 		const currentLevel = LEVELS[this.levelIndex];
+		const players = entitiesManager.getLiveForType("player");
+		currentLevel.started = false;
+		for (const entityType of ["enemy", "playerProjectile", "enemyAttack", "pickup", "gun", "unwalkable"]) {
+			for (const entity of entitiesManager.getLiveForType(entityType)) {
+				entity.die();
+			}
+		}
+		for (let i=0; i<players.length; i++) {
+			players[i].pos.x = i * (canvasData.canvas.width - 20);
+			players[i].pos.y = canvasData.canvas.height / 2 - 20;
+			players[i].enteringStage = true;
+			players[i].setBasicGun();
+		}
 		this.gridViews = currentLevel.grids.map((grid) => new GridView(grid));
 		for (const enemyDef of currentLevel.initialEnemies) {
 			entitiesManager.spawn(enemyDef.cls, enemyDef.x, enemyDef.y);
@@ -253,42 +266,48 @@ class GameScene extends Scene {
 	}
 
 	update(dt) {
+		super.update(dt);
 		const currentLevel = LEVELS[this.levelIndex];
 		if (currentLevel.loaded) {
-			// update grids
-			this.gridViews.forEach((gview) => gview.update(dt));
-			const liveEnemies = [...entitiesManager.liveEntities].filter(e => e.type == "enemy");
-			if (this.waveTimeOut <= 0 || liveEnemies.length <= 0) {
-				if (this.waves.length > 0) {
-					console.log("Loading new wave");
-					const wave = this.waves.shift();
-					this.waveTimeOut = wave.timeOut;
-					for (const spawner of wave.spawners) {
-						Array(spawner.amount).fill().forEach(() => {
-							entitiesManager.spawn(spawner.cls, spawner.x, spawner.y);
-						});
+			if (currentLevel.started) {
+				// update grids
+				this.gridViews.forEach((gview) => gview.update(dt));
+				const liveEnemies = [...entitiesManager.liveEntities].filter(e => e.type == "enemy");
+				if (this.waveTimeOut <= 0 || liveEnemies.length <= 0) {
+					if (this.waves.length > 0) {
+						console.log("Loading new wave");
+						const wave = this.waves.shift();
+						this.waveTimeOut = wave.timeOut;
+						for (const spawner of wave.spawners) {
+							Array(spawner.amount).fill().forEach(() => {
+								entitiesManager.spawn(spawner.cls, spawner.x, spawner.y);
+							});
+						}
+					} else if (liveEnemies.length <= 0 && this.boss == null) {
+						// BOSS BATTLE!
+						this.boss = entitiesManager.spawn(currentLevel.boss.cls, currentLevel.boss.x, currentLevel.boss.y);
+					} else if (this.boss != null && !this.boss.alive) {
+						// load next level
+						if (this.levelIndex < LEVELS.length - 1) {
+							this.levelIndex++;
+							LEVELS[this.levelIndex].loaded = false;
+							this.loadLevel();
+						}
 					}
-				} else if (liveEnemies.length <= 0 && this.boss == null) {
-					// BOSS BATTLE!
-					this.boss = entitiesManager.spawn(currentLevel.boss.cls, currentLevel.boss.x, currentLevel.boss.y);
-				} else if (this.boss != null && !this.boss.alive) {
-					// load next level
-					if (this.levelIndex < LEVELS.length - 1) {
-						this.levelIndex++;
+				} else {
+					// core gameplay
+					if (1 - Math.random() < PICKUP_CHANCE) {
+						entitiesManager.spawn(PICKUP_TYPES[Math.floor(Math.random() * PICKUP_TYPES.length)]);
 					}
 				}
 			} else {
-				// core gameplay
-				if (1 - Math.random() < PICKUP_CHANCE) {
-					entitiesManager.spawn(PICKUP_TYPES[Math.floor(Math.random() * PICKUP_TYPES.length)]);
-				}
+				currentLevel.started = entitiesManager.getLiveForType("player").map(player => player.enteringStage).reduce((acc, cv) => acc && cv, true);
 			}
+			entitiesManager.update(dt);
 		} else {
 			this.loadLevel();
 		}
 		this.waveTimeOut -= dt;
-		super.update(dt);
-		entitiesManager.update(dt);
 	}
 
 	draw() {

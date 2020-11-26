@@ -63,6 +63,7 @@ export class Player extends Entity {
 		//this.lives = 3;
 		this.prevCollider = Object.assign({}, this.collider);
 		this.setBasicGun();
+		this.enteringStage = true;
 		this.reset(controller, x, y);
 	}
 
@@ -98,7 +99,18 @@ export class Player extends Entity {
 	}
 
 	move(dt) {
-		if (this.controller) {
+		if (this.enteringStage) {
+			if (this.pos.x < canvasData.canvas.width/2) {
+				this.aim.x = 1;
+				this.vel.x = SPEED;
+				// this.pos.x += Math.round(100*dt);
+				this.enteringStage = this.pos.x < canvasData.canvas.width/2 - this.width*1.5;
+			} else {
+				this.aim.x = -1;
+				this.vel.x = -SPEED;
+				this.enteringStage = this.pos.x > canvasData.canvas.width/2 + this.width*1.5;
+			}
+		} else if (this.controller) {
 			const state = this.controller.currentState;
 			let cv = getAxis(state.up, state.down, state.left, state.right);
 
@@ -153,7 +165,6 @@ export class Player extends Entity {
 
 	animate(dt) {
 		const oldAnimation = this.currentAnimation;
-
 		let animSet = (this.aim.x != 0 && this.aim.y != 0) ? 1 : 0;
 		let axis = animSet ? this.aim : this.vel;
 		if (axis.x != 0) {
