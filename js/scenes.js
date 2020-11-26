@@ -237,7 +237,7 @@ class GameScene extends Scene {
 		const currentLevel = LEVELS[this.levelIndex];
 		const players = entitiesManager.getLiveForType("player");
 		currentLevel.started = false;
-		for (const entityType of ["enemy", "playerProjectile", "enemyAttack", "pickup", "gun", "unwalkable"]) {
+		for (const entityType of ["enemy", "enemyProjectile", "playerProjectile", "enemyAttack", "pickup", "gun", "unwalkable"]) {
 			for (const entity of entitiesManager.getLiveForType(entityType)) {
 				entity.die();
 			}
