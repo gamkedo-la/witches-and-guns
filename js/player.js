@@ -153,7 +153,7 @@ export class Player extends Entity {
 	}
 
 	shoot(dt) {
-		if (!this.controller) {
+		if (this.enteringStage || !this.controller) {
 			return;
 		}
 		const state = this.controller.currentState;
