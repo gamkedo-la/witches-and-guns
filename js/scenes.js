@@ -301,7 +301,7 @@ class GameScene extends Scene {
 					}
 				}
 			} else {
-				currentLevel.started = entitiesManager.getLiveForType("player").map(player => player.enteringStage).reduce((acc, cv) => acc && cv, true);
+				currentLevel.started = !entitiesManager.getLiveForType("player").map(player => player.enteringStage).reduce((acc, cv) => acc && cv, true);
 			}
 			entitiesManager.update(dt);
 		} else {
