@@ -8,6 +8,7 @@ import { PICKUP_CHANCE, PICKUP_TYPES } from './pickups.js';
 import { GridView } from './view.js';
 import { Fmt } from './fmt.js';
 import { LEVELS, UnWalkable } from "./levels.js";
+import { CreditLine, creditsData } from "./credits.js";
 
 export let currentScene;
 
@@ -355,7 +356,55 @@ class GameScene extends Scene {
 class GameOverScene extends Scene {
 }
 
+
+const TIME_BETWEEN_CREDIT_LINES = 1/4;
+
 class CreditsScene extends Scene {
+	constructor() {
+		super();
+		this.lines = this.generateLines();
+		this.timer = TIME_BETWEEN_CREDIT_LINES;
+		this.generatedLines = [];
+	}
+
+	*generateLines() {
+		for (const line of creditsData) {
+			yield entitiesManager.spawn(CreditLine, line);
+		}
+	}
+
+	update(dt) {
+		super.update(dt);
+		if (this.timer >= TIME_BETWEEN_CREDIT_LINES) {
+			this.generatedLines.push(this.lines.next().value);
+			this.timer = 0;
+		}
+		this.timer += dt;
+		for (const line of entitiesManager.getLiveForType("credit")) {
+			line.update(dt);
+		}
+		if (entitiesManager.getLiveForType("credit").length <= 0) {
+			this.switchTo(SCENES.attract);
+		}
+	}
+
+	reset() {
+		inputManager.reset();
+		inputManager.on(['start'], controller => {
+			this.switchTo(SCENES.attract);
+		});
+		this.lines = this.generateLines();
+		return super.reset();
+	}
+
+	draw() {
+		super.draw();
+		canvasData.context.fillStyle = 'rgb(0, 64, 88)';
+		canvasData.context.fillRect(0, 0, canvasData.canvas.width, canvasData.canvas.height);
+		for (const line of entitiesManager.getLiveForType("credit")) {
+			line.draw();
+		}
+	}
 }
 
 export const SCENES = {
