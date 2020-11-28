@@ -360,13 +360,6 @@ class GameOverScene extends Scene {
 const TIME_BETWEEN_CREDIT_LINES = 1/4;
 
 class CreditsScene extends Scene {
-	constructor() {
-		super();
-		this.lines = this.generateLines();
-		this.timer = TIME_BETWEEN_CREDIT_LINES;
-		this.generatedLines = [];
-	}
-
 	*generateLines() {
 		for (const line of creditsData) {
 			yield entitiesManager.spawn(CreditLine, line);
@@ -376,7 +369,7 @@ class CreditsScene extends Scene {
 	update(dt) {
 		super.update(dt);
 		if (this.timer >= TIME_BETWEEN_CREDIT_LINES) {
-			this.generatedLines.push(this.lines.next().value);
+			this.lines.next();
 			this.timer = 0;
 		}
 		this.timer += dt;
@@ -389,10 +382,10 @@ class CreditsScene extends Scene {
 	}
 
 	reset() {
-		inputManager.reset();
 		inputManager.on(['start'], controller => {
 			this.switchTo(SCENES.attract);
 		});
+		this.timer = TIME_BETWEEN_CREDIT_LINES;
 		this.lines = this.generateLines();
 		return super.reset();
 	}
