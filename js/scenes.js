@@ -172,7 +172,6 @@ class PlayerSelectScene extends Scene {
 class GameScene extends Scene {
 	constructor() {
 		super();
-		this.levelIndex = 0;
 		entitiesManager.onCollision('playerProjectile', 'enemy', (projectile, enemy) => {
 			enemy.hurt(projectile.damage);
 			projectile.die();
@@ -213,8 +212,7 @@ class GameScene extends Scene {
 				enemy.vel.y = 0;
 			}
 		});
-		this.waveTimeOut = Infinity;
-		this.boss = null;
+		this.reset();
 	}
 
 	setUpInput() {
@@ -231,6 +229,9 @@ class GameScene extends Scene {
 
 	reset() {
 		this.setUpInput();
+		this.levelIndex = 0;
+		this.waveTimeOut = Infinity;
+		this.boss = null;
 		return super.reset();
 	}
 
@@ -292,6 +293,9 @@ class GameScene extends Scene {
 					}
 				} else {
 					// core gameplay
+					if (entitiesManager.getLiveForType("player").length <= 0) {
+						this.switchTo(SCENES.gameOver);
+					}
 					if (1 - Math.random() < PICKUP_CHANCE) {
 						entitiesManager.spawn(PICKUP_TYPES[Math.floor(Math.random() * PICKUP_TYPES.length)]);
 					}
@@ -353,7 +357,32 @@ class GameScene extends Scene {
 	}
 }
 
+const GAMEOVER_TIMEOUT = 3;
+
 class GameOverScene extends Scene {
+	reset() {
+		this.timer = 0;
+		return super.reset();
+	}
+
+	update(dt) {
+		super.update(dt);
+		if (this.timer >= GAMEOVER_TIMEOUT) {
+			this.switchTo(SCENES.attract);
+		} else {
+			this.timer += dt;
+		}
+	}
+
+	draw() {
+		canvasData.context.save();
+		canvasData.context.fillStyle = "rgb(0, 64, 88)";
+		canvasData.context.fillRect(0, 0, canvasData.canvas.width, canvasData.canvas.height);
+		canvasData.context.textAlign = "center";
+		canvasData.context.fillStyle = "white";
+		canvasData.context.fillText("GAME OVER!", canvasData.canvas.width / 2, canvasData.canvas.height / 2);
+		canvasData.context.restore();
+	}
 }
 
 
