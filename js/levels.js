@@ -1,7 +1,7 @@
 import {canvasData} from './globals.js';
 import { Grid } from './grid.js';
 import { Entity } from './entity.js';
-import { BroomEnemy, ShovelEnemy } from './enemies.js';
+import {BroomEnemy, FlyingBookEnemy, ShovelEnemy} from './enemies.js';
 import { FridgeBoss, LawnMowerBoss, TVBoss, WasherBoss } from './bosses.js';
 
 const HGRA = "higrass_a";
@@ -443,6 +443,14 @@ export const LEVELS = [
 		name: "Level 3", loaded: false, complete: false, started: false,
 		grids: [LVL3_BG_GRID, LVL3_MID_GRID, LVL3_FG_GRID],
 		initialEnemies: [
+			{ cls: FlyingBookEnemy, x: SIZE, y: SIZE },
+			{ cls: FlyingBookEnemy, x: WIDTH * SIZE/2, y: SIZE },
+			{ cls: FlyingBookEnemy, x: WIDTH * SIZE - SIZE, y: SIZE },
+			{ cls: FlyingBookEnemy, x: SIZE, y: HEIGHT * SIZE/2 },
+			{ cls: FlyingBookEnemy, x: WIDTH * SIZE - SIZE, y: HEIGHT * SIZE/2 },
+			{ cls: FlyingBookEnemy, x: SIZE, y: HEIGHT * SIZE - SIZE},
+			{ cls: FlyingBookEnemy, x: WIDTH * SIZE / 2, y: HEIGHT * SIZE - SIZE },
+			{ cls: FlyingBookEnemy, x: WIDTH * SIZE - SIZE, y: HEIGHT * SIZE - SIZE },
 		],
 		waves: [
 			{
@@ -451,6 +459,7 @@ export const LEVELS = [
 				timeOut: Infinity,
 			},
 		],
+
 		unwalkables: [
 			{x: 0, y: 0, width: SIZE*5, height: SIZE*2},
 			{x: SIZE*5, y: 0, width: SIZE*2, height: SIZE},

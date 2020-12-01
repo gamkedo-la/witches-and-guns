@@ -279,3 +279,87 @@ export class ShovelEnemy extends JumpAttackEnemy {
 	return this.target.x > this.pos.x ? this.animations.bendLeft : this.animations.bendRight;
   }
 }
+
+export class FlyingBookEnemy extends Enemy {
+	constructor(x, y) {
+		const animations = {
+			walkUp: generate(assetLoader.getImage("book.walkUp")),
+			walkRight: generate(assetLoader.getImage("book.walkRight")),
+			walkDown: generate(assetLoader.getImage("book.walkDown")),
+			walkLeft: generate(assetLoader.getImage("book.walkLeft"))
+		};
+		animations.walkDown.loop = animations.walkDown.loop = false;
+
+		super({x: x, y: y}, BROOM_WIDTH, BROOM_HEIGHT, {width: 14, height: 14}, 1, 1, animations, "walkRight");
+		this.speed = 50;
+		this.canCollideWithTypes.add('playerProjectile');
+
+		this.dir = {x: 1, y: 0};
+		this.vel = {x: 0, y: 0};
+		this.attackDistance = 20;
+		this.steerTimer = Math.random()*0.5 + 0.5;
+		this.headButt = entitiesManager.spawn(Attack, this, 0, 0, BROOM_ATTACK_WIDTH - 8, BROOM_HEIGHT/4);
+		console.log(this);
+	}
+
+	performActions(dt) {
+		let dist, minDist = Number.MAX_SAFE_INTEGER;
+		this.currentAnimation.update(dt);
+		let closestPlayer = null;
+		const steer = {x: 0, y: 0};
+		// find closest player
+		for (const player of [...entitiesManager.liveEntities].filter(e => e.type == "player")) {
+			dist = Math.hypot(player.pos.x - this.pos.x, player.pos.y - this.pos.y);
+			if (dist < minDist) {
+				minDist = dist;
+				closestPlayer = player;
+			}
+		}
+		if (this.steerTimer <= 0) {
+			// Steering vehicle behavior, based on https://natureofcode.com/book/chapter-6-autonomous-agents/
+			const desiredVel = {x: 0, y: 0};
+			if (closestPlayer === null) {
+				console.error('Could not find player closest to %s', this);
+				this.currentAnimation.stop();
+			} else {
+				desiredVel.x = closestPlayer.pos.x - this.pos.x;
+				desiredVel.y = closestPlayer.pos.y - this.pos.y;
+				const mag = Math.hypot(desiredVel.x, desiredVel.y);
+				desiredVel.x = this.speed*desiredVel.x/mag;
+				desiredVel.y = this.speed*desiredVel.y/mag;
+			}
+			steer.x = desiredVel.x - this.vel.x;
+			steer.y = desiredVel.y - this.vel.y;
+			this.steerTimer = Math.random()*0.5 + 1;
+		} else {
+			this.steerTimer -= dt;
+		}
+
+		// move
+		this.vel.x += steer.x;
+		this.vel.y += steer.y;
+		this.pos.x += Math.round(this.vel.x * dt);
+		this.pos.y += Math.round(this.vel.y * dt);
+
+		if (steer.x != 0) this.dir.x = steer.x;
+		if (steer.y != 0) this.dir.y = steer.y;
+
+		if (this.dir.x >= 0) {
+				this.changeAnimation(this.animations.walkRight);
+		} else {
+				this.changeAnimation(this.animations.walkLeft);
+		}
+		super.performActions(dt);
+	}
+
+	die() {
+		if (this.headButt && this.headButt.alive) {
+			this.headButt.die();
+		}
+		super.die();
+	}
+
+	get attacking() {
+		return (this.currentAnimation == this.animations.attackLeft || this.currentAnimation == this.animations.attackRight);
+	}
+}

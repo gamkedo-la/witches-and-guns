@@ -7,6 +7,8 @@ const PLAYER_HEIGHT = 32;
 const BROOM_WIDTH = 14;
 const BROOM_HEIGHT = 26;
 const BROOM_ATTACK_WIDTH = 28;
+const BOOK_WIDTH = 17;
+const BOOK_HEIGHT = 16;
 
 const assetDefs = {
   images: [
@@ -111,7 +113,35 @@ const assetDefs = {
 	  {id: "shovel.land", kind: "anim", width: SHOVEL_WIDTH, height: SHOVEL_HEIGHT, loop: false, frames: [
 		{duration: 100, xoffset: 0, yoffset: SHOVEL_HEIGHT * 7},
 	  ]},
-	]},
+		]
+	}, {
+		  id: "bookEnemy", src: "./images/book-enemy.png", subids: [
+			  {
+				  id: "book.walkDown", kind: "anim", width: BOOK_WIDTH, height: BOOK_HEIGHT, frames: [
+					  {duration: 200, xoffset: BOOK_WIDTH * 0, yoffset: BOOK_HEIGHT * 0},
+					  {duration: 200, xoffset: BOOK_WIDTH * 0, yoffset: BOOK_HEIGHT * 1}
+				  ]
+			  },
+			  {
+				  id: "book.walkRight", kind: "anim", width: BOOK_WIDTH, height: BOOK_HEIGHT, frames: [
+					  {duration: 200, xoffset: BOOK_WIDTH * 1, yoffset: BOOK_HEIGHT * 0},
+					  {duration: 200, xoffset: BOOK_WIDTH * 1, yoffset: BOOK_HEIGHT * 1}
+				  ]
+			  },
+			  {
+				  id: "book.walkUp", kind: "anim", width: BOOK_WIDTH, height: BOOK_HEIGHT, frames: [
+					  {duration: 200, xoffset: BOOK_WIDTH * 2, yoffset: BOOK_HEIGHT * 0},
+					  {duration: 200, xoffset: BOOK_WIDTH * 2, yoffset: BOOK_HEIGHT * 1}
+				  ]
+			  },
+			  {
+				  id: "book.walkLeft", kind: "anim", width: BOOK_WIDTH, height: BOOK_HEIGHT, frames: [
+					  {duration: 200, xoffset: BOOK_WIDTH * 3, yoffset: BOOK_HEIGHT * 0},
+					  {duration: 200, xoffset: BOOK_WIDTH* 3, yoffset: BOOK_HEIGHT * 1}
+				  ]
+			  },
+		  ]
+	  },
 	{id: "floorTile", src: "./images/tiles/dungeon-floor.png"},
 	{id: "wateringCan", src: "./images/tiles/watering-can.png"},
 	{id: "fence_b_a", src: "./images/tiles/fence_b_a.png"},
