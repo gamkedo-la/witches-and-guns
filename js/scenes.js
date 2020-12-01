@@ -8,7 +8,7 @@ import { PICKUP_CHANCE, PICKUP_TYPES } from './pickups.js';
 import { GridView } from './view.js';
 import { Fmt } from './fmt.js';
 import { LEVELS, UnWalkable } from "./levels.js";
-import { CreditLine, creditsData } from "./credits.js";
+import { AuthorLine, CreditLine, creditsData } from "./credits.js";
 
 export let currentScene;
 
@@ -390,16 +390,23 @@ const TIME_BETWEEN_CREDIT_LINES = 1/4;
 
 class CreditsScene extends Scene {
 	*generateLines() {
-		for (const line of creditsData) {
-			yield entitiesManager.spawn(CreditLine, line);
+		for (const [author, credits] of Object.entries(creditsData)) {
+			yield entitiesManager.spawn(AuthorLine, author, TIME_BETWEEN_CREDIT_LINES);
+			for (let i=0; i<credits.length; i++) {
+				const timeTilNextLine = TIME_BETWEEN_CREDIT_LINES;
+				yield entitiesManager.spawn(CreditLine, credits[i], i == credits.length - 1 ? timeTilNextLine*2 : timeTilNextLine);
+			}
 		}
 	}
 
 	update(dt) {
 		super.update(dt);
-		if (this.timer >= TIME_BETWEEN_CREDIT_LINES) {
-			this.lines.next();
-			this.timer = 0;
+		if (this.timer >= this.timeTilNextLine) {
+			const line = this.lines.next().value;
+			if (typeof(line) != "undefined") {
+				this.timer = 0;
+				this.timeTilNextLine = line.timeTilNextLine;
+			}
 		}
 		this.timer += dt;
 		for (const line of entitiesManager.getLiveForType("credit")) {
@@ -415,14 +422,20 @@ class CreditsScene extends Scene {
 			this.switchTo(SCENES.attract);
 		});
 		this.timer = TIME_BETWEEN_CREDIT_LINES;
+		this.timeTilNextLine = TIME_BETWEEN_CREDIT_LINES;
+		for (const line of entitiesManager.getLiveForType("credit")) {
+			line.die();
+		}
 		this.lines = this.generateLines();
 		return super.reset();
 	}
 
 	draw() {
 		super.draw();
+		canvasData.context.save();
 		canvasData.context.fillStyle = 'rgb(0, 64, 88)';
 		canvasData.context.fillRect(0, 0, canvasData.canvas.width, canvasData.canvas.height);
+		canvasData.context.restore();
 		for (const line of entitiesManager.getLiveForType("credit")) {
 			line.draw();
 		}

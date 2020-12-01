@@ -5,16 +5,36 @@ import { Entity } from "./entity.js";
 const CREDITS_SPEED = 1;
 
 export class CreditLine extends Entity {
-	constructor(text) {
+	constructor(text, timeTilNextLine) {
 		super("credit", {x: canvasData.canvas.width/2, y: canvasData.canvas.height}, 0, 0, {}, Infinity, 0, {}, '');
-		this.reset(text);
+		this.reset(text, timeTilNextLine);
 	}
 
-	reset(text) {
-		const txtMetrics = canvasData.context.measureText(text);
+	setUpContext() {
+		const ctx = canvasData.context;
+		ctx.save();
+		ctx.textAlign = "center";
+		ctx.font = "12px serif";
+		ctx.fillStyle = "cyan";
+	}
+
+	restoreContext() {
+		const ctx = canvasData.context;
+		ctx.restore();
+	}
+
+	setDimensions() {
+		this.setUpContext();
+		const txtMetrics = canvasData.context.measureText(this.text);
 		this.width = txtMetrics.width;
 		this.height = txtMetrics.actualBoundingBoxAscent;
+		this.restoreContext();
+	}
+
+	reset(text, timeTilNextLine) {
 		this.text = text;
+		this.timeTilNextLine = timeTilNextLine;
+		this.setDimensions();
 		super.reset(canvasData.canvas.width/2, canvasData.canvas.height + this.height);
 	}
 
@@ -27,35 +47,43 @@ export class CreditLine extends Entity {
 
 	draw() {
 		const ctx = canvasData.context;
-		ctx.save();
-		ctx.textAlign = "center";
-		// TODO: set font
-		ctx.fillStyle = "cyan";
+		this.setUpContext();
 		ctx.fillText(this.text, this.pos.x, this.pos.y);
-		ctx.restore();
+		this.restoreContext();
 	}
 }
 
-export const creditsData = [
-	"Lorem ipsum dolor sit amet",
-	"consectetur adipiscing elit.",
-	"Duis malesuada ultrices quam nec vulputate.",
-	"Lorem ipsum dolor sit amet",
-	"consectetur adipiscing eLorem lit.",
-	"Donec in ullamcorper nibh.",
-	"Phasellus id eros id risus pellentesque venenatis.",
-	"Donec aliquam vehicula lectus id blandit.",
-	"Donec vel vulputate nisi.",
-	"Integer in vehicula eros.",
-	"Fusce dignissim luctus accumsan.",
-	"Mauris consequat",
-	"enim sed tempor fringilla",
-	"lectus dolor luctus lacus",
-	"in facilisis diam ante vel erat.",
-	"Orci varius natoque penatibus et magnis dis parturient montes",
-	"nascetur ridiculus mus.",
-	"Donec gravida odio a turpis pellentesque",
-	"quis porttitor nisi porttitor.",
-	"Curabitur aliquet nibh eget finibus viverra.",
-	"Praesent imperdiet bibendum eleifend."
-];
+export class AuthorLine extends CreditLine {
+	setUpContext() {
+		super.setUpContext();
+		canvasData.context.font = "bold 20px serif";
+	}
+
+	reset(text, timeTilNextLine) {
+		super.reset(text, timeTilNextLine + 1/8);
+	}
+}
+
+export const creditsData = {
+	"John Doe": [
+		"Lorem ipsum dolor sit amet",
+		"consectetur adipiscing elit.",
+		"Duis malesuada ultrices quam nec vulputate.",
+		"Lorem ipsum dolor sit amet",
+		"consectetur adipiscing eLorem lit.",
+	],
+	"Jane Doe": [
+		"Donec in ullamcorper nibh.",
+		"Phasellus id eros id risus pellentesque venenatis.",
+		"Donec aliquam vehicula lectus id blandit.",
+		"Donec vel vulputate nisi.",
+	],
+	"Guy Incognito": [
+		"Integer in vehicula eros.",
+		"Fusce dignissim luctus accumsan.",
+		"Mauris consequat",
+		"enim sed tempor fringilla",
+		"lectus dolor luctus lacus",
+		"in facilisis diam ante vel erat.",
+	],
+};
