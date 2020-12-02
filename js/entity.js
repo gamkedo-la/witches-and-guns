@@ -1,4 +1,6 @@
 import {canvasData} from './globals.js';
+import { assetLoader } from './assets.js';
+import { generate } from './view.js';
 
 class EntitiesManager {
   constructor() {
@@ -186,6 +188,28 @@ export class Entity {
 		this.currentAnimation.currentFrameIndex = 0;
 		this.currentAnimation = animation;
 		this.currentAnimation.play();
+	}
+  }
+}
+
+export class DeathPoof extends Entity {
+  constructor(deadEntity) {
+	const animations = {poof: generate(assetLoader.getImage("poof"))};
+	super("poof", {x: deadEntity.pos.x, y: deadEntity.pos.y}, 0, 0, {width: 23, height: 32}, 1, 1, animations, "poof");
+	this.reset(deadEntity);
+  }
+
+  reset(deadEntity) {
+	super.reset(deadEntity.pos.x, deadEntity.pos.y);
+	this.currentAnimation.reset();
+	this.currentAnimation.play();
+  }
+
+  update(dt) {
+	super.update(dt);
+	this.currentAnimation.update(dt);
+	if (!this.currentAnimation.playing) {
+	  this.die();
 	}
   }
 }

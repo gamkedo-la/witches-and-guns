@@ -141,7 +141,17 @@ const assetDefs = {
 				  ]
 			  },
 		  ]
-	  },
+	},
+	{
+	  id: "deathAnim", src: "./images/deathpoof.png", subids: [
+		{id: "poof", kind: "anim", width: 23, height: 32, loop: false, frames: [
+		  {duration: 100, xoffset: 0, yoffset: 0},
+		  {duration: 60, xoffset: 0, yoffset: 32},
+		  {duration: 60, xoffset: 0, yoffset: 32*2},
+		  {duration: 100, xoffset: 0, yoffset: 32*3},
+		]},
+	  ],
+	},
 	{id: "floorTile", src: "./images/tiles/dungeon-floor.png"},
 	{id: "wateringCan", src: "./images/tiles/watering-can.png"},
 	{id: "fence_b_a", src: "./images/tiles/fence_b_a.png"},

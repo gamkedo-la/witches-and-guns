@@ -1,6 +1,6 @@
 import {Animation} from './animation.js';
 import { assetLoader } from './assets.js';
-import {Entity, entitiesManager, DEFAULT_DAMAGE} from './entity.js';
+import {DeathPoof, Entity, entitiesManager, DEFAULT_DAMAGE} from './entity.js';
 import {canvasData} from './globals.js';
 import { generate } from './view.js';
 
@@ -8,6 +8,11 @@ import { generate } from './view.js';
 export class Enemy extends Entity {
   constructor(initialPos, width, height, collider, hp, damage, animations, initialAnimation) {
 	super("enemy", initialPos, width, height, collider, hp, damage, animations, initialAnimation);
+  }
+
+  die() {
+	entitiesManager.spawn(DeathPoof, this);
+	super.die();
   }
 }
 
