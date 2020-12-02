@@ -5,10 +5,11 @@ import { inputManager } from './input.js';
 
 import { Player } from './player.js';
 import { PICKUP_CHANCE, PICKUP_TYPES } from './pickups.js';
-import { GridView } from './view.js';
+import { generate, GridView } from './view.js';
 import { Fmt } from './fmt.js';
 import { LEVELS, UnWalkable } from "./levels.js";
 import { AuthorLine, CreditLine, creditsData } from "./credits.js";
+import { Util } from './util.js';
 
 export let currentScene;
 
@@ -54,11 +55,20 @@ class AttractModeScene extends Scene {
 		return super.reset();
 	}
 
+	setup() {
+		if (this.titleSprite) return;
+		this.titleSprite = generate(assetLoader.getImage("title"));
+	}
+
 	draw() {
-		canvasData.context.fillStyle = 'rgb(0, 64, 88)';
+		this.setup();
+		canvasData.context.fillStyle = 'rgb(0, 0, 0)';
 		canvasData.context.fillRect(0, 0, canvasData.canvas.width, canvasData.canvas.height);
-		canvasData.context.fillStyle = 'white';
-		canvasData.context.fillText('ATTRACT MODE, HIT "ENTER" KEY TO START PLAYING', 10, canvasData.canvas.height / 2);
+		this.titleSprite.draw(canvasData.context);
+		canvasData.context.fillStyle = 'rgb(153,229,80)';
+		canvasData.context.textAlign = 'center';
+		canvasData.context.fillText('HIT "ENTER" KEY TO START PLAYING', canvasData.canvas.width/2, canvasData.canvas.height * .95);
+		canvasData.context.textAlign = 'left';
 	}
 
 	update(dt) {

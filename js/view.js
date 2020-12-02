@@ -66,6 +66,7 @@ class Sprite {
 }
 
 function generate(spec) {
+    if (!spec) return undefined;
     if (spec.kind === "anim") {
         return new Animation(spec);
     } else {
