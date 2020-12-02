@@ -58,6 +58,9 @@ class AttractModeScene extends Scene {
 	setup() {
 		if (this.titleSprite) return;
 		this.titleSprite = generate(assetLoader.getImage("title"));
+		this.textAlpha = 1;
+		this.textAlphaTTL = 1;
+		this.textFadeOut = true;
 	}
 
 	draw() {
@@ -65,7 +68,7 @@ class AttractModeScene extends Scene {
 		canvasData.context.fillStyle = 'rgb(0, 0, 0)';
 		canvasData.context.fillRect(0, 0, canvasData.canvas.width, canvasData.canvas.height);
 		this.titleSprite.draw(canvasData.context);
-		canvasData.context.fillStyle = 'rgb(153,229,80)';
+		canvasData.context.fillStyle = 'rgb(153,229,80, ' + this.textAlpha + ')';
 		canvasData.context.textAlign = 'center';
 		canvasData.context.fillText('HIT "ENTER" KEY TO START PLAYING', canvasData.canvas.width/2, canvasData.canvas.height * .95);
 		canvasData.context.textAlign = 'left';
@@ -73,6 +76,20 @@ class AttractModeScene extends Scene {
 
 	update(dt) {
 		super.update(dt);
+		// text fade
+		if (this.textFadeOut) {
+			this.textAlpha -= dt/this.textAlphaTTL;
+			if (this.textAlpha <= 0) {
+				this.textAlpha = 0;
+				this.textFadeOut = false;
+			}
+		} else {
+			this.textAlpha += dt/this.textAlphaTTL;
+			if (this.textAlpha >= 1) {
+				this.textAlpha = 1;
+				this.textFadeOut = true;
+			}
+		}
 	}
 }
 
