@@ -92,7 +92,8 @@ class AttractModeScene extends Scene {
 		// enter text
 		canvasData.context.fillStyle = 'rgb(153,229,80, ' + this.textAlpha + ')';
 		canvasData.context.textAlign = 'center';
-		canvasData.context.fillText('HIT "ENTER" KEY TO START PLAYING', canvasData.canvas.width/2, canvasData.canvas.height * .95);
+		canvasData.context.fillText('HIT "ENTER" KEY TO START PLAYING', canvasData.canvas.width/2, canvasData.canvas.height * .96);
+	  	canvasData.context.fillText('HIT "C" KEY TO SEE CREDITS', canvasData.canvas.width/2, canvasData.canvas.height * 0.91);
 		canvasData.context.textAlign = 'left';
 	}
 
