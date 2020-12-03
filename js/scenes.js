@@ -65,7 +65,7 @@ class AttractModeScene extends Scene {
 			generate(assetLoader.getImage("necro")),
 			generate(assetLoader.getImage("pentagram")),
 			generate(assetLoader.getImage("crystalball")),
-			generate(assetLoader.getImage("cauldron")),
+			generate(assetLoader.getImage("cauldron2")),
 			generate(assetLoader.getImage("potion")),
 		];
 		this.bgx = Math.floor(Math.random() * canvasData.canvas.width);
@@ -79,7 +79,7 @@ class AttractModeScene extends Scene {
 	draw() {
 		this.setup();
 		// background
-		canvasData.context.fillStyle = 'rgb(0, 0, 0)';
+		canvasData.context.fillStyle = 'rgb(30, 17, 36)';
 		canvasData.context.fillRect(0, 0, canvasData.canvas.width, canvasData.canvas.height);
 		// bg sprites
 		const sprite = this.bgSprites[this.bgi];

@@ -156,7 +156,7 @@ const assetDefs = {
 	{id: "pentagram", src: "./images/pentagram.png", "kind": "sprite"},
 	{id: "crystalball", src: "./images/crystal ball.png", "kind": "sprite"},
 	{id: "necro", src: "./images/Necronomicon.png", "kind": "sprite"},
-	{id: "cauldron", src: "./images/cauldron.png", "kind": "sprite"},
+	{id: "cauldron2", src: "./images/cauldron.png", "kind": "sprite"},
 	{id: "potion", src: "./images/potion.png", "kind": "sprite"},
 	{id: "floorTile", src: "./images/tiles/dungeon-floor.png"},
 	{id: "wateringCan", src: "./images/tiles/watering-can.png"},
