@@ -65,6 +65,8 @@ class AttractModeScene extends Scene {
 			generate(assetLoader.getImage("necro")),
 			generate(assetLoader.getImage("pentagram")),
 			generate(assetLoader.getImage("crystalball")),
+			generate(assetLoader.getImage("cauldron")),
+			generate(assetLoader.getImage("potion")),
 		];
 		this.bgx = Math.floor(Math.random() * canvasData.canvas.width);
 		this.bgy = Math.floor(Math.random() * canvasData.canvas.height);
