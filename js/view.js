@@ -52,8 +52,16 @@ class Sprite {
 	}
 
 	get img() {
-		return this._img;
-	}
+		return this._img || {width: 0, height: 0};
+    }
+    
+    get width() {
+        return this.img.width;
+    }
+
+    get height() {
+        return this.img.height;
+    }
 
 	draw(ctx, x=0, y=0) {
 		if (!this._img) return;

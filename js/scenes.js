@@ -61,13 +61,35 @@ class AttractModeScene extends Scene {
 		this.textAlpha = 1;
 		this.textAlphaTTL = 1;
 		this.textFadeOut = true;
+		this.bgSprites = [
+			generate(assetLoader.getImage("necro")),
+			generate(assetLoader.getImage("pentagram")),
+			generate(assetLoader.getImage("crystalball")),
+		];
+		this.bgx = Math.floor(Math.random() * canvasData.canvas.width);
+		this.bgy = Math.floor(Math.random() * canvasData.canvas.height);
+		this.bgi = 0;
+		this.bgAlpha = 0;
+		this.bgTTL = 1.5;
+		this.bgFadeOut = false;
 	}
 
 	draw() {
 		this.setup();
+		// background
 		canvasData.context.fillStyle = 'rgb(0, 0, 0)';
 		canvasData.context.fillRect(0, 0, canvasData.canvas.width, canvasData.canvas.height);
+		// bg sprites
+		const sprite = this.bgSprites[this.bgi];
+		const x = this.bgx - (sprite.width*.5);
+		const y = this.bgy - (sprite.height*.5);
+		// WARNING -- setting global alpha, make sure it it set back
+		canvasData.context.globalAlpha = this.bgAlpha;
+		sprite.draw(canvasData.context, x, y);
+		canvasData.context.globalAlpha = 1;
+		// title
 		this.titleSprite.draw(canvasData.context);
+		// enter text
 		canvasData.context.fillStyle = 'rgb(153,229,80, ' + this.textAlpha + ')';
 		canvasData.context.textAlign = 'center';
 		canvasData.context.fillText('HIT "ENTER" KEY TO START PLAYING', canvasData.canvas.width/2, canvasData.canvas.height * .95);
@@ -88,6 +110,25 @@ class AttractModeScene extends Scene {
 			if (this.textAlpha >= 1) {
 				this.textAlpha = 1;
 				this.textFadeOut = true;
+			}
+		}
+		// sprite fade
+		if (this.bgFadeOut) {
+			this.bgAlpha -= dt/this.bgTTL;
+			if (this.bgAlpha <= 0) {
+				this.bgAlpha = 0;
+				this.bgFadeOut = false;
+				// next image and pos
+				this.bgi++;
+				this.bgx = Math.floor(Math.random() * canvasData.canvas.width);
+				this.bgy = Math.floor(Math.random() * canvasData.canvas.height);
+				if (this.bgi >= this.bgSprites.length) this.bgi = 0;
+			}
+		} else {
+			this.bgAlpha += dt/this.bgTTL;
+			if (this.bgAlpha >= 1) {
+				this.bgAlpha = 1;
+				this.bgFadeOut = true;
 			}
 		}
 	}
