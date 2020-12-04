@@ -240,6 +240,7 @@ class PlayerSelectScene extends Scene {
 	}
 }
 
+const LEVEL_COMPLETE_MESSAGE_TIMEOUT = 3;
 class GameScene extends Scene {
 	constructor() {
 		super();
@@ -303,6 +304,7 @@ class GameScene extends Scene {
 		this.levelIndex = 0;
 		this.waveTimeOut = Infinity;
 		this.boss = null;
+		this.levelCompleteTimer = 0;
 		return super.reset();
 	}
 
@@ -310,6 +312,7 @@ class GameScene extends Scene {
 		const currentLevel = LEVELS[this.levelIndex];
 		const players = entitiesManager.getLiveForType("player");
 		currentLevel.started = false;
+		currentLevel.complete = false;
 		for (const entityType of ["enemy", "enemyProjectile", "playerProjectile", "enemyAttack", "pickup", "gun", "unwalkable"]) {
 			for (const entity of entitiesManager.getLiveForType(entityType)) {
 				entity.die();
@@ -331,6 +334,7 @@ class GameScene extends Scene {
 		this.waves = Array.from(currentLevel.waves);
 		currentLevel.loaded = true;
 		this.boss = null;
+		this.levelCompleteTimer = 0;
 	}
 
 	update(dt) {
@@ -355,11 +359,18 @@ class GameScene extends Scene {
 						// BOSS BATTLE!
 						this.boss = entitiesManager.spawn(currentLevel.boss.cls, currentLevel.boss.x, currentLevel.boss.y);
 					} else if (this.boss != null && !this.boss.alive) {
-						// load next level
-						if (this.levelIndex < LEVELS.length - 1) {
-							this.levelIndex++;
-							LEVELS[this.levelIndex].loaded = false;
-							this.loadLevel();
+						LEVELS[this.levelIndex].complete = true;
+						if (this.levelCompleteTimer >= LEVEL_COMPLETE_MESSAGE_TIMEOUT) {
+							// load next level
+							if (this.levelIndex < LEVELS.length - 1) {
+								this.levelIndex++;
+								LEVELS[this.levelIndex].loaded = false;
+								this.loadLevel();
+							} else {
+								// TODO: finished game congratulations, then switch to credits
+							}
+						} else {
+							this.levelCompleteTimer += dt;
 						}
 					}
 				} else {
@@ -424,6 +435,14 @@ class GameScene extends Scene {
 			canvasData.context.fillStyle = 'white';
 			canvasData.context.textBaseline = 'middle';
 			canvasData.context.fillText('x' + player.lives, x, y);
+		}
+		if (currentLevel.complete) {
+			canvasData.context.save();
+			canvasData.context.textAlign = "center";
+			canvasData.context.font = "bold 20px sans";
+			canvasData.context.fillStyle = "purple";
+			canvasData.context.fillText("LEVEL COMPLETE!", canvasData.canvas.width / 2, canvasData.canvas.height / 2);
+			canvasData.context.restore();
 		}
 	}
 }
