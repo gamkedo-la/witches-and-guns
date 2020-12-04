@@ -65,25 +65,52 @@ export class AuthorLine extends CreditLine {
 }
 
 export const creditsData = {
-	"John Doe": [
-		"Lorem ipsum dolor sit amet",
-		"consectetur adipiscing elit.",
-		"Duis malesuada ultrices quam nec vulputate.",
-		"Lorem ipsum dolor sit amet",
-		"consectetur adipiscing eLorem lit.",
+	"Gonzalo Delgado": [
+		"Project lead, core gameplay, enemy AI & pathfinding, sound",
+		"code, sounds, waves, broom attack animation integration,",
+		"lawnmower boss (art and code), pickups, washing machine art",
+		"and animation, book enemy sprites, lawnmower flame animation,",
+		"gardening shovel enemy, different gun support, gun spread,",
+		"ammo limit, gun items, level skip cheat, game reset, rolling",
+		"credits support, game over scene, death poof",
 	],
-	"Jane Doe": [
-		"Donec in ullamcorper nibh.",
-		"Phasellus id eros id risus pellentesque venenatis.",
-		"Donec aliquam vehicula lectus id blandit.",
-		"Donec vel vulputate nisi.",
+	"Tylor Allison": [
+		"Room design and tile art (yard, kitchen, living room, laundry",
+		"room), level grid implementation, tile layering, subtile",
+		"support, animated tile support, fridge boss animations and",
+		"taunts, ice cube animation integration, teapot animation,",
+		"title screen and related transitions",
 	],
-	"Guy Incognito": [
-		"Integer in vehicula eros.",
-		"Fusce dignissim luctus accumsan.",
-		"Mauris consequat",
-		"enim sed tempor fringilla",
-		"lectus dolor luctus lacus",
-		"in facilisis diam ante vel erat.",
+	"Andrew Mushel": [
+		"Player and shot velocity fixes, lifebar, lives display, dash",
+		"ability gamepad support, player animation refactor, broom walk",
+		"and attack animations",
 	],
+	"Bilal A. Cheema": [
+		"Fridge boss ice cube attacks, fridge attack animation, level 3,",
+		"TV boss animation and integration",
+	],
+	"Rutger McKenna": [
+		"Menu icons (potion, pentagram, crystal ball, cauldron,",
+		"necronomicon)",
+	],
+	"Grygoriy Kulesko": [
+		"Book enemy animation integration, pause feature including",
+		"overlay and recovery time",
+	],
+	"Ashleigh M.": [
+		"Witch llama concept draft",
+	],
+	"Antonio Malafronte": [
+		"Mute functionality",
+	],
+	"H Trayford": [
+		"Placeholder description of keyboard controls",
+	],
+	"Chris DeLeon": [
+		"Compiled credits",
+	],
+	"Wesley Stagg": [
+		"Practice commit (welcome to HomeTeam!)",
+	]
 };
