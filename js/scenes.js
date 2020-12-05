@@ -253,8 +253,10 @@ class GameScene extends Scene {
 			projectile.die();
 		});
 		entitiesManager.onCollision('enemyAttack', 'player', (attack, player) => {
-			player.hurt(attack.damage);
-			attack.damage = 0;
+			if (!player.invincible) {
+				player.hurt(attack.damage);
+				attack.damage = 0;
+			}
 		});
 		entitiesManager.onCollision("pickup", "player", (pickup, player) => {
 			pickup.apply(player);
@@ -318,11 +320,9 @@ class GameScene extends Scene {
 				entity.die();
 			}
 		}
-		for (let i=0; i<players.length; i++) {
-			players[i].pos.x = i * (canvasData.canvas.width - 20);
-			players[i].pos.y = canvasData.canvas.height / 2 - 20;
-			players[i].enteringStage = true;
-			players[i].setBasicGun();
+		for (const player of players) {
+			player.reset(player.controller, player.initialPos.x, player.initialPos.y);
+			player.setBasicGun();
 		}
 		this.gridViews = currentLevel.grids.map((grid) => new GridView(grid));
 		for (const enemyDef of currentLevel.initialEnemies) {
