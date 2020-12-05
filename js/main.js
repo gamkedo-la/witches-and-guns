@@ -49,6 +49,7 @@ window.onload = function() {
 };
 
 function startGame(values) {
+  console.log("starting game");
   currentScene.init();
   window.requestAnimationFrame(runGameStep);
 }

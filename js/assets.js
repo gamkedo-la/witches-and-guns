@@ -7,6 +7,8 @@ const PLAYER_HEIGHT = 32;
 const BROOM_WIDTH = 14;
 const BROOM_HEIGHT = 26;
 const BROOM_ATTACK_WIDTH = 28;
+const BOOK_WIDTH = 17;
+const BOOK_HEIGHT = 16;
 
 const assetDefs = {
   images: [
@@ -58,6 +60,12 @@ const assetDefs = {
 		  {duration: 150, xoffset: PLAYER_WIDTH*3, yoffset: PLAYER_HEIGHT*2},
 		  {duration: 150, xoffset: PLAYER_WIDTH*3, yoffset: PLAYER_HEIGHT*1},
 		  {duration: 150, xoffset: PLAYER_WIDTH*3, yoffset: 0},
+	  ]},
+	  { id: "player.crying", kind: "anim", width: PLAYER_WIDTH, height: PLAYER_HEIGHT, frames: [
+		{duration: 100, xoffset: PLAYER_WIDTH*4, yoffset: 0},
+		{duration: 100, xoffset: PLAYER_WIDTH*4, yoffset: PLAYER_HEIGHT},
+		{duration: 100, xoffset: PLAYER_WIDTH*4, yoffset: PLAYER_HEIGHT*2},
+		{duration: 100, xoffset: PLAYER_WIDTH*4, yoffset: PLAYER_HEIGHT*3},
 	  ]},
 	]},
 	{id: "broomEnemy", src: "./images/broom-enemy.png", subids: [
@@ -111,8 +119,53 @@ const assetDefs = {
 	  {id: "shovel.land", kind: "anim", width: SHOVEL_WIDTH, height: SHOVEL_HEIGHT, loop: false, frames: [
 		{duration: 100, xoffset: 0, yoffset: SHOVEL_HEIGHT * 7},
 	  ]},
-	]},
+		]
+	}, {
+		  id: "bookEnemy", src: "./images/book-enemy.png", subids: [
+			  {
+				  id: "book.walkDown", kind: "anim", width: BOOK_WIDTH, height: BOOK_HEIGHT, frames: [
+					  {duration: 200, xoffset: BOOK_WIDTH * 0, yoffset: BOOK_HEIGHT * 0},
+					  {duration: 200, xoffset: BOOK_WIDTH * 0, yoffset: BOOK_HEIGHT * 1}
+				  ]
+			  },
+			  {
+				  id: "book.walkRight", kind: "anim", width: BOOK_WIDTH, height: BOOK_HEIGHT, frames: [
+					  {duration: 200, xoffset: BOOK_WIDTH * 1, yoffset: BOOK_HEIGHT * 0},
+					  {duration: 200, xoffset: BOOK_WIDTH * 1, yoffset: BOOK_HEIGHT * 1}
+				  ]
+			  },
+			  {
+				  id: "book.walkUp", kind: "anim", width: BOOK_WIDTH, height: BOOK_HEIGHT, frames: [
+					  {duration: 200, xoffset: BOOK_WIDTH * 2, yoffset: BOOK_HEIGHT * 0},
+					  {duration: 200, xoffset: BOOK_WIDTH * 2, yoffset: BOOK_HEIGHT * 1}
+				  ]
+			  },
+			  {
+				  id: "book.walkLeft", kind: "anim", width: BOOK_WIDTH, height: BOOK_HEIGHT, frames: [
+					  {duration: 200, xoffset: BOOK_WIDTH * 3, yoffset: BOOK_HEIGHT * 0},
+					  {duration: 200, xoffset: BOOK_WIDTH* 3, yoffset: BOOK_HEIGHT * 1}
+				  ]
+			  },
+		  ]
+	},
+	{
+	  id: "deathAnim", src: "./images/deathpoof.png", subids: [
+		{id: "poof", kind: "anim", width: 23, height: 32, loop: false, frames: [
+		  {duration: 100, xoffset: 0, yoffset: 0},
+		  {duration: 60, xoffset: 0, yoffset: 32},
+		  {duration: 60, xoffset: 0, yoffset: 32*2},
+		  {duration: 100, xoffset: 0, yoffset: 32*3},
+		]},
+	  ],
+	},
+	{id: "title", src: "./images/title3.png", "kind": "sprite"},
+	{id: "pentagram", src: "./images/pentagram.png", "kind": "sprite"},
+	{id: "crystalball", src: "./images/crystal ball.png", "kind": "sprite"},
+	{id: "necro", src: "./images/Necronomicon.png", "kind": "sprite"},
+	{id: "cauldron2", src: "./images/cauldron.png", "kind": "sprite"},
+	{id: "potion", src: "./images/potion.png", "kind": "sprite"},
 	{id: "floorTile", src: "./images/tiles/dungeon-floor.png"},
+	{id: "wateringCan", src: "./images/tiles/watering-can.png"},
 	{id: "fence_b_a", src: "./images/tiles/fence_b_a.png"},
 	{id: "fence_b_b", src: "./images/tiles/fence_b_b.png"},
 	{id: "fence_bll", src: "./images/tiles/fence_bll.png"},

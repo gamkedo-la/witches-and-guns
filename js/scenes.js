@@ -5,9 +5,11 @@ import { inputManager } from './input.js';
 
 import { Player } from './player.js';
 import { PICKUP_CHANCE, PICKUP_TYPES } from './pickups.js';
-import { GridView } from './view.js';
+import { generate, GridView } from './view.js';
 import { Fmt } from './fmt.js';
 import { LEVELS, UnWalkable } from "./levels.js";
+import { AuthorLine, CreditLine, creditsData } from "./credits.js";
+import { Util } from './util.js';
 
 export let currentScene;
 
@@ -53,15 +55,85 @@ class AttractModeScene extends Scene {
 		return super.reset();
 	}
 
+	setup() {
+		if (this.titleSprite) return;
+		this.titleSprite = generate(assetLoader.getImage("title"));
+		this.textAlpha = 1;
+		this.textAlphaTTL = 1;
+		this.textFadeOut = true;
+		this.bgSprites = [
+			generate(assetLoader.getImage("necro")),
+			generate(assetLoader.getImage("pentagram")),
+			generate(assetLoader.getImage("crystalball")),
+			generate(assetLoader.getImage("cauldron2")),
+			generate(assetLoader.getImage("potion")),
+		];
+		this.bgx = Math.floor(Math.random() * canvasData.canvas.width);
+		this.bgy = Math.floor(Math.random() * canvasData.canvas.height);
+		this.bgi = 0;
+		this.bgAlpha = 0;
+		this.bgTTL = 1.5;
+		this.bgFadeOut = false;
+	}
+
 	draw() {
-		canvasData.context.fillStyle = 'rgb(0, 64, 88)';
+		this.setup();
+		// background
+		canvasData.context.fillStyle = 'rgb(30, 17, 36)';
 		canvasData.context.fillRect(0, 0, canvasData.canvas.width, canvasData.canvas.height);
-		canvasData.context.fillStyle = 'white';
-		canvasData.context.fillText('ATTRACT MODE, HIT "ENTER" KEY TO START PLAYING', 10, canvasData.canvas.height / 2);
+		// bg sprites
+		const sprite = this.bgSprites[this.bgi];
+		const x = this.bgx - (sprite.width*.5);
+		const y = this.bgy - (sprite.height*.5);
+		// WARNING -- setting global alpha, make sure it it set back
+		canvasData.context.globalAlpha = this.bgAlpha;
+		sprite.draw(canvasData.context, x, y);
+		canvasData.context.globalAlpha = 1;
+		// title
+		this.titleSprite.draw(canvasData.context);
+		// enter text
+		canvasData.context.fillStyle = 'rgb(153,229,80, ' + this.textAlpha + ')';
+		canvasData.context.textAlign = 'center';
+		canvasData.context.fillText('HIT "ENTER" KEY TO START PLAYING', canvasData.canvas.width/2, canvasData.canvas.height * .96);
+	  	canvasData.context.fillText('HIT "C" KEY TO SEE CREDITS', canvasData.canvas.width/2, canvasData.canvas.height * 0.91);
+		canvasData.context.textAlign = 'left';
 	}
 
 	update(dt) {
 		super.update(dt);
+		// text fade
+		if (this.textFadeOut) {
+			this.textAlpha -= dt/this.textAlphaTTL;
+			if (this.textAlpha <= 0) {
+				this.textAlpha = 0;
+				this.textFadeOut = false;
+			}
+		} else {
+			this.textAlpha += dt/this.textAlphaTTL;
+			if (this.textAlpha >= 1) {
+				this.textAlpha = 1;
+				this.textFadeOut = true;
+			}
+		}
+		// sprite fade
+		if (this.bgFadeOut) {
+			this.bgAlpha -= dt/this.bgTTL;
+			if (this.bgAlpha <= 0) {
+				this.bgAlpha = 0;
+				this.bgFadeOut = false;
+				// next image and pos
+				this.bgi++;
+				this.bgx = Math.floor(Math.random() * canvasData.canvas.width);
+				this.bgy = Math.floor(Math.random() * canvasData.canvas.height);
+				if (this.bgi >= this.bgSprites.length) this.bgi = 0;
+			}
+		} else {
+			this.bgAlpha += dt/this.bgTTL;
+			if (this.bgAlpha >= 1) {
+				this.bgAlpha = 1;
+				this.bgFadeOut = true;
+			}
+		}
 	}
 }
 
@@ -168,10 +240,10 @@ class PlayerSelectScene extends Scene {
 	}
 }
 
+const LEVEL_COMPLETE_MESSAGE_TIMEOUT = 3;
 class GameScene extends Scene {
 	constructor() {
 		super();
-		this.levelIndex = 1;
 		entitiesManager.onCollision('playerProjectile', 'enemy', (projectile, enemy) => {
 			enemy.hurt(projectile.damage);
 			projectile.die();
@@ -181,8 +253,10 @@ class GameScene extends Scene {
 			projectile.die();
 		});
 		entitiesManager.onCollision('enemyAttack', 'player', (attack, player) => {
-			player.hurt(attack.damage);
-			attack.damage = 0;
+			if (!(player.invincible || player.crying)) {
+				player.hurt(attack.damage);
+				attack.damage = 0;
+			}
 		});
 		entitiesManager.onCollision("pickup", "player", (pickup, player) => {
 			pickup.apply(player);
@@ -200,22 +274,28 @@ class GameScene extends Scene {
 				player.vel.y = 0;
 			}
 		});
-		this.waveTimeOut = Infinity;
-		this.boss = null;
+	  	entitiesManager.onCollision("unwalkable", "enemy", (unwalkable, enemy) => {
+			const horizontalCollision = enemy.collider.x + enemy.collider.width > unwalkable.collider.x + unwalkable.collider.width || enemy.collider.x < unwalkable.collider.x;
+			const verticalCollision = enemy.collider.y + enemy.collider.height > unwalkable.collider.y + unwalkable.collider.height || enemy.collider.y < unwalkable.collider.y;
+			if (horizontalCollision) {
+				enemy.pos.x = enemy.prevPos.x;
+				enemy.vel.x = 0;
+			}
+			if (verticalCollision) {
+				enemy.pos.y = enemy.prevPos.y;
+				enemy.vel.y = 0;
+			}
+		});
+		this.reset();
 	}
 
 	setUpInput() {
 		for (let i=0; i<LEVELS.length; i++) {
 			inputManager.on(`warpToLevel${i+1}`, (controller) => {
 				LEVELS[this.levelIndex].loaded = false;
+				LEVELS[this.levelIndex].started = false;
 				this.waveTimeOut = Infinity;
 				this.boss = null;
-				for (const enemy of entitiesManager.getLiveForType("enemy")) {
-					enemy.die();
-				}
-				for (const unwalkable of entitiesManager.getLiveForType("unwalkable")) {
-					unwalkable.die();
-				}
 				this.levelIndex = i;
 			});
 		}
@@ -223,11 +303,27 @@ class GameScene extends Scene {
 
 	reset() {
 		this.setUpInput();
+		this.levelIndex = 0;
+		this.waveTimeOut = Infinity;
+		this.boss = null;
+		this.levelCompleteTimer = 0;
 		return super.reset();
 	}
 
 	loadLevel() {
 		const currentLevel = LEVELS[this.levelIndex];
+		const players = entitiesManager.getLiveForType("player");
+		currentLevel.started = false;
+		currentLevel.complete = false;
+		for (const entityType of ["enemy", "enemyProjectile", "playerProjectile", "enemyAttack", "pickup", "gun", "unwalkable"]) {
+			for (const entity of entitiesManager.getLiveForType(entityType)) {
+				entity.die();
+			}
+		}
+		for (const player of players) {
+			player.reset(player.controller, player.initialPos.x, player.initialPos.y);
+			player.setBasicGun();
+		}
 		this.gridViews = currentLevel.grids.map((grid) => new GridView(grid));
 		for (const enemyDef of currentLevel.initialEnemies) {
 			entitiesManager.spawn(enemyDef.cls, enemyDef.x, enemyDef.y);
@@ -238,45 +334,62 @@ class GameScene extends Scene {
 		this.waves = Array.from(currentLevel.waves);
 		currentLevel.loaded = true;
 		this.boss = null;
+		this.levelCompleteTimer = 0;
 	}
 
 	update(dt) {
+		super.update(dt);
 		const currentLevel = LEVELS[this.levelIndex];
 		if (currentLevel.loaded) {
-			// update grids
-			this.gridViews.forEach((gview) => gview.update(dt));
-			const liveEnemies = [...entitiesManager.liveEntities].filter(e => e.type == "enemy");
-			if (this.waveTimeOut <= 0 || liveEnemies.length <= 0) {
-				if (this.waves.length > 0) {
-					console.log("Loading new wave");
-					const wave = this.waves.shift();
-					this.waveTimeOut = wave.timeOut;
-					for (const spawner of wave.spawners) {
-						Array(spawner.amount).fill().forEach(() => {
-							entitiesManager.spawn(spawner.cls, spawner.x, spawner.y);
-						});
+			if (currentLevel.started) {
+				// update grids
+				this.gridViews.forEach((gview) => gview.update(dt));
+				const liveEnemies = [...entitiesManager.liveEntities].filter(e => e.type == "enemy");
+				if (this.waveTimeOut <= 0 || liveEnemies.length <= 0) {
+					if (this.waves.length > 0) {
+						console.log("Loading new wave");
+						const wave = this.waves.shift();
+						this.waveTimeOut = wave.timeOut;
+						for (const spawner of wave.spawners) {
+							Array(spawner.amount).fill().forEach(() => {
+								entitiesManager.spawn(spawner.cls, spawner.x, spawner.y);
+							});
+						}
+					} else if (liveEnemies.length <= 0 && this.boss == null) {
+						// BOSS BATTLE!
+						this.boss = entitiesManager.spawn(currentLevel.boss.cls, currentLevel.boss.x, currentLevel.boss.y);
+					} else if (this.boss != null && !this.boss.alive) {
+						LEVELS[this.levelIndex].complete = true;
+						if (this.levelCompleteTimer >= LEVEL_COMPLETE_MESSAGE_TIMEOUT) {
+							// load next level
+							if (this.levelIndex < LEVELS.length - 1) {
+								this.levelIndex++;
+								LEVELS[this.levelIndex].loaded = false;
+								this.loadLevel();
+							} else {
+								// TODO: finished game congratulations, then switch to credits
+							}
+						} else {
+							this.levelCompleteTimer += dt;
+						}
 					}
-				} else if (liveEnemies.length <= 0 && this.boss == null) {
-					// BOSS BATTLE!
-					this.boss = entitiesManager.spawn(currentLevel.boss.cls, currentLevel.boss.x, currentLevel.boss.y);
-				} else if (this.boss != null && !this.boss.alive) {
-					// load next level
-					if (this.levelIndex < LEVELS.length - 1) {
-						this.levelIndex++;
+				} else {
+					// core gameplay
+					if (entitiesManager.getLiveForType("player").length <= 0) {
+						this.switchTo(SCENES.gameOver);
+					}
+					if (1 - Math.random() < PICKUP_CHANCE) {
+						entitiesManager.spawn(PICKUP_TYPES[Math.floor(Math.random() * PICKUP_TYPES.length)]);
 					}
 				}
 			} else {
-				// core gameplay
-				if (1 - Math.random() < PICKUP_CHANCE) {
-					entitiesManager.spawn(PICKUP_TYPES[Math.floor(Math.random() * PICKUP_TYPES.length)]);
-				}
+				currentLevel.started = !entitiesManager.getLiveForType("player").map(player => player.enteringStage).reduce((acc, cv) => acc && cv, true);
 			}
+			entitiesManager.update(dt);
 		} else {
 			this.loadLevel();
 		}
 		this.waveTimeOut -= dt;
-		super.update(dt);
-		entitiesManager.update(dt);
 	}
 
 	draw() {
@@ -323,13 +436,100 @@ class GameScene extends Scene {
 			canvasData.context.textBaseline = 'middle';
 			canvasData.context.fillText('x' + player.lives, x, y);
 		}
+		if (currentLevel.complete) {
+			canvasData.context.save();
+			canvasData.context.textAlign = "center";
+			canvasData.context.font = "bold 20px sans";
+			canvasData.context.fillStyle = "purple";
+			canvasData.context.fillText("LEVEL COMPLETE!", canvasData.canvas.width / 2, canvasData.canvas.height / 2);
+			canvasData.context.restore();
+		}
 	}
 }
 
+const GAMEOVER_TIMEOUT = 3;
+
 class GameOverScene extends Scene {
+	reset() {
+		this.timer = 0;
+		return super.reset();
+	}
+
+	update(dt) {
+		super.update(dt);
+		if (this.timer >= GAMEOVER_TIMEOUT) {
+			this.switchTo(SCENES.attract);
+		} else {
+			this.timer += dt;
+		}
+	}
+
+	draw() {
+		canvasData.context.save();
+		canvasData.context.fillStyle = "rgb(0, 64, 88)";
+		canvasData.context.fillRect(0, 0, canvasData.canvas.width, canvasData.canvas.height);
+		canvasData.context.textAlign = "center";
+		canvasData.context.fillStyle = "white";
+		canvasData.context.fillText("GAME OVER!", canvasData.canvas.width / 2, canvasData.canvas.height / 2);
+		canvasData.context.restore();
+	}
 }
 
+
+const TIME_BETWEEN_CREDIT_LINES = 1/4;
+
 class CreditsScene extends Scene {
+	*generateLines() {
+		for (const [author, credits] of Object.entries(creditsData)) {
+			yield entitiesManager.spawn(AuthorLine, author, TIME_BETWEEN_CREDIT_LINES);
+			for (let i=0; i<credits.length; i++) {
+				const timeTilNextLine = TIME_BETWEEN_CREDIT_LINES;
+				yield entitiesManager.spawn(CreditLine, credits[i], i == credits.length - 1 ? timeTilNextLine*2 : timeTilNextLine);
+			}
+		}
+	}
+
+	update(dt) {
+		super.update(dt);
+		if (this.timer >= this.timeTilNextLine) {
+			const line = this.lines.next().value;
+			if (typeof(line) != "undefined") {
+				this.timer = 0;
+				this.timeTilNextLine = line.timeTilNextLine;
+			}
+		}
+		this.timer += dt;
+		for (const line of entitiesManager.getLiveForType("credit")) {
+			line.update(dt);
+		}
+		if (entitiesManager.getLiveForType("credit").length <= 0) {
+			this.switchTo(SCENES.attract);
+		}
+	}
+
+	reset() {
+		inputManager.on(['start'], controller => {
+			this.switchTo(SCENES.attract);
+		});
+		this.timer = TIME_BETWEEN_CREDIT_LINES;
+		this.timeTilNextLine = TIME_BETWEEN_CREDIT_LINES;
+		for (const line of entitiesManager.getLiveForType("credit")) {
+			line.die();
+		}
+		this.lines = this.generateLines();
+		return super.reset();
+	}
+
+	draw() {
+		super.draw();
+		canvasData.context.save();
+		canvasData.context.fillStyle = 'rgb(0, 64, 88)';
+		canvasData.context.fillRect(0, 0, canvasData.canvas.width, canvasData.canvas.height);
+		canvasData.context.restore();
+		for (const line of entitiesManager.getLiveForType("credit")) {
+			line.draw();
+		}
+	}
 }
 
 export const SCENES = {

@@ -13,7 +13,9 @@ const DASH_TIME = 10;
 const DASH_COOLDOWN = 24;
 const PLAYER_WIDTH = 20;
 const PLAYER_HEIGHT = 32;
-
+const FLASH_TIMEOUT = 0.11;
+const INVINCIBLE_TIMEOUT = 3;
+const CRYING_TIMEOUT = 2;
 /*
 const PLAYER_ANIMATIONS = {
   down: new Animation("player", 150, [0, 1, 2, 3], 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT),
@@ -60,10 +62,11 @@ export class Player extends Entity {
 			],
 		];
 		super("player", { x: x, y: y }, PLAYER_WIDTH, PLAYER_HEIGHT, { width: 12, height: 24 }, 10, 1, anims, initialAnimation);
+		this.cryingAnimation = generate(assetLoader.getImage("player.crying"));
 		//this.lives = 3;
 		this.prevCollider = Object.assign({}, this.collider);
-		this.prevPos = Object.assign({}, this.pos);
 		this.setBasicGun();
+		this.initialPos = {x: x, y: y};
 		this.reset(controller, x, y);
 	}
 
@@ -73,11 +76,20 @@ export class Player extends Entity {
 
 	reset(controller, x = 0, y = 0) {
 		super.reset();
+		this.initialPos.x = x;
+		this.initialPos.y = y;
 		this.currentAnimation = this.animations[0][0];
 		this.controller = controller;
 		this.hp = 10;
 		this.shotTimer = 0;
+		this.flash = false;
+		this.flashTimer = 0;
+		this.invincible = true;
+		this.invincibleTimer = 0;
 		this.dashing = 0;
+		this.enteringStage = true;
+		this.crying = false;
+		this.cryingTimer = 0;
 		this.resetPosition(x, y);
 	}
 
@@ -91,6 +103,9 @@ export class Player extends Entity {
 	set alive(val) { this.lives = val ? 3 : 0; }
 
 	draw() {
+		if (this.invincible && this.flash) {
+			return;
+		}
 		if (canvasData.context) {
 			// TODO: make animation objects draw to their own canvas and return an image here
 			this.currentAnimation.draw(canvasData.context, this.pos.x, this.pos.y);
@@ -99,7 +114,21 @@ export class Player extends Entity {
 	}
 
 	move(dt) {
-		if (this.controller) {
+		if (this.crying) {
+			return;
+		}
+		if (this.enteringStage) {
+			if (this.pos.x < canvasData.canvas.width/2) {
+				this.aim.x = 1;
+				this.vel.x = SPEED;
+				// this.pos.x += Math.round(100*dt);
+				this.enteringStage = this.pos.x < canvasData.canvas.width/2 - this.width*1.5;
+			} else {
+				this.aim.x = -1;
+				this.vel.x = -SPEED;
+				this.enteringStage = this.pos.x > canvasData.canvas.width/2 + this.width*1.5;
+			}
+		} else if (this.controller) {
 			const state = this.controller.currentState;
 			let cv = getAxis(state.up, state.down, state.left, state.right);
 
@@ -116,7 +145,6 @@ export class Player extends Entity {
 				this.vel.y = cv.y * SPEED;
 			}
 		}
-		Object.assign(this.prevPos, this.pos);
 		Object.assign(this.prevCollider, this.collider);
 		this.pos.x += Math.round(this.vel.x * dt);
 		this.pos.y += Math.round(this.vel.y * dt);
@@ -143,7 +171,7 @@ export class Player extends Entity {
 	}
 
 	shoot(dt) {
-		if (!this.controller) {
+		if (this.enteringStage || !this.controller) {
 			return;
 		}
 		const state = this.controller.currentState;
@@ -154,8 +182,13 @@ export class Player extends Entity {
 	}
 
 	animate(dt) {
+		if (this.crying) {
+			if (this.currentAnimation != this.cryingAnimation) {
+				this.changeAnimation(this.cryingAnimation);
+			}
+			return;
+		}
 		const oldAnimation = this.currentAnimation;
-
 		let animSet = (this.aim.x != 0 && this.aim.y != 0) ? 1 : 0;
 		let axis = animSet ? this.aim : this.vel;
 		if (axis.x != 0) {
@@ -179,20 +212,43 @@ export class Player extends Entity {
 		this.currentAnimation.update(dt);
 	}
 
+	performActions(dt) {
+		this.move(dt);
+		this.shoot(dt);
+		this.animate(dt);
+		if (this.invincible) {
+			if (this.flashTimer >= FLASH_TIMEOUT) {
+				this.flash = !this.flash;
+				this.flashTimer = 0;
+			} else {
+				this.flashTimer += dt;
+			}
+			this.invincibleTimer += dt;
+			if (this.invincibleTimer >= INVINCIBLE_TIMEOUT) {
+				this.invincible = false;
+				this.invincibleTimer = 0;
+			}
+		}
+		if (this.crying) {
+			this.cryingTimer += dt;
+			if (this.cryingTimer >= CRYING_TIMEOUT) {
+				this.reset(this.controller, this.initialPos.x, this.initialPos.y);
+			}
+		}
+		super.performActions(dt);
+	}
+
 	update(dt) {
 		if (this.controller) {
 			this.controller.update(dt);
 		}
-		this.move(dt);
-		this.shoot(dt);
-		this.animate(dt);
 		super.update(dt);
 	}
 
 	die() {
 		if (this.lives > 1) {
 			this.lives--;
-			this.reset(this.controller, canvasData.canvas.width / 2, canvasData.canvas.height / 2);
+			this.crying = true;
 		} else {
 			entitiesManager.kill(this);
 		}

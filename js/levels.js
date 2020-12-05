@@ -1,7 +1,7 @@
 import {canvasData} from './globals.js';
 import { Grid } from './grid.js';
 import { Entity } from './entity.js';
-import { BroomEnemy, ShovelEnemy } from './enemies.js';
+import {BroomEnemy, FlyingBookEnemy, ShovelEnemy} from './enemies.js';
 import { FridgeBoss, LawnMowerBoss, TVBoss, WasherBoss } from './bosses.js';
 
 const HGRA = "higrass_a";
@@ -98,6 +98,12 @@ const LVL1_BG_GRID = new Grid({
 		HGRA, HGRA, HGRA, HGRA, HGRA, HGRA, HGRA, HGRA, HGRA, PVRD, PVRA, HGRA, HGRA, HGRA, HGRA, HGRA, HGRA, HGRA, HGRA, HGRA,
 	],
 });
+
+const LVL1_MID_GRID = new Grid({
+	width: WIDTH,
+	height: HEIGHT,
+});
+LVL1_MID_GRID.set("wateringCan", 17, 0);
 
 const LVL1_FG_GRID = new Grid({
 	width: WIDTH,
@@ -353,8 +359,8 @@ LVL4_MID_GRID.set("potion_purple_o", 1, 1);
 
 export const LEVELS = [
 	{
-		name: "Level 1", loaded: false, complete: false,
-		grids: [LVL1_BG_GRID, LVL1_FG_GRID],
+		name: "Level 1", loaded: false, complete: false, started: false,
+		grids: [LVL1_BG_GRID, LVL1_MID_GRID, LVL1_FG_GRID],
 		waves: [
 			// {
 			// 	spawners: [
@@ -390,7 +396,7 @@ export const LEVELS = [
 		boss: { cls: LawnMowerBoss, x: 110, y: 30 }
 	},
 	{
-		name: "Level 2", loaded: false, complete: false,
+		name: "Level 2", loaded: false, complete: false, started: false,
 		grids: [LVL2_BG_GRID, LVL2_MID_GRID, LVL2_FG_GRID],
 		initialEnemies: [
 			/*
@@ -415,10 +421,10 @@ export const LEVELS = [
 		waves: [
 			{
 				spawners: [
-					//{cls: BroomEnemy, x: 20, y: 10,  amount: 2},
-					////{cls: BroomEnemy, x: 20, y: 200,  amount: 20},
-					//{cls: BroomEnemy, x: 300, y: 10,  amount: 20},
-					//{cls: BroomEnemy, x: 300, y: 200,  amount: 20},
+					{cls: BroomEnemy, x: SIZE*20, y: SIZE*6,  amount: 20},
+					{cls: BroomEnemy, x: 0, y: SIZE*6,  amount: 20},
+					{cls: BroomEnemy, x: SIZE*14, y: 0,  amount: 20},
+					{cls: BroomEnemy, x: SIZE*12, y: SIZE*20,  amount: 20},
 				],
 				timeOut: Infinity,
 			},
@@ -434,9 +440,17 @@ export const LEVELS = [
 		boss: { cls: FridgeBoss, x: 110, y: 100 }
 	},
 	{
-		name: "Level 3", loaded: false, complete: false,
+		name: "Level 3", loaded: false, complete: false, started: false,
 		grids: [LVL3_BG_GRID, LVL3_MID_GRID, LVL3_FG_GRID],
 		initialEnemies: [
+			{ cls: FlyingBookEnemy, x: SIZE, y: SIZE },
+			{ cls: FlyingBookEnemy, x: WIDTH * SIZE/2, y: SIZE },
+			{ cls: FlyingBookEnemy, x: WIDTH * SIZE - SIZE, y: SIZE },
+			{ cls: FlyingBookEnemy, x: SIZE, y: HEIGHT * SIZE/2 },
+			{ cls: FlyingBookEnemy, x: WIDTH * SIZE - SIZE, y: HEIGHT * SIZE/2 },
+			{ cls: FlyingBookEnemy, x: SIZE, y: HEIGHT * SIZE - SIZE},
+			{ cls: FlyingBookEnemy, x: WIDTH * SIZE / 2, y: HEIGHT * SIZE - SIZE },
+			{ cls: FlyingBookEnemy, x: WIDTH * SIZE - SIZE, y: HEIGHT * SIZE - SIZE },
 		],
 		waves: [
 			{
@@ -445,6 +459,7 @@ export const LEVELS = [
 				timeOut: Infinity,
 			},
 		],
+
 		unwalkables: [
 			{x: 0, y: 0, width: SIZE*5, height: SIZE*2},
 			{x: SIZE*5, y: 0, width: SIZE*2, height: SIZE},
@@ -463,7 +478,7 @@ export const LEVELS = [
 		boss: { cls: TVBoss, x: 110, y: 100 }
 	},
 	{
-		name: "Level 4", loaded: false, complete: false,
+		name: "Level 4", loaded: false, complete: false, started: false,
 		grids: [LVL4_BG_GRID, LVL4_MID_GRID],
 		initialEnemies: [
 		],
@@ -496,6 +511,7 @@ export class UnWalkable extends Entity {
 		const height = spec.height;
 		super("unwalkable", {x: x, y: y}, width, height, {x: x, y: y, width: width, height: height}, Infinity);
 		this.canCollideWithTypes.add("player");
+		this.canCollideWithTypes.add("enemy");
 	}
 
 	reset(spec) {

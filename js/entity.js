@@ -1,4 +1,6 @@
 import {canvasData} from './globals.js';
+import { assetLoader } from './assets.js';
+import { generate } from './view.js';
 
 class EntitiesManager {
   constructor() {
@@ -67,7 +69,7 @@ class EntitiesManager {
   }
   
   draw() {
-	for (const entity of this.liveEntities) {
+	for (const entity of [...this.liveEntities].reverse()) {
 	  entity.draw();
 	}
   }
@@ -86,6 +88,7 @@ export const DEFAULT_DAMAGE = 1;
 export class Entity {
   constructor(type, initialPos, width, height, collider, hp=DEFAULT_HP, damage=DEFAULT_DAMAGE, animations={}, initialAnimation='') {
 	this.pos = Object.assign({}, initialPos);
+	this.prevPos = Object.assign({}, this.pos);
 	this.width = width;
 	this.height = height;
 	this.type = type;
@@ -124,6 +127,7 @@ export class Entity {
   reset(x, y) {
 	this.pos.x = x;
 	this.pos.y = y;
+	this.hp = this.maxHp;
   }
 
   onTopWallCollision(dt) {
@@ -137,8 +141,13 @@ export class Entity {
   
   onRightWallCollision(dt) {
   }
-  
+
+  performActions(dt) {
+  }
+
   update(dt) {
+	Object.assign(this.prevPos, this.pos);
+	this.performActions(dt);
 	if (this.pos.x < 0) {
 	  this.pos.x = 0;
 	  this.onLeftWallCollision(dt);
@@ -179,6 +188,28 @@ export class Entity {
 		this.currentAnimation.currentFrameIndex = 0;
 		this.currentAnimation = animation;
 		this.currentAnimation.play();
+	}
+  }
+}
+
+export class DeathPoof extends Entity {
+  constructor(deadEntity) {
+	const animations = {poof: generate(assetLoader.getImage("poof"))};
+	super("poof", {x: deadEntity.pos.x, y: deadEntity.pos.y}, 0, 0, {width: 23, height: 32}, 1, 1, animations, "poof");
+	this.reset(deadEntity);
+  }
+
+  reset(deadEntity) {
+	super.reset(deadEntity.pos.x, deadEntity.pos.y);
+	this.currentAnimation.reset();
+	this.currentAnimation.play();
+  }
+
+  update(dt) {
+	super.update(dt);
+	this.currentAnimation.update(dt);
+	if (!this.currentAnimation.playing) {
+	  this.die();
 	}
   }
 }
