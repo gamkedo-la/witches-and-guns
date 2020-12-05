@@ -69,7 +69,7 @@ class EntitiesManager {
   }
   
   draw() {
-	for (const entity of this.liveEntities) {
+	for (const entity of [...this.liveEntities].reverse()) {
 	  entity.draw();
 	}
   }
