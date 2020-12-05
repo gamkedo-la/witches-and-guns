@@ -61,6 +61,12 @@ const assetDefs = {
 		  {duration: 150, xoffset: PLAYER_WIDTH*3, yoffset: PLAYER_HEIGHT*1},
 		  {duration: 150, xoffset: PLAYER_WIDTH*3, yoffset: 0},
 	  ]},
+	  { id: "player.crying", kind: "anim", width: PLAYER_WIDTH, height: PLAYER_HEIGHT, frames: [
+		{duration: 100, xoffset: PLAYER_WIDTH*4, yoffset: 0},
+		{duration: 100, xoffset: PLAYER_WIDTH*4, yoffset: PLAYER_HEIGHT},
+		{duration: 100, xoffset: PLAYER_WIDTH*4, yoffset: PLAYER_HEIGHT*2},
+		{duration: 100, xoffset: PLAYER_WIDTH*4, yoffset: PLAYER_HEIGHT*3},
+	  ]},
 	]},
 	{id: "broomEnemy", src: "./images/broom-enemy.png", subids: [
 	  { id: "broom.walkRight", kind: "anim", width: BROOM_WIDTH, height: BROOM_HEIGHT, frames: [

@@ -253,7 +253,7 @@ class GameScene extends Scene {
 			projectile.die();
 		});
 		entitiesManager.onCollision('enemyAttack', 'player', (attack, player) => {
-			if (!player.invincible) {
+			if (!(player.invincible || player.crying)) {
 				player.hurt(attack.damage);
 				attack.damage = 0;
 			}

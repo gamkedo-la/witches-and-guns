@@ -15,6 +15,7 @@ const PLAYER_WIDTH = 20;
 const PLAYER_HEIGHT = 32;
 const FLASH_TIMEOUT = 0.11;
 const INVINCIBLE_TIMEOUT = 3;
+const CRYING_TIMEOUT = 2;
 /*
 const PLAYER_ANIMATIONS = {
   down: new Animation("player", 150, [0, 1, 2, 3], 0, 0, PLAYER_WIDTH, PLAYER_HEIGHT),
@@ -61,6 +62,7 @@ export class Player extends Entity {
 			],
 		];
 		super("player", { x: x, y: y }, PLAYER_WIDTH, PLAYER_HEIGHT, { width: 12, height: 24 }, 10, 1, anims, initialAnimation);
+		this.cryingAnimation = generate(assetLoader.getImage("player.crying"));
 		//this.lives = 3;
 		this.prevCollider = Object.assign({}, this.collider);
 		this.setBasicGun();
@@ -86,6 +88,8 @@ export class Player extends Entity {
 		this.invincibleTimer = 0;
 		this.dashing = 0;
 		this.enteringStage = true;
+		this.crying = false;
+		this.cryingTimer = 0;
 		this.resetPosition(x, y);
 	}
 
@@ -110,6 +114,9 @@ export class Player extends Entity {
 	}
 
 	move(dt) {
+		if (this.crying) {
+			return;
+		}
 		if (this.enteringStage) {
 			if (this.pos.x < canvasData.canvas.width/2) {
 				this.aim.x = 1;
@@ -175,6 +182,12 @@ export class Player extends Entity {
 	}
 
 	animate(dt) {
+		if (this.crying) {
+			if (this.currentAnimation != this.cryingAnimation) {
+				this.changeAnimation(this.cryingAnimation);
+			}
+			return;
+		}
 		const oldAnimation = this.currentAnimation;
 		let animSet = (this.aim.x != 0 && this.aim.y != 0) ? 1 : 0;
 		let axis = animSet ? this.aim : this.vel;
@@ -216,6 +229,12 @@ export class Player extends Entity {
 				this.invincibleTimer = 0;
 			}
 		}
+		if (this.crying) {
+			this.cryingTimer += dt;
+			if (this.cryingTimer >= CRYING_TIMEOUT) {
+				this.reset(this.controller, this.initialPos.x, this.initialPos.y);
+			}
+		}
 		super.performActions(dt);
 	}
 
@@ -229,7 +248,7 @@ export class Player extends Entity {
 	die() {
 		if (this.lives > 1) {
 			this.lives--;
-			this.reset(this.controller, this.initialPos.x, this.initialPos.y);
+			this.crying = true;
 		} else {
 			entitiesManager.kill(this);
 		}
