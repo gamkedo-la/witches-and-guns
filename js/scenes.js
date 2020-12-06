@@ -45,6 +45,7 @@ class Scene {
 
 class AttractModeScene extends Scene {
 	reset() {
+		entitiesManager.reset();
 		inputManager.reset();
 		inputManager.on(['start'], controller => {
 			this.switchTo(SCENES.select);
@@ -201,6 +202,7 @@ class PlayerSelectScene extends Scene {
 					if (this.slots[i].selected) {
 						const controller = this.slots[i].input;
 						const player = entitiesManager.spawn(Player, controller, i * (canvasData.canvas.width - 20), canvasData.canvas.height / 2 - 20, "player" + (i + 1), i == 0 ? "right" : "left");
+						player.lives = 3;
 						controller.player = player;
 					}
 				}
@@ -534,6 +536,9 @@ class CreditsScene extends Scene {
 		this.timeTilNextLine = TIME_BETWEEN_CREDIT_LINES;
 		for (const line of entitiesManager.getLiveForType("credit")) {
 			line.die();
+		}
+		for (const player of entitiesManager.getLiveForType("player")) {
+			player.die();
 		}
 		this.lines = this.generateLines();
 		return super.reset();

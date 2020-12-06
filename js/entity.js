@@ -77,6 +77,12 @@ class EntitiesManager {
   getLiveForType(type) {
 	return [...this.liveEntities].filter(e => e.type == type);
   }
+
+  reset() {
+	for (const entity of this.liveEntities) {
+	  entity.die();
+	}
+  }
 }
 
 export const entitiesManager = new EntitiesManager();
