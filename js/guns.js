@@ -1,5 +1,6 @@
 import { assetLoader } from './assets.js';
 import { canvasData } from './globals.js';
+import { generate } from './view.js';
 import { Entity, entitiesManager } from './entity.js';
 
 
@@ -7,7 +8,14 @@ const SHOTSPEED = 320;
 
 class Bullet extends Entity {
 	constructor(posX, posY, dirX, dirY, velX, velY) {
-		super('playerProjectile');
+		const collider = {width: 4,	height: 2, offsetX: 5, offsetY: 3};
+		const animations = {
+			up: generate(assetLoader.getImage("bulletU")),
+			left: generate(assetLoader.getImage("bulletL")),
+			down: generate(assetLoader.getImage("bulletD")),
+			right: generate(assetLoader.getImage("bulletR")),
+		};
+		super('playerProjectile', {x: posX, y: posY}, 19, 9, collider, Infinity, 1, animations, "right");
 		this.canCollideWithTypes.add('enemy');
 		this.collider.width = 3;
 		this.collider.height = 3;
@@ -21,6 +29,11 @@ class Bullet extends Entity {
 			x: dirX * SHOTSPEED + velX,
 			y: dirY * SHOTSPEED + velY
 		};
+		if (this.vel.x == 0) {
+			this.changeAnimation(this.vel.y > 0 ? this.animations.down : this.animations.up);
+		} else {
+			this.changeAnimation(this.vel.x > 0 ? this.animations.right : this.animations.left);
+		}
 	}
 
 	update(dt) {
@@ -40,12 +53,6 @@ class Bullet extends Entity {
 		if (this.pos.x < 0 || this.pos.x > canvasData.canvas.width || this.pos.y < 0 || this.pos.y > canvasData.canvas.height) {
 			this.die();
 		}
-	}
-
-	draw() {
-		super.draw();
-		canvasData.context.fillStyle = 'white';
-		canvasData.context.fillRect(this.pos.x - 2, this.pos.y - 2, 4, 4);
 	}
 }
 

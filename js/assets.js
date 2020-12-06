@@ -459,6 +459,20 @@ const assetDefs = {
 		{duration: 1, xoffset: 0, yoffset: 0},
 	  ]}
 	]},
+	{id: "projectilesSheet", src: "./images/projectiles.png", subids: [
+	  { id: "bulletR", kind: "anim", width: 19, height: 9, frames: [
+		{duration: 1, xoffset: 0, yoffset: 0},
+	  ]},
+	  { id: "bulletL", kind: "anim", width: 19, height: 9, frames: [
+		{duration: 1, xoffset: 0, yoffset: 9},
+	  ]},
+	  { id: "bulletD", kind: "anim", width: 9, height: 19, frames: [
+		{duration: 1, xoffset: 5, yoffset: 18},
+	  ]},
+	  { id: "bulletU", kind: "anim", width: 9, height: 19, frames: [
+		{duration: 1, xoffset: 5, yoffset: 18 + 19},
+	  ]},
+	]},
 	{id: "icecube", src: "./images/icecube.png", subids: [
 	  { id: "icecube.dflt", kind: "anim", width: 4, height: 4, frames: [
 		  { duration: 50, xoffset: 0, yoffset: 0 },
