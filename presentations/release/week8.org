@@ -1,0 +1,45 @@
+#+OPTIONS: reveal_title_slide:nil reveal_center:t reveal_progress:t reveal_history:nil reveal_control:t
+#+OPTIONS: reveal_rolling_links:t reveal_keyboard:t reveal_overview:t num:nil
+#+OPTIONS: toc:0
+#+REVEAL_ROOT: https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/
+#+REVEAL_MARGIN: 0.2
+#+REVEAL_MIN_SCALE: 0.8
+#+REVEAL_TRANS: fast
+#+REVEAL_THEME: blood
+
+
+* Witches n' Guns
+
+  #+BEGIN_export html
+  <h1>Week 8</h1>
+  <strong>RELEASE!</strong>
+  #+END_export
+
+* Stats
+  
+  - 33 new commits
+
+* Contributions
+
+  - Tylor Allison :: title screen
+  - Greg :: book enemy integration
+  - Chris DeLeon :: credits compilation and integration
+  - Rutger McKenna :: projectile sprites
+
+** Contributions
+
+  - Gonzalo :: credits font adjustment, enemy death poof animation,
+    credits key text, level and game complete text, invulnerable
+    player on new level or life, player death animation, entities draw
+    order adjustment, projectile sprites integration, laser gun
+    implementation, add gun to player sprite, player 2 sprites,
+    entities reset adjustments, level edits.
+
+* Demo
+
+#+BEGIN_export html
+<iframe src="./demo/index.html" width="640" height="480"></iframe>
+#+END_export
+
+
+* Thanks!!

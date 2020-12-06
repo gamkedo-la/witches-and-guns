@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="author" content="Gonzalo"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/css/reveal.css"/>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/css/theme/blood.css" id="theme"/>
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+
+<section>
+<section id="slide-org7c173b7">
+<h2 id="org7c173b7">Witches n' Guns</h2>
+<h1>Week 8</h1>
+<strong>RELEASE!</strong>
+
+</section>
+</section>
+<section>
+<section id="slide-org058756c">
+<h2 id="org058756c">Stats</h2>
+<ul>
+<li>33 new commits</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org0b1dd83">
+<h2 id="org0b1dd83">Contributions</h2>
+<dl>
+<dt>Tylor Allison</dt><dd>title screen</dd>
+<dt>Greg</dt><dd>book enemy integration</dd>
+<dt>Chris DeLeon</dt><dd>credits compilation and integration</dd>
+<dt>Rutger McKenna</dt><dd>projectile sprites</dd>
+
+</dl>
+
+</section>
+<section id="slide-orgdc14d32">
+<h3 id="orgdc14d32">Contributions</h3>
+<dl>
+<dt>Gonzalo</dt><dd>credits font adjustment, enemy death poof animation,
+credits key text, level and game complete text, invulnerable
+player on new level or life, player death animation, entities draw
+order adjustment, projectile sprites integration, laser gun
+implementation, add gun to player sprite, player 2 sprites,
+entities reset adjustments, level edits.</dd>
+
+</dl>
+
+</section>
+</section>
+<section>
+<section id="slide-orgd822930">
+<h2 id="orgd822930">Demo</h2>
+<iframe src="./demo/index.html" width="640" height="480"></iframe>
+
+
+</section>
+</section>
+<section>
+<section id="slide-org0cbd491">
+<h2 id="org0cbd491">Thanks!!</h2>
+</section>
+</section>
+</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/lib/js/head.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/js/reveal.js"></script>
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: true,
+keyboard: true,
+mouseWheel: false,
+fragmentInURL: false,
+hashOneBasedIndex: false,
+pdfSeparateFragments: true,
+
+overview: true,
+margin: 0.20,
+minScale: 0.80,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'fast', // see README of reveal.js for options
+transitionSpeed: 'default',
+
+// Optional libraries used to extend reveal.js
+dependencies: [
+ { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } }]
+
+});
+</script>
+</body>
+</html>
