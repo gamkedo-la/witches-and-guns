@@ -259,7 +259,7 @@ class GameScene extends Scene {
 		super();
 		entitiesManager.onCollision('playerProjectile', 'enemy', (projectile, enemy) => {
 			enemy.hurt(projectile.damage);
-			projectile.hurt();
+			projectile.hurt(1);
 		});
 		entitiesManager.onCollision('enemyProjectile', 'player', (projectile, player) => {
 			player.hurt(projectile.damage);
