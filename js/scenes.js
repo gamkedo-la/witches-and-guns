@@ -144,12 +144,14 @@ class PlayerSelectScene extends Scene {
 		this.slots = [
 			{
 				input: null,
-				avatar: 'Julhilde',
+				sprite: "player1.select",
+				animation: null,
 				selected: false,
 			},
 			{
 				input: null,
-				avatar: 'Calixto',
+				sprite: "player2.select",
+				animation: null,
 				selected: false,
 			},
 		];
@@ -195,11 +197,12 @@ class PlayerSelectScene extends Scene {
 			// find slot with this controller
 			const matchingSlots = this.slots.filter(slot => slot.input === controller);
 			if (matchingSlots.length) {
-				const selectedSlots = this.slots.filter(slot => slot.selected);
-				for (let i = 0; i < selectedSlots.length; i++) {
-					const controller = selectedSlots[i].input;
-					const player = entitiesManager.spawn(Player, controller, i * (canvasData.canvas.width - 20), canvasData.canvas.height / 2 - 20, i == 0 ? "right" : "left");
-					controller.player = player;
+				for (let i = 0; i < this.slots.length; i++) {
+					if (this.slots[i].selected) {
+						const controller = this.slots[i].input;
+						const player = entitiesManager.spawn(Player, controller, i * (canvasData.canvas.width - 20), canvasData.canvas.height / 2 - 20, "player" + (i + 1), i == 0 ? "right" : "left");
+						controller.player = player;
+					}
 				}
 				this.switchTo(SCENES.game);
 			} else {
@@ -215,6 +218,11 @@ class PlayerSelectScene extends Scene {
 
 	update(dt) {
 		super.update(dt);
+		for (const slot of this.slots) {
+			if (slot.animation !== null) {
+				slot.animation.update(dt);
+			}
+		}
 	}
 
 	draw() {
@@ -234,9 +242,12 @@ class PlayerSelectScene extends Scene {
 				canvasData.context.fillText(slot.input.cntrls2, 30 + Math.round(canvasData.canvas.width / 2) * i, Math.round(canvasData.canvas.height / 2 + 60));
 				canvasData.context.fillText(slot.input.cntrls3, 30 + Math.round(canvasData.canvas.width / 2) * i, Math.round(canvasData.canvas.height / 2 + 90));
 			}
+			if (slot.animation === null) {
+				slot.animation = generate(assetLoader.getImage(slot.sprite));
+				slot.animation.play();
+			}
+			slot.animation.draw(canvasData.context, canvasData.canvas.width/4 + i*canvasData.canvas.width/2, 50);
 		});
-		// TODO: draw portraits
-		// TODO: draw control icons
 	}
 }
 
@@ -321,7 +332,7 @@ class GameScene extends Scene {
 			}
 		}
 		for (const player of players) {
-			player.reset(player.controller, player.initialPos.x, player.initialPos.y);
+			player.reset(player.controller, player.initialPos.x, player.initialPos.y, player.spriteId);
 			player.setBasicGun();
 		}
 		this.gridViews = currentLevel.grids.map((grid) => new GridView(grid));

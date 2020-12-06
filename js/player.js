@@ -45,37 +45,39 @@ const PLAYER_ANIMATIONS_ARRAY = [
 */
 
 export class Player extends Entity {
-	constructor(controller, x, y, initialAnimation = "right") {
-		// build animations
-		const anims = [
-			[
-				generate(assetLoader.getImage("player.left")),
-				generate(assetLoader.getImage("player.right")),
-				generate(assetLoader.getImage("player.up")),
-				generate(assetLoader.getImage("player.down")),
-			],
-			[
-				generate(assetLoader.getImage("player.leftB")),
-				generate(assetLoader.getImage("player.rightB")),
-				generate(assetLoader.getImage("player.upB")),
-				generate(assetLoader.getImage("player.downB")),
-			],
-		];
-		super("player", { x: x, y: y }, PLAYER_WIDTH, PLAYER_HEIGHT, { width: 12, height: 24 }, 10, 1, anims, initialAnimation);
-		this.cryingAnimation = generate(assetLoader.getImage("player.crying"));
+	constructor(controller, x, y, spriteId, initialAnimation = "right") {
+		super("player", { x: x, y: y }, PLAYER_WIDTH, PLAYER_HEIGHT, { width: 12, height: 24 }, 10, 1);
+		this.cryingAnimation = generate(assetLoader.getImage(spriteId + ".crying"));
 		//this.lives = 3;
 		this.prevCollider = Object.assign({}, this.collider);
 		this.setBasicGun();
 		this.initialPos = {x: x, y: y};
-		this.reset(controller, x, y);
+		this.spriteId = spriteId;
+		this.reset(controller, x, y, spriteId);
 	}
 
 	setBasicGun() {
 		this.gun = entitiesManager.spawn(Gun, this, GUNS.basic);
 	}
 
-	reset(controller, x = 0, y = 0) {
+	reset(controller, x = 0, y = 0, spriteId) {
 		super.reset();
+		this.spriteId = spriteId;
+		// build animations
+		this.animations = [
+			[
+				generate(assetLoader.getImage(spriteId + ".left")),
+				generate(assetLoader.getImage(spriteId + ".right")),
+				generate(assetLoader.getImage(spriteId + ".up")),
+				generate(assetLoader.getImage(spriteId + ".down")),
+			],
+			[
+				generate(assetLoader.getImage(spriteId + ".leftB")),
+				generate(assetLoader.getImage(spriteId + ".rightB")),
+				generate(assetLoader.getImage(spriteId + ".upB")),
+				generate(assetLoader.getImage(spriteId + ".downB")),
+			],
+		];
 		this.initialPos.x = x;
 		this.initialPos.y = y;
 		this.currentAnimation = this.animations[0][0];
@@ -232,7 +234,7 @@ export class Player extends Entity {
 		if (this.crying) {
 			this.cryingTimer += dt;
 			if (this.cryingTimer >= CRYING_TIMEOUT) {
-				this.reset(this.controller, this.initialPos.x, this.initialPos.y);
+				this.reset(this.controller, this.initialPos.x, this.initialPos.y, this.spriteId);
 			}
 		}
 		super.performActions(dt);

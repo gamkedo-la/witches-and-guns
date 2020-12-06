@@ -12,66 +12,128 @@ const BOOK_HEIGHT = 16;
 
 const assetDefs = {
   images: [
-	{id: "player", src: "./images/julhilde.png", subids: [
-	  { id: "player.down", kind: "anim", width: PLAYER_WIDTH, height: PLAYER_HEIGHT, frames: [
+	{id: "player1", src: "./images/julhilde.png", subids: [
+	  { id: "player1.down", kind: "anim", width: PLAYER_WIDTH, height: PLAYER_HEIGHT, frames: [
 		  {duration: 150, xoffset: 0, yoffset: 0},
 		  {duration: 150, xoffset: 0, yoffset: PLAYER_HEIGHT*1},
 		  {duration: 150, xoffset: 0, yoffset: PLAYER_HEIGHT*2},
 		  {duration: 150, xoffset: 0, yoffset: PLAYER_HEIGHT*3},
 	  ]},
-	  { id: "player.left", kind: "anim", width: PLAYER_WIDTH + 3, height: PLAYER_HEIGHT, frames: [
+	  { id: "player1.left", kind: "anim", width: PLAYER_WIDTH + 3, height: PLAYER_HEIGHT, frames: [
 		  {duration: 150, xoffset: PLAYER_WIDTH, yoffset: 0},
 		  {duration: 150, xoffset: PLAYER_WIDTH, yoffset: PLAYER_HEIGHT*1},
 		  {duration: 150, xoffset: PLAYER_WIDTH, yoffset: PLAYER_HEIGHT*2},
 		  {duration: 150, xoffset: PLAYER_WIDTH, yoffset: PLAYER_HEIGHT*3},
 	  ]},
-	  { id: "player.up", kind: "anim", width: PLAYER_WIDTH, height: PLAYER_HEIGHT, frames: [
+	  { id: "player1.up", kind: "anim", width: PLAYER_WIDTH, height: PLAYER_HEIGHT, frames: [
 		  {duration: 150, xoffset: PLAYER_WIDTH*2 + 10, yoffset: 0},
 		  {duration: 150, xoffset: PLAYER_WIDTH*2 + 10, yoffset: PLAYER_HEIGHT*1},
 		  {duration: 150, xoffset: PLAYER_WIDTH*2 + 10, yoffset: PLAYER_HEIGHT*2},
 		  {duration: 150, xoffset: PLAYER_WIDTH*2 + 10, yoffset: PLAYER_HEIGHT*3},
 	  ]},
-	  { id: "player.right", kind: "anim", width: PLAYER_WIDTH + 3, height: PLAYER_HEIGHT, frames: [
+	  { id: "player1.right", kind: "anim", width: PLAYER_WIDTH + 3, height: PLAYER_HEIGHT, frames: [
 		  {duration: 150, xoffset: PLAYER_WIDTH*3 + 10, yoffset: 0},
 		  {duration: 150, xoffset: PLAYER_WIDTH*3 + 10, yoffset: PLAYER_HEIGHT*1},
 		  {duration: 150, xoffset: PLAYER_WIDTH*3 + 10, yoffset: PLAYER_HEIGHT*2},
 		  {duration: 150, xoffset: PLAYER_WIDTH*3 + 10, yoffset: PLAYER_HEIGHT*3},
 	  ]},
-	  { id: "player.downB", kind: "anim", width: PLAYER_WIDTH, height: PLAYER_HEIGHT, frames: [
+	  { id: "player1.downB", kind: "anim", width: PLAYER_WIDTH, height: PLAYER_HEIGHT, frames: [
 		  {duration: 150, xoffset: 0, yoffset: PLAYER_HEIGHT*3},
 		  {duration: 150, xoffset: 0, yoffset: PLAYER_HEIGHT*2},
 		  {duration: 150, xoffset: 0, yoffset: PLAYER_HEIGHT*1},
 		  {duration: 150, xoffset: 0, yoffset: 0},
 	  ]},
-	  { id: "player.leftB", kind: "anim", width: PLAYER_WIDTH + 3, height: PLAYER_HEIGHT, frames: [
+	  { id: "player1.leftB", kind: "anim", width: PLAYER_WIDTH + 3, height: PLAYER_HEIGHT, frames: [
 		  {duration: 150, xoffset: PLAYER_WIDTH, yoffset: PLAYER_HEIGHT*3},
 		  {duration: 150, xoffset: PLAYER_WIDTH, yoffset: PLAYER_HEIGHT*2},
 		  {duration: 150, xoffset: PLAYER_WIDTH, yoffset: PLAYER_HEIGHT*1},
 		  {duration: 150, xoffset: PLAYER_WIDTH, yoffset: 0},
 	  ]},
-	  { id: "player.upB", kind: "anim", width: PLAYER_WIDTH, height: PLAYER_HEIGHT, frames: [
+	  { id: "player1.upB", kind: "anim", width: PLAYER_WIDTH, height: PLAYER_HEIGHT, frames: [
 		  {duration: 150, xoffset: PLAYER_WIDTH*2 + 10, yoffset: PLAYER_HEIGHT*3},
 		  {duration: 150, xoffset: PLAYER_WIDTH*2 + 10, yoffset: PLAYER_HEIGHT*2},
 		  {duration: 150, xoffset: PLAYER_WIDTH*2 + 10, yoffset: PLAYER_HEIGHT*1},
 		  {duration: 150, xoffset: PLAYER_WIDTH*2 + 10, yoffset: 0},
 	  ]},
-	  { id: "player.rightB", kind: "anim", width: PLAYER_WIDTH + 3, height: PLAYER_HEIGHT, frames: [
+	  { id: "player1.rightB", kind: "anim", width: PLAYER_WIDTH + 3, height: PLAYER_HEIGHT, frames: [
 		  {duration: 150, xoffset: PLAYER_WIDTH*3 + 10, yoffset: PLAYER_HEIGHT*3},
 		  {duration: 150, xoffset: PLAYER_WIDTH*3 + 10, yoffset: PLAYER_HEIGHT*2},
 		  {duration: 150, xoffset: PLAYER_WIDTH*3 + 10, yoffset: PLAYER_HEIGHT*1},
 		  {duration: 150, xoffset: PLAYER_WIDTH*3 + 10, yoffset: 0},
 	  ]},
-	  { id: "player.crying", kind: "anim", width: PLAYER_WIDTH, height: PLAYER_HEIGHT, frames: [
+	  { id: "player1.crying", kind: "anim", width: PLAYER_WIDTH, height: PLAYER_HEIGHT, frames: [
 		{duration: 100, xoffset: PLAYER_WIDTH*5, yoffset: 0},
 		{duration: 100, xoffset: PLAYER_WIDTH*5, yoffset: PLAYER_HEIGHT},
 		{duration: 100, xoffset: PLAYER_WIDTH*5, yoffset: PLAYER_HEIGHT*2},
 		{duration: 100, xoffset: PLAYER_WIDTH*5, yoffset: PLAYER_HEIGHT*3},
 	  ]},
-	  { id: "player.select", kind: "anim", width: PLAYER_WIDTH, height: PLAYER_HEIGHT, frames: [
-		{duration: 100, xoffset: PLAYER_WIDTH*6, yoffset: 0},
-		{duration: 100, xoffset: PLAYER_WIDTH*6, yoffset: PLAYER_HEIGHT},
-		{duration: 100, xoffset: PLAYER_WIDTH*6, yoffset: PLAYER_HEIGHT*2},
-		{duration: 100, xoffset: PLAYER_WIDTH*6, yoffset: PLAYER_HEIGHT*3},
+	  { id: "player1.select", kind: "anim", width: PLAYER_WIDTH, height: PLAYER_HEIGHT, frames: [
+		{duration: 130, xoffset: PLAYER_WIDTH*6, yoffset: 0},
+		{duration: 130, xoffset: PLAYER_WIDTH*6, yoffset: PLAYER_HEIGHT},
+		{duration: 130, xoffset: PLAYER_WIDTH*6, yoffset: PLAYER_HEIGHT*2},
+		{duration: 130, xoffset: PLAYER_WIDTH*6, yoffset: PLAYER_HEIGHT*3},
+	  ]},
+	]},
+	{id: "player2", src: "./images/jameshilde.png", subids: [
+	  { id: "player2.down", kind: "anim", width: PLAYER_WIDTH, height: PLAYER_HEIGHT, frames: [
+		  {duration: 150, xoffset: 0, yoffset: 0},
+		  {duration: 150, xoffset: 0, yoffset: PLAYER_HEIGHT*1},
+		  {duration: 150, xoffset: 0, yoffset: PLAYER_HEIGHT*2},
+		  {duration: 150, xoffset: 0, yoffset: PLAYER_HEIGHT*3},
+	  ]},
+	  { id: "player2.left", kind: "anim", width: PLAYER_WIDTH + 3, height: PLAYER_HEIGHT, frames: [
+		  {duration: 150, xoffset: PLAYER_WIDTH, yoffset: 0},
+		  {duration: 150, xoffset: PLAYER_WIDTH, yoffset: PLAYER_HEIGHT*1},
+		  {duration: 150, xoffset: PLAYER_WIDTH, yoffset: PLAYER_HEIGHT*2},
+		  {duration: 150, xoffset: PLAYER_WIDTH, yoffset: PLAYER_HEIGHT*3},
+	  ]},
+	  { id: "player2.up", kind: "anim", width: PLAYER_WIDTH, height: PLAYER_HEIGHT, frames: [
+		  {duration: 150, xoffset: PLAYER_WIDTH*2 + 10, yoffset: 0},
+		  {duration: 150, xoffset: PLAYER_WIDTH*2 + 10, yoffset: PLAYER_HEIGHT*1},
+		  {duration: 150, xoffset: PLAYER_WIDTH*2 + 10, yoffset: PLAYER_HEIGHT*2},
+		  {duration: 150, xoffset: PLAYER_WIDTH*2 + 10, yoffset: PLAYER_HEIGHT*3},
+	  ]},
+	  { id: "player2.right", kind: "anim", width: PLAYER_WIDTH + 3, height: PLAYER_HEIGHT, frames: [
+		  {duration: 150, xoffset: PLAYER_WIDTH*3 + 10, yoffset: 0},
+		  {duration: 150, xoffset: PLAYER_WIDTH*3 + 10, yoffset: PLAYER_HEIGHT*1},
+		  {duration: 150, xoffset: PLAYER_WIDTH*3 + 10, yoffset: PLAYER_HEIGHT*2},
+		  {duration: 150, xoffset: PLAYER_WIDTH*3 + 10, yoffset: PLAYER_HEIGHT*3},
+	  ]},
+	  { id: "player2.downB", kind: "anim", width: PLAYER_WIDTH, height: PLAYER_HEIGHT, frames: [
+		  {duration: 150, xoffset: 0, yoffset: PLAYER_HEIGHT*3},
+		  {duration: 150, xoffset: 0, yoffset: PLAYER_HEIGHT*2},
+		  {duration: 150, xoffset: 0, yoffset: PLAYER_HEIGHT*1},
+		  {duration: 150, xoffset: 0, yoffset: 0},
+	  ]},
+	  { id: "player2.leftB", kind: "anim", width: PLAYER_WIDTH + 3, height: PLAYER_HEIGHT, frames: [
+		  {duration: 150, xoffset: PLAYER_WIDTH, yoffset: PLAYER_HEIGHT*3},
+		  {duration: 150, xoffset: PLAYER_WIDTH, yoffset: PLAYER_HEIGHT*2},
+		  {duration: 150, xoffset: PLAYER_WIDTH, yoffset: PLAYER_HEIGHT*1},
+		  {duration: 150, xoffset: PLAYER_WIDTH, yoffset: 0},
+	  ]},
+	  { id: "player2.upB", kind: "anim", width: PLAYER_WIDTH, height: PLAYER_HEIGHT, frames: [
+		  {duration: 150, xoffset: PLAYER_WIDTH*2 + 10, yoffset: PLAYER_HEIGHT*3},
+		  {duration: 150, xoffset: PLAYER_WIDTH*2 + 10, yoffset: PLAYER_HEIGHT*2},
+		  {duration: 150, xoffset: PLAYER_WIDTH*2 + 10, yoffset: PLAYER_HEIGHT*1},
+		  {duration: 150, xoffset: PLAYER_WIDTH*2 + 10, yoffset: 0},
+	  ]},
+	  { id: "player2.rightB", kind: "anim", width: PLAYER_WIDTH + 3, height: PLAYER_HEIGHT, frames: [
+		  {duration: 150, xoffset: PLAYER_WIDTH*3 + 10, yoffset: PLAYER_HEIGHT*3},
+		  {duration: 150, xoffset: PLAYER_WIDTH*3 + 10, yoffset: PLAYER_HEIGHT*2},
+		  {duration: 150, xoffset: PLAYER_WIDTH*3 + 10, yoffset: PLAYER_HEIGHT*1},
+		  {duration: 150, xoffset: PLAYER_WIDTH*3 + 10, yoffset: 0},
+	  ]},
+	  { id: "player2.crying", kind: "anim", width: PLAYER_WIDTH, height: PLAYER_HEIGHT, frames: [
+		{duration: 100, xoffset: PLAYER_WIDTH*5, yoffset: 0},
+		{duration: 100, xoffset: PLAYER_WIDTH*5, yoffset: PLAYER_HEIGHT},
+		{duration: 100, xoffset: PLAYER_WIDTH*5, yoffset: PLAYER_HEIGHT*2},
+		{duration: 100, xoffset: PLAYER_WIDTH*5, yoffset: PLAYER_HEIGHT*3},
+	  ]},
+	  { id: "player2.select", kind: "anim", width: PLAYER_WIDTH, height: PLAYER_HEIGHT, frames: [
+		{duration: 130, xoffset: PLAYER_WIDTH*6, yoffset: 0},
+		{duration: 130, xoffset: PLAYER_WIDTH*6, yoffset: PLAYER_HEIGHT},
+		{duration: 130, xoffset: PLAYER_WIDTH*6, yoffset: PLAYER_HEIGHT*2},
+		{duration: 130, xoffset: PLAYER_WIDTH*6, yoffset: PLAYER_HEIGHT*3},
 	  ]},
 	]},
 	{id: "broomEnemy", src: "./images/broom-enemy.png", subids: [
