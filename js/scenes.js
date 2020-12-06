@@ -10,6 +10,7 @@ import { Fmt } from './fmt.js';
 import { LEVELS, UnWalkable } from "./levels.js";
 import { AuthorLine, CreditLine, creditsData } from "./credits.js";
 import { Util } from './util.js';
+import { WasherBoss } from "./bosses.js";
 
 export let currentScene;
 
@@ -288,6 +289,9 @@ class GameScene extends Scene {
 			}
 		});
 	  	entitiesManager.onCollision("unwalkable", "enemy", (unwalkable, enemy) => {
+			if (enemy instanceof WasherBoss) {
+				return;
+			}
 			const horizontalCollision = enemy.collider.x + enemy.collider.width > unwalkable.collider.x + unwalkable.collider.width || enemy.collider.x < unwalkable.collider.x;
 			const verticalCollision = enemy.collider.y + enemy.collider.height > unwalkable.collider.y + unwalkable.collider.height || enemy.collider.y < unwalkable.collider.y;
 			if (horizontalCollision) {
