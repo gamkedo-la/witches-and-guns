@@ -8,16 +8,17 @@ const SHOTSPEED = 320;
 const BULLET_SPRITE_SPECS = {
 	bullet: {up: "bulletU", left: "bulletL", down: "bulletD", right: "bulletR"},
 	spread: {up: "spread", left: "spread", down: "spread", right: "spread"},
+	laser: {up: "laserU", left: "laserL", down: "laserD", right: "laserR"},
 };
 
 class Bullet extends Entity {
-	constructor(posX, posY, dirX, dirY, velX, velY, spriteId) {
+	constructor(posX, posY, dirX, dirY, velX, velY, hp, spriteId) {
 		const collider = {width: 4,	height: 2, offsetX: 5, offsetY: 3};
-		super('playerProjectile', {x: posX, y: posY}, 19, 9, collider, Infinity, 1);
+		super('playerProjectile', {x: posX, y: posY}, 19, 9, collider, hp, 1);
 		this.canCollideWithTypes.add('enemy');
 		this.collider.width = 3;
 		this.collider.height = 3;
-		this.reset(posX, posY, dirX, dirY, velX, velY, spriteId);
+		this.reset(posX, posY, dirX, dirY, velX, velY, hp, spriteId);
 	}
 
 	generateAnimations(iconId) {
@@ -27,13 +28,14 @@ class Bullet extends Entity {
 		}
 	}
 
-	reset(posX, posY, dirX, dirY, velX, velY, spriteId) {
+	reset(posX, posY, dirX, dirY, velX, velY, hp, spriteId) {
 		super.reset();
 		this.pos = { x: posX, y: posY };
 		this.vel = {
 			x: dirX * SHOTSPEED + velX,
 			y: dirY * SHOTSPEED + velY
 		};
+		this.hp = hp;
 		this.generateAnimations(spriteId);
 		this.currentAnimation = this.animations.right;
 		if (this.vel.x == 0) {
@@ -80,7 +82,7 @@ export const GUNS = {
 		bulletSprite: "bullet",
 		soundId: "shoot",
 		bulletSpawner: (origin, dir, vel) => {
-			entitiesManager.spawn(Bullet, origin.x, origin.y, dir.x, dir.y, vel.x, vel.y, "bullet");
+			entitiesManager.spawn(Bullet, origin.x, origin.y, dir.x, dir.y, vel.x, vel.y, 1, "bullet");
 		}
 	},
 	spread: {
@@ -91,10 +93,20 @@ export const GUNS = {
 		bulletSpawner: (origin, dir, vel) => {
 			const angle = Math.atan2(dir.x, -dir.y) - Math.PI/2;
 			const spreadAngle = Math.PI/16;
-			entitiesManager.spawn(Bullet, origin.x, origin.y, Math.cos(angle - 2*spreadAngle), Math.sin(angle - 2*spreadAngle), vel.x, vel.y, "spread");
-			entitiesManager.spawn(Bullet, origin.x, origin.y, Math.cos(angle - spreadAngle), Math.sin(angle - spreadAngle), vel.x, vel.y, "spread");
-			entitiesManager.spawn(Bullet, origin.x, origin.y, Math.cos(angle + spreadAngle), Math.sin(angle + spreadAngle), vel.x, vel.y, "spread");
-			entitiesManager.spawn(Bullet, origin.x, origin.y, Math.cos(angle + 2*spreadAngle), Math.sin(angle + 2*spreadAngle), vel.x, vel.y, "spread");
+			entitiesManager.spawn(Bullet, origin.x, origin.y, Math.cos(angle - 2*spreadAngle), Math.sin(angle - 2*spreadAngle), vel.x, vel.y, 1, "spread");
+			entitiesManager.spawn(Bullet, origin.x, origin.y, Math.cos(angle - spreadAngle), Math.sin(angle - spreadAngle), vel.x, vel.y, 1, "spread");
+			entitiesManager.spawn(Bullet, origin.x, origin.y, Math.cos(angle + spreadAngle), Math.sin(angle + spreadAngle), vel.x, vel.y, 1, "spread");
+			entitiesManager.spawn(Bullet, origin.x, origin.y, Math.cos(angle + 2*spreadAngle), Math.sin(angle + 2*spreadAngle), vel.x, vel.y, 1, "spread");
+		}
+	},
+	laser: {
+		shotTime: 1 / 6,
+		ammo: 100,
+		bulletSprite: "bullet",
+		soundId: "shoot",
+		iconId: "laserGun",
+		bulletSpawner: (origin, dir, vel) => {
+			entitiesManager.spawn(Bullet, origin.x, origin.y, dir.x, dir.y, vel.x, vel.y, Infinity, "laser");
 		}
 	},
 };

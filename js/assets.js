@@ -457,7 +457,10 @@ const assetDefs = {
 	{id: "pickUpsSheet", src: "./images/pickups.png", subids: [
 	  { id: "spreadGun", kind: "anim", width: 12, height: 12, frames: [
 		{duration: 1, xoffset: 0, yoffset: 0},
-	  ]}
+	  ]},
+	  { id: "laserGun", kind: "anim", width: 12, height: 12, frames: [
+		{duration: 1, xoffset: 12, yoffset: 0},
+	  ]},
 	]},
 	{id: "projectilesSheet", src: "./images/projectiles.png", subids: [
 	  { id: "bulletR", kind: "anim", width: 19, height: 9, frames: [
@@ -474,6 +477,18 @@ const assetDefs = {
 	  ]},
 	  { id: "spread", kind: "anim", width: 14, height: 12, frames: [
 		{duration: 1, xoffset: 44, yoffset: 0},
+	  ]},
+	  { id: "laserR", kind: "anim", width: 25, height: 10, frames: [
+		{duration: 1, xoffset: 19, yoffset: 0},
+	  ]},
+	  { id: "laserL", kind: "anim", width: 25, height: 10, frames: [
+		{duration: 1, xoffset: 19, yoffset: 10},
+	  ]},
+	  { id: "laserD", kind: "anim", width: 10, height: 25, frames: [
+		{duration: 1, xoffset: 26, yoffset: 20},
+	  ]},
+	  { id: "laserU", kind: "anim", width: 10, height: 25, frames: [
+		{duration: 1, xoffset: 26, yoffset: 45},
 	  ]},
 	]},
 	{id: "icecube", src: "./images/icecube.png", subids: [
