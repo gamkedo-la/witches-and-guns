@@ -646,21 +646,80 @@ export const LEVELS = [
 	{
 		name: "Level 3", loaded: false, complete: false, started: false,
 		grids: [LVL3_BG_GRID, LVL3_MID_GRID, LVL3_FG_GRID],
-		initialEnemies: [
-			{ cls: FlyingBookEnemy, x: SIZE, y: SIZE },
-			{ cls: FlyingBookEnemy, x: WIDTH * SIZE/2, y: SIZE },
-			{ cls: FlyingBookEnemy, x: WIDTH * SIZE - SIZE, y: SIZE },
-			{ cls: FlyingBookEnemy, x: SIZE, y: HEIGHT * SIZE/2 },
-			{ cls: FlyingBookEnemy, x: WIDTH * SIZE - SIZE, y: HEIGHT * SIZE/2 },
-			{ cls: FlyingBookEnemy, x: SIZE, y: HEIGHT * SIZE - SIZE},
-			{ cls: FlyingBookEnemy, x: WIDTH * SIZE / 2, y: HEIGHT * SIZE - SIZE },
-			{ cls: FlyingBookEnemy, x: WIDTH * SIZE - SIZE, y: HEIGHT * SIZE - SIZE },
-		],
+		initialEnemies: [],
 		waves: [
 			{
 				spawners: [
+					{cls: FlyingBookEnemy, x: 1, y: SIZE*6 + SIZE/2,  amount: 10},
+					{cls: FlyingBookEnemy, x: SIZE*9 + SIZE/2, y: SIZE + SIZE/2,  amount: 10},
+					{cls: FlyingBookEnemy, x: SIZE*20, y: SIZE*6 + SIZE/2,  amount: 10},
+					{cls: FlyingBookEnemy, x: SIZE*10, y: SIZE*13 + SIZE/2,  amount: 10},
+				],
+				timeOut: 10,
+			},
+
+			{
+				spawners: [
+					{cls: FlyingBookEnemy, x: 1, y: SIZE*6 + SIZE/2,  amount: 6},
+					{cls: FlyingBookEnemy, x: SIZE*9 + SIZE/2, y: SIZE + SIZE/2,  amount: 6},
+					{cls: FlyingBookEnemy, x: SIZE*20, y: SIZE*6 + SIZE/2,  amount: 6},
+					{cls: FlyingBookEnemy, x: SIZE*10, y: SIZE*13 + SIZE/2,  amount: 6},
+					{cls: BroomEnemy, x: 1, y: SIZE*6 + SIZE/2,  amount: 16},
+					{cls: BroomEnemy, x: SIZE*9 + SIZE/2, y: SIZE + SIZE/2,  amount: 16},
+					{cls: BroomEnemy, x: SIZE*20, y: SIZE*6 + SIZE/2,  amount: 16},
+					{cls: BroomEnemy, x: SIZE*10, y: SIZE*13 + SIZE/2,  amount: 16},
 				],
 				timeOut: Infinity,
+			},
+
+			{
+				spawners: [
+					{cls: FlyingBookEnemy, x: 1, y: SIZE*6 + SIZE/2,  amount: 12},
+					{cls: FlyingBookEnemy, x: SIZE*9 + SIZE/2, y: SIZE + SIZE/2,  amount: 12},
+					{cls: FlyingBookEnemy, x: SIZE*20, y: SIZE*6 + SIZE/2,  amount: 12},
+					{cls: FlyingBookEnemy, x: SIZE*10, y: SIZE*13 + SIZE/2,  amount: 12},
+				],
+				timeOut: 4,
+			},
+
+			{
+				spawners: [
+					{cls: BroomEnemy, x: 1, y: SIZE*6 + SIZE/2,  amount: 18},
+					{cls: BroomEnemy, x: SIZE*9 + SIZE/2, y: SIZE + SIZE/2,  amount: 18},
+					{cls: BroomEnemy, x: SIZE*20, y: SIZE*6 + SIZE/2,  amount: 18},
+					{cls: BroomEnemy, x: SIZE*10, y: SIZE*13 + SIZE/2,  amount: 18},
+				],
+				timeOut: 5,
+			},
+
+			{
+				spawners: [
+					{cls: BroomEnemy, x: 1, y: SIZE*6 + SIZE/2,  amount: 3},
+					{cls: BroomEnemy, x: SIZE*9 + SIZE/2, y: SIZE + SIZE/2,  amount: 3},
+					{cls: BroomEnemy, x: SIZE*20, y: SIZE*6 + SIZE/2,  amount: 3},
+					{cls: BroomEnemy, x: SIZE*10, y: SIZE*13 + SIZE/2,  amount: 3},
+				],
+				timeOut: 2,
+			},
+
+			{
+				spawners: [
+					{cls: BroomEnemy, x: 1, y: SIZE*6 + SIZE/2,  amount: 3},
+					{cls: BroomEnemy, x: SIZE*9 + SIZE/2, y: SIZE + SIZE/2,  amount: 3},
+					{cls: BroomEnemy, x: SIZE*20, y: SIZE*6 + SIZE/2,  amount: 3},
+					{cls: BroomEnemy, x: SIZE*10, y: SIZE*13 + SIZE/2,  amount: 3},
+				],
+				timeOut: 2,
+			},
+
+			{
+				spawners: [
+					{cls: BroomEnemy, x: 1, y: SIZE*6 + SIZE/2,  amount: 6},
+					{cls: BroomEnemy, x: SIZE*9 + SIZE/2, y: SIZE + SIZE/2,  amount: 6},
+					{cls: BroomEnemy, x: SIZE*20, y: SIZE*6 + SIZE/2,  amount: 6},
+					{cls: BroomEnemy, x: SIZE*10, y: SIZE*13 + SIZE/2,  amount: 6},
+				],
+				timeOut: 2,
 			},
 		],
 
@@ -679,7 +738,7 @@ export const LEVELS = [
 			{x: SIZE*18.5, y: SIZE*10, width: SIZE*1.5, height: SIZE*4},
 			{x: SIZE*20, y: SIZE*13, width: SIZE, height: SIZE*2},
 		],
-		boss: { cls: TVBoss, x: 110, y: 100 }
+		boss: { cls: TVBoss, x: 110, y: SIZE*13 + SIZE/2 }
 	},
 	{
 		name: "Level 4", loaded: false, complete: false, started: false,
