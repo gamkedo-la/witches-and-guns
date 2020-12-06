@@ -19,23 +19,23 @@ const assetDefs = {
 		  {duration: 150, xoffset: 0, yoffset: PLAYER_HEIGHT*2},
 		  {duration: 150, xoffset: 0, yoffset: PLAYER_HEIGHT*3},
 	  ]},
-	  { id: "player.left", kind: "anim", width: PLAYER_WIDTH, height: PLAYER_HEIGHT, frames: [
+	  { id: "player.left", kind: "anim", width: PLAYER_WIDTH + 3, height: PLAYER_HEIGHT, frames: [
 		  {duration: 150, xoffset: PLAYER_WIDTH, yoffset: 0},
 		  {duration: 150, xoffset: PLAYER_WIDTH, yoffset: PLAYER_HEIGHT*1},
 		  {duration: 150, xoffset: PLAYER_WIDTH, yoffset: PLAYER_HEIGHT*2},
 		  {duration: 150, xoffset: PLAYER_WIDTH, yoffset: PLAYER_HEIGHT*3},
 	  ]},
 	  { id: "player.up", kind: "anim", width: PLAYER_WIDTH, height: PLAYER_HEIGHT, frames: [
-		  {duration: 150, xoffset: PLAYER_WIDTH*2, yoffset: 0},
-		  {duration: 150, xoffset: PLAYER_WIDTH*2, yoffset: PLAYER_HEIGHT*1},
-		  {duration: 150, xoffset: PLAYER_WIDTH*2, yoffset: PLAYER_HEIGHT*2},
-		  {duration: 150, xoffset: PLAYER_WIDTH*2, yoffset: PLAYER_HEIGHT*3},
+		  {duration: 150, xoffset: PLAYER_WIDTH*2 + 10, yoffset: 0},
+		  {duration: 150, xoffset: PLAYER_WIDTH*2 + 10, yoffset: PLAYER_HEIGHT*1},
+		  {duration: 150, xoffset: PLAYER_WIDTH*2 + 10, yoffset: PLAYER_HEIGHT*2},
+		  {duration: 150, xoffset: PLAYER_WIDTH*2 + 10, yoffset: PLAYER_HEIGHT*3},
 	  ]},
-	  { id: "player.right", kind: "anim", width: PLAYER_WIDTH, height: PLAYER_HEIGHT, frames: [
-		  {duration: 150, xoffset: PLAYER_WIDTH*3, yoffset: 0},
-		  {duration: 150, xoffset: PLAYER_WIDTH*3, yoffset: PLAYER_HEIGHT*1},
-		  {duration: 150, xoffset: PLAYER_WIDTH*3, yoffset: PLAYER_HEIGHT*2},
-		  {duration: 150, xoffset: PLAYER_WIDTH*3, yoffset: PLAYER_HEIGHT*3},
+	  { id: "player.right", kind: "anim", width: PLAYER_WIDTH + 3, height: PLAYER_HEIGHT, frames: [
+		  {duration: 150, xoffset: PLAYER_WIDTH*3 + 10, yoffset: 0},
+		  {duration: 150, xoffset: PLAYER_WIDTH*3 + 10, yoffset: PLAYER_HEIGHT*1},
+		  {duration: 150, xoffset: PLAYER_WIDTH*3 + 10, yoffset: PLAYER_HEIGHT*2},
+		  {duration: 150, xoffset: PLAYER_WIDTH*3 + 10, yoffset: PLAYER_HEIGHT*3},
 	  ]},
 	  { id: "player.downB", kind: "anim", width: PLAYER_WIDTH, height: PLAYER_HEIGHT, frames: [
 		  {duration: 150, xoffset: 0, yoffset: PLAYER_HEIGHT*3},
@@ -43,29 +43,35 @@ const assetDefs = {
 		  {duration: 150, xoffset: 0, yoffset: PLAYER_HEIGHT*1},
 		  {duration: 150, xoffset: 0, yoffset: 0},
 	  ]},
-	  { id: "player.leftB", kind: "anim", width: PLAYER_WIDTH, height: PLAYER_HEIGHT, frames: [
+	  { id: "player.leftB", kind: "anim", width: PLAYER_WIDTH + 3, height: PLAYER_HEIGHT, frames: [
 		  {duration: 150, xoffset: PLAYER_WIDTH, yoffset: PLAYER_HEIGHT*3},
 		  {duration: 150, xoffset: PLAYER_WIDTH, yoffset: PLAYER_HEIGHT*2},
 		  {duration: 150, xoffset: PLAYER_WIDTH, yoffset: PLAYER_HEIGHT*1},
 		  {duration: 150, xoffset: PLAYER_WIDTH, yoffset: 0},
 	  ]},
 	  { id: "player.upB", kind: "anim", width: PLAYER_WIDTH, height: PLAYER_HEIGHT, frames: [
-		  {duration: 150, xoffset: PLAYER_WIDTH*2, yoffset: PLAYER_HEIGHT*3},
-		  {duration: 150, xoffset: PLAYER_WIDTH*2, yoffset: PLAYER_HEIGHT*2},
-		  {duration: 150, xoffset: PLAYER_WIDTH*2, yoffset: PLAYER_HEIGHT*1},
-		  {duration: 150, xoffset: PLAYER_WIDTH*2, yoffset: 0},
+		  {duration: 150, xoffset: PLAYER_WIDTH*2 + 10, yoffset: PLAYER_HEIGHT*3},
+		  {duration: 150, xoffset: PLAYER_WIDTH*2 + 10, yoffset: PLAYER_HEIGHT*2},
+		  {duration: 150, xoffset: PLAYER_WIDTH*2 + 10, yoffset: PLAYER_HEIGHT*1},
+		  {duration: 150, xoffset: PLAYER_WIDTH*2 + 10, yoffset: 0},
 	  ]},
-	  { id: "player.rightB", kind: "anim", width: PLAYER_WIDTH, height: PLAYER_HEIGHT, frames: [
-		  {duration: 150, xoffset: PLAYER_WIDTH*3, yoffset: PLAYER_HEIGHT*3},
-		  {duration: 150, xoffset: PLAYER_WIDTH*3, yoffset: PLAYER_HEIGHT*2},
-		  {duration: 150, xoffset: PLAYER_WIDTH*3, yoffset: PLAYER_HEIGHT*1},
-		  {duration: 150, xoffset: PLAYER_WIDTH*3, yoffset: 0},
+	  { id: "player.rightB", kind: "anim", width: PLAYER_WIDTH + 3, height: PLAYER_HEIGHT, frames: [
+		  {duration: 150, xoffset: PLAYER_WIDTH*3 + 10, yoffset: PLAYER_HEIGHT*3},
+		  {duration: 150, xoffset: PLAYER_WIDTH*3 + 10, yoffset: PLAYER_HEIGHT*2},
+		  {duration: 150, xoffset: PLAYER_WIDTH*3 + 10, yoffset: PLAYER_HEIGHT*1},
+		  {duration: 150, xoffset: PLAYER_WIDTH*3 + 10, yoffset: 0},
 	  ]},
 	  { id: "player.crying", kind: "anim", width: PLAYER_WIDTH, height: PLAYER_HEIGHT, frames: [
-		{duration: 100, xoffset: PLAYER_WIDTH*4, yoffset: 0},
-		{duration: 100, xoffset: PLAYER_WIDTH*4, yoffset: PLAYER_HEIGHT},
-		{duration: 100, xoffset: PLAYER_WIDTH*4, yoffset: PLAYER_HEIGHT*2},
-		{duration: 100, xoffset: PLAYER_WIDTH*4, yoffset: PLAYER_HEIGHT*3},
+		{duration: 100, xoffset: PLAYER_WIDTH*5, yoffset: 0},
+		{duration: 100, xoffset: PLAYER_WIDTH*5, yoffset: PLAYER_HEIGHT},
+		{duration: 100, xoffset: PLAYER_WIDTH*5, yoffset: PLAYER_HEIGHT*2},
+		{duration: 100, xoffset: PLAYER_WIDTH*5, yoffset: PLAYER_HEIGHT*3},
+	  ]},
+	  { id: "player.select", kind: "anim", width: PLAYER_WIDTH, height: PLAYER_HEIGHT, frames: [
+		{duration: 100, xoffset: PLAYER_WIDTH*6, yoffset: 0},
+		{duration: 100, xoffset: PLAYER_WIDTH*6, yoffset: PLAYER_HEIGHT},
+		{duration: 100, xoffset: PLAYER_WIDTH*6, yoffset: PLAYER_HEIGHT*2},
+		{duration: 100, xoffset: PLAYER_WIDTH*6, yoffset: PLAYER_HEIGHT*3},
 	  ]},
 	]},
 	{id: "broomEnemy", src: "./images/broom-enemy.png", subids: [
