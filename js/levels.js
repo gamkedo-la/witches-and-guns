@@ -588,26 +588,7 @@ export const LEVELS = [
 	{
 		name: "Level 2", loaded: false, complete: false, started: false,
 		grids: [LVL2_BG_GRID, LVL2_MID_GRID, LVL2_FG_GRID],
-		initialEnemies: [
-			/*
-		  {cls: BroomEnemy, x: 300, y: 200},
-		  {cls: BroomEnemy, x: 300, y: 200},
-		  {cls: BroomEnemy, x: 300, y: 200},
-		  {cls: BroomEnemy, x: 300, y: 200},
-		  {cls: BroomEnemy, x: 300, y: 200},
-		  {cls: BroomEnemy, x: 300, y: 200},
-		  {cls: BroomEnemy, x: 300, y: 200},
-		  {cls: BroomEnemy, x: 300, y: 200},
-		  {cls: BroomEnemy, x: 300, y: 200},
-		  {cls: BroomEnemy, x: 300, y: 200},
-		  {cls: BroomEnemy, x: 300, y: 200},
-		  {cls: BroomEnemy, x: 300, y: 200},
-		  {cls: BroomEnemy, x: 300, y: 200},
-		  {cls: BroomEnemy, x: 300, y: 200},
-		  {cls: BroomEnemy, x: 300, y: 200},
-		  {cls: BroomEnemy, x: 300, y: 200},
-		  */
-		],
+		initialEnemies: [],
 		waves: [
 			{
 				spawners: [
@@ -615,8 +596,41 @@ export const LEVELS = [
 					{cls: BroomEnemy, x: 0, y: SIZE*6,  amount: 20},
 					{cls: BroomEnemy, x: SIZE*14, y: 0,  amount: 20},
 					{cls: BroomEnemy, x: SIZE*12, y: SIZE*20,  amount: 20},
+
+					{cls: BroomEnemy, x: SIZE*20, y: SIZE*6,  amount: 20},
+					{cls: BroomEnemy, x: 0, y: SIZE*6,  amount: 20},
+					{cls: BroomEnemy, x: SIZE*14, y: 0,  amount: 20},
+					{cls: BroomEnemy, x: SIZE*12, y: SIZE*20,  amount: 20},
 				],
 				timeOut: Infinity,
+			},
+			{
+				spawners: [
+					{cls: BroomEnemy, x: SIZE*20, y: SIZE*6,  amount: 30},
+					{cls: BroomEnemy, x: 0, y: SIZE*6,  amount: 30},
+					{cls: BroomEnemy, x: SIZE*14, y: 0,  amount: 30},
+					{cls: BroomEnemy, x: SIZE*12, y: SIZE*20,  amount: 30},
+				],
+				timeOut: Infinity,
+			},
+			{
+				spawners: [
+					{cls: BroomEnemy, x: SIZE*20, y: SIZE*6,  amount: 50},
+					{cls: BroomEnemy, x: 0, y: SIZE*6,  amount: 50},
+					{cls: BroomEnemy, x: SIZE*14, y: 0,  amount: 50},
+					{cls: BroomEnemy, x: SIZE*12, y: SIZE*20,  amount: 50},
+				],
+				timeOut: 20,
+			},
+
+			{
+				spawners: [
+					{cls: FlyingBookEnemy, x: SIZE*20, y: SIZE*6,  amount: 20},
+					{cls: FlyingBookEnemy, x: 0, y: SIZE*6,  amount: 20},
+					{cls: FlyingBookEnemy, x: SIZE*14, y: 0,  amount: 20},
+					{cls: FlyingBookEnemy, x: SIZE*12, y: SIZE*20,  amount: 20},
+				],
+				timeOut: 20,
 			},
 		],
 		unwalkables: [
@@ -627,7 +641,7 @@ export const LEVELS = [
 			{x: 0, y: SIZE*8, width: SIZE, height: SIZE*7},
 			{x: SIZE*19, y: SIZE*8, width: SIZE, height: SIZE*7},
 		],
-		boss: { cls: FridgeBoss, x: 110, y: 100 }
+		boss: { cls: FridgeBoss, x: SIZE*11 + 1, y: 1 }
 	},
 	{
 		name: "Level 3", loaded: false, complete: false, started: false,
