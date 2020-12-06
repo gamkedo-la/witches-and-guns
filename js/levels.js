@@ -748,20 +748,146 @@ export const LEVELS = [
 		waves: [
 			{
 				spawners: [
+					{cls: BroomEnemy, x: 1, y: SIZE*6 + SIZE/2,  amount: 2},
+					{cls: BroomEnemy, x: SIZE*8, y: SIZE + SIZE/2,  amount: 2},
+					{cls: BroomEnemy, x: SIZE*20, y: SIZE*6 + SIZE/2,  amount: 2},
+					{cls: BroomEnemy, x: SIZE*10, y: SIZE*13 + SIZE/2,  amount: 2},
+				],
+				timeOut: 2,
+			},
+			{
+				spawners: [
+					{cls: BroomEnemy, x: 1, y: SIZE*6 + SIZE/2,  amount: 2},
+					{cls: BroomEnemy, x: SIZE*8, y: SIZE + SIZE/2,  amount: 2},
+					{cls: BroomEnemy, x: SIZE*20, y: SIZE*6 + SIZE/2,  amount: 2},
+					{cls: BroomEnemy, x: SIZE*10, y: SIZE*13 + SIZE/2,  amount: 2},
+				],
+				timeOut: 1,
+			},
+
+			{
+				spawners: [
+					{cls: BroomEnemy, x: 1, y: SIZE*6 + SIZE/2,  amount: 2},
+					{cls: BroomEnemy, x: SIZE*8, y: SIZE + SIZE/2,  amount: 2},
+					{cls: BroomEnemy, x: SIZE*20, y: SIZE*6 + SIZE/2,  amount: 2},
+					{cls: BroomEnemy, x: SIZE*10, y: SIZE*13 + SIZE/2,  amount: 2},
+				],
+				timeOut: 1,
+			},
+			{
+				spawners: [
+					{cls: BroomEnemy, x: 1, y: SIZE*6 + SIZE/2,  amount: 2},
+					{cls: BroomEnemy, x: SIZE*8, y: SIZE + SIZE/2,  amount: 2},
+					{cls: BroomEnemy, x: SIZE*20, y: SIZE*6 + SIZE/2,  amount: 2},
+					{cls: BroomEnemy, x: SIZE*10, y: SIZE*13 + SIZE/2,  amount: 2},
+				],
+				timeOut: 1,
+			},
+			{
+				spawners: [
+					{cls: BroomEnemy, x: 1, y: SIZE*6 + SIZE/2,  amount: 2},
+					{cls: BroomEnemy, x: SIZE*8, y: SIZE + SIZE/2,  amount: 2},
+					{cls: BroomEnemy, x: SIZE*20, y: SIZE*6 + SIZE/2,  amount: 2},
+					{cls: BroomEnemy, x: SIZE*10, y: SIZE*13 + SIZE/2,  amount: 2},
+				],
+				timeOut: 1,
+			},
+			{
+				spawners: [
+					{cls: BroomEnemy, x: 1, y: SIZE*6 + SIZE/2,  amount: 3},
+					{cls: BroomEnemy, x: SIZE*8, y: SIZE + SIZE/2,  amount: 3},
+					{cls: BroomEnemy, x: SIZE*20, y: SIZE*6 + SIZE/2,  amount: 3},
+					{cls: BroomEnemy, x: SIZE*10, y: SIZE*13 + SIZE/2,  amount: 3},
+				],
+				timeOut: 2,
+			},
+
+			{
+				spawners: [
+					{cls: BroomEnemy, x: 1, y: SIZE*6 + SIZE/2,  amount: 16},
+					{cls: BroomEnemy, x: SIZE*8, y: SIZE + SIZE/2,  amount: 16},
+					{cls: BroomEnemy, x: SIZE*20, y: SIZE*6 + SIZE/2,  amount: 16},
+					{cls: BroomEnemy, x: SIZE*10, y: SIZE*13 + SIZE/2,  amount: 16},
+				],
+				timeOut: Infinity,
+			},
+
+			{
+				spawners: [
+					{cls: BroomEnemy, x: 1, y: SIZE*6 + SIZE/2,  amount: 32},
+					{cls: BroomEnemy, x: SIZE*8, y: SIZE + SIZE/2,  amount: 32},
+					{cls: BroomEnemy, x: SIZE*20, y: SIZE*6 + SIZE/2,  amount: 32},
+					{cls: BroomEnemy, x: SIZE*10, y: SIZE*13 + SIZE/2,  amount: 32},
+				],
+				timeOut: Infinity,
+			},
+			{
+				spawners: [
+					{cls: BroomEnemy, x: 1, y: SIZE*6 + SIZE/2,  amount: 48},
+					{cls: BroomEnemy, x: SIZE*8, y: SIZE + SIZE/2,  amount: 48},
+					{cls: BroomEnemy, x: SIZE*20, y: SIZE*6 + SIZE/2,  amount: 48},
+					{cls: BroomEnemy, x: SIZE*10, y: SIZE*13 + SIZE/2,  amount: 48},
+				],
+				timeOut: Infinity,
+			},
+
+			{
+				spawners: [
+					{cls: BroomEnemy, x: 1, y: SIZE*6 + SIZE/2,  amount: 2},
+					{cls: BroomEnemy, x: SIZE*8, y: SIZE + SIZE/2,  amount: 2},
+					{cls: BroomEnemy, x: SIZE*20, y: SIZE*6 + SIZE/2,  amount: 2},
+					{cls: BroomEnemy, x: SIZE*10, y: SIZE*13 + SIZE/2,  amount: 2},
+				],
+				timeOut: 1,
+			},
+
+			{
+				spawners: [
+					{cls: BroomEnemy, x: 1, y: SIZE*6 + SIZE/2,  amount: 2},
+					{cls: BroomEnemy, x: SIZE*8, y: SIZE + SIZE/2,  amount: 2},
+					{cls: BroomEnemy, x: SIZE*20, y: SIZE*6 + SIZE/2,  amount: 2},
+					{cls: BroomEnemy, x: SIZE*10, y: SIZE*13 + SIZE/2,  amount: 2},
+				],
+				timeOut: 1,
+			},
+			{
+				spawners: [
+					{cls: BroomEnemy, x: 1, y: SIZE*6 + SIZE/2,  amount: 2},
+					{cls: BroomEnemy, x: SIZE*8, y: SIZE + SIZE/2,  amount: 2},
+					{cls: BroomEnemy, x: SIZE*20, y: SIZE*6 + SIZE/2,  amount: 2},
+					{cls: BroomEnemy, x: SIZE*10, y: SIZE*13 + SIZE/2,  amount: 2},
+				],
+				timeOut: 1,
+			},
+			{
+				spawners: [
+					{cls: BroomEnemy, x: 1, y: SIZE*6 + SIZE/2,  amount: 2},
+					{cls: BroomEnemy, x: SIZE*8, y: SIZE + SIZE/2,  amount: 2},
+					{cls: BroomEnemy, x: SIZE*20, y: SIZE*6 + SIZE/2,  amount: 2},
+					{cls: BroomEnemy, x: SIZE*10, y: SIZE*13 + SIZE/2,  amount: 2},
+				],
+				timeOut: Infinity,
+			},
+			{
+				spawners: [
+					{cls: BroomEnemy, x: 1, y: SIZE*6 + SIZE/2,  amount: 64},
+					{cls: BroomEnemy, x: SIZE*8, y: SIZE + SIZE/2,  amount: 64},
+					{cls: BroomEnemy, x: SIZE*20, y: SIZE*6 + SIZE/2,  amount: 64},
+					{cls: BroomEnemy, x: SIZE*10, y: SIZE*13 + SIZE/2,  amount: 64},
 				],
 				timeOut: Infinity,
 			},
 		],
 		unwalkables: [
 			{x: 0, y: 0, width: SIZE*7, height: SIZE*2},
-			{x: SIZE*9, y: 0, width: SIZE*3, height: SIZE*2},
-			{x: SIZE*15, y: 0, width: SIZE*4, height: SIZE*2},
+			{x: SIZE*9, y: 0, width: SIZE*3 - 4, height: SIZE*2},
+			{x: SIZE*15 + 4, y: 0, width: SIZE*4, height: SIZE*2},
 			{x: SIZE*20, y: 0, width: SIZE, height: SIZE*6},
-			{x: 0, y: SIZE*2, width: SIZE*2, height: SIZE*4},
+			{x: 0, y: SIZE*2, width: SIZE*2, height: SIZE*3 + SIZE/2},
 			{x: 0, y: SIZE*8, width: SIZE, height: SIZE*7},
 			{x: SIZE*20, y: SIZE*8, width: SIZE, height: SIZE*7},
 		],
-		boss: { cls: WasherBoss, x: 110, y: 100 }
+		boss: { cls: WasherBoss, x: SIZE*12 - 2, y: 1 }
 	},
 ];
 
