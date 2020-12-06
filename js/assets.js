@@ -472,6 +472,9 @@ const assetDefs = {
 	  { id: "bulletU", kind: "anim", width: 9, height: 19, frames: [
 		{duration: 1, xoffset: 5, yoffset: 18 + 19},
 	  ]},
+	  { id: "spread", kind: "anim", width: 14, height: 12, frames: [
+		{duration: 1, xoffset: 44, yoffset: 0},
+	  ]},
 	]},
 	{id: "icecube", src: "./images/icecube.png", subids: [
 	  { id: "icecube.dflt", kind: "anim", width: 4, height: 4, frames: [

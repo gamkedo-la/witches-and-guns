@@ -5,30 +5,37 @@ import { Entity, entitiesManager } from './entity.js';
 
 
 const SHOTSPEED = 320;
+const BULLET_SPRITE_SPECS = {
+	bullet: {up: "bulletU", left: "bulletL", down: "bulletD", right: "bulletR"},
+	spread: {up: "spread", left: "spread", down: "spread", right: "spread"},
+};
 
 class Bullet extends Entity {
-	constructor(posX, posY, dirX, dirY, velX, velY) {
+	constructor(posX, posY, dirX, dirY, velX, velY, spriteId) {
 		const collider = {width: 4,	height: 2, offsetX: 5, offsetY: 3};
-		const animations = {
-			up: generate(assetLoader.getImage("bulletU")),
-			left: generate(assetLoader.getImage("bulletL")),
-			down: generate(assetLoader.getImage("bulletD")),
-			right: generate(assetLoader.getImage("bulletR")),
-		};
-		super('playerProjectile', {x: posX, y: posY}, 19, 9, collider, Infinity, 1, animations, "right");
+		super('playerProjectile', {x: posX, y: posY}, 19, 9, collider, Infinity, 1);
 		this.canCollideWithTypes.add('enemy');
 		this.collider.width = 3;
 		this.collider.height = 3;
-		this.reset(posX, posY, dirX, dirY, velX, velY);
+		this.reset(posX, posY, dirX, dirY, velX, velY, spriteId);
 	}
 
-	reset(posX, posY, dirX, dirY, velX, velY) {
+	generateAnimations(iconId) {
+		this.animations = {};
+		for (const [dir, imageId] of Object.entries(BULLET_SPRITE_SPECS[iconId])) {
+			this.animations[dir] = generate(assetLoader.getImage(imageId));
+		}
+	}
+
+	reset(posX, posY, dirX, dirY, velX, velY, spriteId) {
 		super.reset();
 		this.pos = { x: posX, y: posY };
 		this.vel = {
 			x: dirX * SHOTSPEED + velX,
 			y: dirY * SHOTSPEED + velY
 		};
+		this.generateAnimations(spriteId);
+		this.currentAnimation = this.animations.right;
 		if (this.vel.x == 0) {
 			this.changeAnimation(this.vel.y > 0 ? this.animations.down : this.animations.up);
 		} else {
@@ -70,9 +77,10 @@ export const GUNS = {
 	basic: {
 		shotTime: 1 / 12,
 		ammo: Infinity,
+		bulletSprite: "bullet",
 		soundId: "shoot",
 		bulletSpawner: (origin, dir, vel) => {
-			entitiesManager.spawn(Bullet, origin.x, origin.y, dir.x, dir.y, vel.x, vel.y);
+			entitiesManager.spawn(Bullet, origin.x, origin.y, dir.x, dir.y, vel.x, vel.y, "bullet");
 		}
 	},
 	spread: {
@@ -83,10 +91,10 @@ export const GUNS = {
 		bulletSpawner: (origin, dir, vel) => {
 			const angle = Math.atan2(dir.x, -dir.y) - Math.PI/2;
 			const spreadAngle = Math.PI/16;
-			entitiesManager.spawn(Bullet, origin.x, origin.y, Math.cos(angle - 2*spreadAngle), Math.sin(angle - 2*spreadAngle), vel.x, vel.y);
-			entitiesManager.spawn(Bullet, origin.x, origin.y, Math.cos(angle - spreadAngle), Math.sin(angle - spreadAngle), vel.x, vel.y);
-			entitiesManager.spawn(Bullet, origin.x, origin.y, Math.cos(angle + spreadAngle), Math.sin(angle + spreadAngle), vel.x, vel.y);
-			entitiesManager.spawn(Bullet, origin.x, origin.y, Math.cos(angle + 2*spreadAngle), Math.sin(angle + 2*spreadAngle), vel.x, vel.y);
+			entitiesManager.spawn(Bullet, origin.x, origin.y, Math.cos(angle - 2*spreadAngle), Math.sin(angle - 2*spreadAngle), vel.x, vel.y, "spread");
+			entitiesManager.spawn(Bullet, origin.x, origin.y, Math.cos(angle - spreadAngle), Math.sin(angle - spreadAngle), vel.x, vel.y, "spread");
+			entitiesManager.spawn(Bullet, origin.x, origin.y, Math.cos(angle + spreadAngle), Math.sin(angle + spreadAngle), vel.x, vel.y, "spread");
+			entitiesManager.spawn(Bullet, origin.x, origin.y, Math.cos(angle + 2*spreadAngle), Math.sin(angle + 2*spreadAngle), vel.x, vel.y, "spread");
 		}
 	},
 };
