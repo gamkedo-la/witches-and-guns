@@ -371,14 +371,14 @@ class GameScene extends Scene {
 						this.boss = entitiesManager.spawn(currentLevel.boss.cls, currentLevel.boss.x, currentLevel.boss.y);
 					} else if (this.boss != null && !this.boss.alive) {
 						LEVELS[this.levelIndex].complete = true;
-						if (this.levelCompleteTimer >= LEVEL_COMPLETE_MESSAGE_TIMEOUT) {
+						if (this.levelCompleteTimer >= LEVEL_COMPLETE_MESSAGE_TIMEOUT + (this.levelIndex >= LEVELS.length - 1 ? 2 : 0)) {
 							// load next level
 							if (this.levelIndex < LEVELS.length - 1) {
 								this.levelIndex++;
 								LEVELS[this.levelIndex].loaded = false;
 								this.loadLevel();
 							} else {
-								// TODO: finished game congratulations, then switch to credits
+								this.switchTo(SCENES.credits);
 							}
 						} else {
 							this.levelCompleteTimer += dt;
@@ -450,9 +450,17 @@ class GameScene extends Scene {
 		if (currentLevel.complete) {
 			canvasData.context.save();
 			canvasData.context.textAlign = "center";
-			canvasData.context.font = "bold 20px sans";
-			canvasData.context.fillStyle = "purple";
-			canvasData.context.fillText("LEVEL COMPLETE!", canvasData.canvas.width / 2, canvasData.canvas.height / 2);
+			if (this.levelIndex >= LEVELS.length - 1) {
+				canvasData.context.font = "bold 24px sans";
+				canvasData.context.fillStyle = "red";
+				canvasData.context.fillText("CONGRATULATIONS!!", canvasData.canvas.width / 2, canvasData.canvas.height / 2);
+				canvasData.context.font = "bold 18px sans";
+				canvasData.context.fillText("You finished the game!!", canvasData.canvas.width / 2, canvasData.canvas.height / 2 + 30);
+			} else {
+				canvasData.context.font = "bold 20px sans";
+				canvasData.context.fillStyle = "purple";
+				canvasData.context.fillText("LEVEL COMPLETE!", canvasData.canvas.width / 2, canvasData.canvas.height / 2);
+			}
 			canvasData.context.restore();
 		}
 	}
