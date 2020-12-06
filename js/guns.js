@@ -59,9 +59,22 @@ class Bullet extends Entity {
 		this.pos.y += Math.round(vel.y);
 		this.collider.x = this.pos.x - 1;
 		this.collider.y = this.pos.y - 1;
-		if (this.pos.x < 0 || this.pos.x > canvasData.canvas.width || this.pos.y < 0 || this.pos.y > canvasData.canvas.height) {
-			this.die();
-		}
+	}
+
+	onTopWallCollision(dt) {
+		this.die();
+	}
+
+	onLeftWallCollision(dt) {
+		this.die();
+	}
+
+	onBottomWallCollision(dt) {
+		this.die();
+	}
+
+	onRightWallCollision(dt) {
+		this.die();
 	}
 }
 
