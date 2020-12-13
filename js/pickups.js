@@ -73,9 +73,8 @@ class GunPickUp extends PickUp {
 
   reset() {
 	this.spec = getRandomGunSpec();
-	this.animations = {
-	  default: generate(assetLoader.getImage(this.spec.iconId))
-	};
+	this.animations.default = generate(assetLoader.getImage(this.spec.iconId));
+	this.currentAnimation = this.animations.default;
 	super.reset();
   }
 
