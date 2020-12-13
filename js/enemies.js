@@ -31,6 +31,8 @@ export class Attack extends Entity {
 	this.parent = parent;
 	this.offset = offset;
 	this.damage = DEFAULT_DAMAGE;
+	this.collider.x = this.pos.x;
+	this.collider.y = this.pos.y;
 	this.collider.width = width;
 	this.collider.height = height;
   }
@@ -38,12 +40,23 @@ export class Attack extends Entity {
   draw() {
 	  if (this.alive && window.debugMode) {
 		canvasData.context.fillStyle = 'red';
-		canvasData.context.fillRect(this.x, this.y, this.collider.width, this.collider.height);
+		canvasData.context.fillRect(this.pos.x, this.pos.y, this.collider.width, this.collider.height);
 	  }
   }
 
-  get x() { return this.parent.pos.x + this.offset.x; }
-  get y() { return this.parent.pos.y + this.offset.y; }
+  performActions(dt) {
+	super.performActions(dt);
+	this.pos.x = this.parent.pos.x + this.offset.x;
+	this.pos.y = this.parent.pos.y + this.offset.y;
+  }
+
+  update(dt) {
+	if (!this.parent.alive) {
+	  this.die();
+	} else {
+	  super.update(dt);
+	}
+  }
 }
 
 const BROOM_WIDTH = 14;
@@ -152,7 +165,12 @@ export class BroomEnemy extends Enemy {
 	}
 	super.die();
   }
-  
+
+  reset(x, y) {
+	super.reset(x, y);
+	this.headButt = entitiesManager.spawn(Attack, this, 0, 0, BROOM_ATTACK_WIDTH - 8, BROOM_HEIGHT/4);
+  }
+
   get attacking() {
 	  return (this.currentAnimation == this.animations.attackLeft || this.currentAnimation == this.animations.attackRight);
   }
