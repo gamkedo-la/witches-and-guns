@@ -324,6 +324,11 @@ class GameScene extends Scene {
 		this.waveTimeOut = Infinity;
 		this.boss = null;
 		this.levelCompleteTimer = 0;
+		for (const level of LEVELS) {
+			level.loaded = false;
+			level.complete = false;
+			level.started = false;
+		}
 		return super.reset();
 	}
 
@@ -380,8 +385,8 @@ class GameScene extends Scene {
 						if (this.levelCompleteTimer >= LEVEL_COMPLETE_MESSAGE_TIMEOUT + (this.levelIndex >= LEVELS.length - 1 ? 2 : 0)) {
 							// load next level
 							if (this.levelIndex < LEVELS.length - 1) {
-								this.levelIndex++;
 								LEVELS[this.levelIndex].loaded = false;
+								this.levelIndex++;
 								this.loadLevel();
 							} else {
 								this.switchTo(SCENES.credits);
