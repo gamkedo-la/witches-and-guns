@@ -15,6 +15,10 @@ const FACE = { down: 0, left: 1, right: 2, up: 3 };
 
 export class Boss extends Enemy {};
 
+
+const BOSS_HEALTH = 200;
+const BOSS_DAMAGE = 2;
+
 export class LawnMowerBoss extends Boss {
 	constructor(x, y) {
 		const animations = {
@@ -31,7 +35,7 @@ export class LawnMowerBoss extends Boss {
 			flamesUp: generate(assetLoader.getImage("lawnmowerFlames.up")),
 			flamesRight: generate(assetLoader.getImage("lawnmowerFlames.right")),
 		};
-		super({ x: x, y: y }, MOWER_BACK_WIDTH, MOWER_HEIGHT, { offsetY: 14, width: MOWER_BACK_WIDTH, height: MOWER_HEIGHT / 2 }, 60, 2, animations, "down");
+		super({ x: x, y: y }, MOWER_BACK_WIDTH, MOWER_HEIGHT, { offsetY: 14, width: MOWER_BACK_WIDTH, height: MOWER_HEIGHT / 2 }, BOSS_HEALTH, BOSS_DAMAGE, animations, "down");
 		this.speed = 500;
 		this.canCollideWithTypes.add('playerProjectile');
 		this.vel = { x: 0, y: 0 };
@@ -270,7 +274,7 @@ export class FridgeBoss extends Boss {
 			aimrtl: generate(assetLoader.getImage("fridge.aim.rtl")),
 			aimrtm: generate(assetLoader.getImage("fridge.aim.rtm")),
 		};
-		super({ x: x, y: y }, FRIDGE_WIDTH, FRIDGE_HEIGHT, { offsetY: 0, width: FRIDGE_WIDTH, height: FRIDGE_HEIGHT }, 100, 2, animations, "idlel");
+		super({ x: x, y: y }, FRIDGE_WIDTH, FRIDGE_HEIGHT, { offsetY: 0, width: FRIDGE_WIDTH, height: FRIDGE_HEIGHT }, BOSS_HEALTH + 50, BOSS_DAMAGE + 1, animations, "idlel");
 		this.speed = 150.0;
 		this.canCollideWithTypes.add('playerProjectile');
 		this.vel = { x: 0, y: 0 };
@@ -466,7 +470,7 @@ export class TVBoss extends Boss {
 			idle: generate(assetLoader.getImage("tv.idle")),
 			att: generate(assetLoader.getImage("tv.att"))
 		};
-		super({ x: x, y: y }, TV_WIDTH, TV_HEIGHT, { width: TV_WIDTH, height: TV_HEIGHT }, 100, 2, animations, "idle");
+		super({ x: x, y: y }, TV_WIDTH, TV_HEIGHT, { width: TV_WIDTH, height: TV_HEIGHT }, BOSS_HEALTH + 100, BOSS_DAMAGE + 2, animations, "idle");
 		this.speed = 300;
 		this.canCollideWithTypes.add('playerProjectile');
 		this.vel = { x: 0, y: 0 };
@@ -573,7 +577,7 @@ export class WasherBoss extends JumpAttackEnemy {
 	  'open': generate(assetLoader.getImage("washer.open")),
 	  'close': generate(assetLoader.getImage("washer.close")),
 	};
-	super({ x: x, y: y }, WASHER_WIDTH, WASHER_HEIGHT, { width: WASHER_WIDTH, height: WASHER_HEIGHT }, 100, 2, animations, "idle", WASHER_JUMP_SPEED, WASHER_ATTACK_DELAY, WASHER_MAX_JUMP_DIST, "washer.preJump", "jump", "stomp");
+	super({ x: x, y: y }, WASHER_WIDTH, WASHER_HEIGHT, { width: WASHER_WIDTH, height: WASHER_HEIGHT }, BOSS_HEALTH + 200, BOSS_DAMAGE + 4, animations, "idle", WASHER_JUMP_SPEED, WASHER_ATTACK_DELAY, WASHER_MAX_JUMP_DIST, "washer.preJump", "jump", "stomp");
   }
 
   getPreJumpAnim() {
