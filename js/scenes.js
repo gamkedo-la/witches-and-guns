@@ -255,6 +255,7 @@ class PlayerSelectScene extends Scene {
 }
 
 const LEVEL_COMPLETE_MESSAGE_TIMEOUT = 3;
+const GAME_OVER_TIMEOUT = 3;
 class GameScene extends Scene {
 	constructor() {
 		super();
@@ -323,6 +324,7 @@ class GameScene extends Scene {
 		this.levelIndex = 0;
 		this.waveTimeOut = Infinity;
 		this.boss = null;
+		this.gameOverTimer = 0;
 		this.levelCompleteTimer = 0;
 		for (const level of LEVELS) {
 			level.loaded = false;
@@ -398,7 +400,10 @@ class GameScene extends Scene {
 				} else {
 					// core gameplay
 					if (entitiesManager.getLiveForType("player").length <= 0) {
-						this.switchTo(SCENES.gameOver);
+						if (this.gameOverTimer > GAME_OVER_TIMEOUT) {
+							this.switchTo(SCENES.gameOver);
+						}
+						this.gameOverTimer += dt;
 					}
 					if (1 - Math.random() < PICKUP_CHANCE) {
 						entitiesManager.spawn(PICKUP_TYPES[Math.floor(Math.random() * PICKUP_TYPES.length)]);
