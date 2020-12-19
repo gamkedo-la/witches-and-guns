@@ -13,7 +13,9 @@ const MOWER_ATTACK_DELAY = 3 / 4;
 const MOWER_ATTACK_DISTANCE = 16;
 const FACE = { down: 0, left: 1, right: 2, up: 3 };
 
-export class LawnMowerBoss extends Enemy {
+export class Boss extends Enemy {};
+
+export class LawnMowerBoss extends Boss {
 	constructor(x, y) {
 		const animations = {
 			down: generate(assetLoader.getImage("lawnmower.down")),
@@ -251,7 +253,7 @@ const FRIDGE_PROJECTILE_ATTACK_DELAY = 1 / 2;
 const FRIDGE_PROJECTILE_ATTACK_AFTER_TURNS = 3;
 const FRIDGE_SHOT_DELAY = 1 / 10;
 
-export class FridgeBoss extends Enemy {
+export class FridgeBoss extends Boss {
 	constructor(x, y) {
 		const animations = {
 			wake: generate(assetLoader.getImage("fridge.wake")),
@@ -458,7 +460,7 @@ export const TV_HEIGHT = 40;
 const TV_ATTACK_DELAY = 3;
 const TV_ATTACK_DISTANCE = 20;
 
-export class TVBoss extends Enemy {
+export class TVBoss extends Boss {
 	constructor(x, y) {
 		const animations = {
 			idle: generate(assetLoader.getImage("tv.idle")),
