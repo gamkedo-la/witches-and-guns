@@ -72,7 +72,9 @@ export const creditsData = {
 		"and animation, book enemy sprites, lawnmower flame animation,",
 		"gardening shovel enemy, different gun support, gun spread,",
 		"ammo limit, gun items, level skip cheat, game reset, rolling",
-		"credits support, game over scene, death poof",
+		"credits support, game over scene, death poof, laser gun,",
+		"level progression implementation, player death animation,",
+		"player sprites, game end logic"
 	],
 	"Tylor Allison": [
 		"Room design and tile art (yard, kitchen, living room, laundry",
@@ -92,7 +94,7 @@ export const creditsData = {
 	],
 	"Rutger McKenna": [
 		"Menu icons (potion, pentagram, crystal ball, cauldron,",
-		"necronomicon)",
+		"necronomicon), projectile sprites",
 	],
 	"Grygoriy Kulesko": [
 		"Book enemy animation integration, pause feature including",
