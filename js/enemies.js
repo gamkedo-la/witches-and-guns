@@ -214,10 +214,12 @@ export class JumpAttackEnemy extends Enemy {
 		y: Math.round(this.pos.y + signY*Math.sin(angle)*this.maxJumpDist)
 	  };
 	} else {
-	  this.target = {
-		x: closestPlayer.pos.x + Math.floor(Math.random() * 5 - 2),
-		y: closestPlayer.pos.y + Math.floor(Math.random() * 5 - 2)
-	  };
+	  if (closestPlayer !== null) {
+		this.target = {
+		  x: closestPlayer.pos.x + Math.floor(Math.random() * 5 - 2),
+		  y: closestPlayer.pos.y + Math.floor(Math.random() * 5 - 2)
+		};
+	  }
 	}
   }
 
